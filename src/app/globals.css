@@ -19,19 +19,34 @@
 }
 
 body {
-  max-width: 800px; /* 최대 너비를 800px로 설정 */
-  margin-left: auto; /* 중앙 정렬 */
-  margin-right: auto; /* 중앙 정렬 */
-  padding: 1rem; /* 양쪽 패딩 추가 */
+  max-width: 800px;
+  margin-left: auto; 
+  margin-right: auto; 
+  padding: 2rem; 
   color: var(--foreground); /* 텍스트 색상 */
   background: var(--background); /* 배경 색상 */
   font-family: var(--font-goorm-sans-regular); /* 로컬 폰트를 기본 폰트로 적용 */
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-goorm-sans-bold); /* 제목에 Bold 폰트 적용 */
+/* 커스텀 */
+
+/* input 관련 */
+/* label-input 세트 간격 정의 */
+.label-input-set {
+  @apply flex flex-col space-y-2;
 }
 
-p {
-  font-family: var(--font-goorm-sans-medium); /* 일반 본문에 Medium 폰트 적용 */
+/* label-input 세트 간격 정의 */
+.label-base {
+  @apply text-base font-semibold;
+}
+
+/* 인풋-플레이스홀더 */
+.input-base {
+  @apply h-14 p-3 border rounded-xl placeholder:text-xs placeholder:text-gray-600;
+}
+
+/* 안내 문구 */
+.helper-text {
+  @apply text-xs font-light pl-1;
 }
