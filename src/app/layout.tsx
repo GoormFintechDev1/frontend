@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+
 import QueryProvider from "@/Provider/QueryProvider";
 import { AuthProvider } from "@/Provider/AuthProvider";
-import Navbar from "@/components/Navbar";
 
 // goorm-sans 폰트 설정
 const goormSansBold = localFont({
@@ -34,6 +34,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body
@@ -47,7 +48,6 @@ export default function RootLayout({
         <QueryProvider>
           <AuthProvider>
             {children}
-            <Navbar />
           </AuthProvider>
         </QueryProvider>
       </body>
