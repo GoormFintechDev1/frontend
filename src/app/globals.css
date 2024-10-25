@@ -1,8 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+/* 로컬 폰트 적용 부분 */
 :root {
+  --font-goorm-sans-bold: 'goorm-sans-bold', sans-serif;
+  --font-goorm-sans-medium: 'goorm-sans-medium', sans-serif;
+  --font-goorm-sans-regular: 'goorm-sans-regular', sans-serif;
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -15,7 +15,19 @@
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  max-width: 800px; /* 최대 너비를 800px로 설정 */
+  margin-left: auto; /* 중앙 정렬 */
+  margin-right: auto; /* 중앙 정렬 */
+  padding: 1rem; /* 양쪽 패딩 추가 */
+  color: var(--foreground); /* 텍스트 색상 */
+  background: var(--background); /* 배경 색상 */
+  font-family: var(--font-goorm-sans-regular); /* 로컬 폰트를 기본 폰트로 적용 */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-goorm-sans-bold); /* 제목에 Bold 폰트 적용 */
+}
+
+p {
+  font-family: var(--font-goorm-sans-medium); /* 일반 본문에 Medium 폰트 적용 */
 }
