@@ -1,6 +1,9 @@
+'use client'
+
 import { SubmitHandler, useForm } from "react-hook-form";
 import Button from "./Button";
-
+import { useState } from "react";
+import AdderssInput from "./AdderssInput";
 interface InputType {
     username: string,
     phone: string, 
@@ -14,12 +17,21 @@ interface Props {
 
 export default function Register2({onReadySubmit}:Props){
     
-    const {register, handleSubmit} = useForm<InputType>();
-    const onSubmit: SubmitHandler<InputType> = (data) => onReadySubmit(data); //나중에는 api 연결
+    const {register, handleSubmit, setValue} = useForm<InputType>();
+    const onSubmit: SubmitHandler<InputType> = (data) => {
+        onReadySubmit(data);
+    }; //나중에는 api 연결
+    const [address, setAddress] = useState("");
+
+    const handleAddressSelect = (selectedAddress:string) => {
+        setAddress(selectedAddress);
+        setValue("address", selectedAddress);
+    }
 
 
     return(
         <div className="h-full">
+
             <form className="flex flex-col space-y-8 h-full" onSubmit={handleSubmit(onSubmit)}>
                 <p className="text-xl font-bold">회원가입</p>
                 <div className="label-input-set">
@@ -32,7 +44,7 @@ export default function Register2({onReadySubmit}:Props){
                 </div>
                 <div className="label-input-set">
                     <label className="label-base">주소</label>
-                    <input className="w-full input-base" placeholder="주소를 입력하세요." type="password" {...register("address")}></input>
+                    <AdderssInput value={address} onAddressSelect={handleAddressSelect} />
                 </div>
                 <div className="flex-grow"></div>
                 <div className="py-8">
