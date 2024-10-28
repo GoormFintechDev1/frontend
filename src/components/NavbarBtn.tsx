@@ -21,7 +21,7 @@ const NavbarBtn = (props: BtnProps) => {
       <Image
       src={pathname === props.path ? `/nav/${props.imgName}_on.png` : `/nav/${props.imgName}.png`}
       alt={`${props.btnName}`} width={24} height={24} />
-      <span className={`text-xs ${pathname === `${props.path}` ? 'text-emerald-400' : 'text-[#676767]'} leading-[22px]`}>
+      <span className={`text-xs ${pathname === `${props.path}` ? 'text-emerald-600' : 'text-[#676767]'} leading-[22px]`}>
         {props.btnName}
       </span>
     </button>
