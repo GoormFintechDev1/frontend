@@ -1,3 +1,5 @@
+import { LoginFormType } from "@/components/Login";
+
 const enviroment = process.env.NODE_ENV;
 
 let url = "http://localhost:8080/api/auth";
@@ -25,13 +27,13 @@ export const authUser = async () => {
   }
 };
 
-export const loginUser = async (userId: string, password: string) => {
+export const loginUser = async (data:LoginFormType) => {
   const response = await fetch(`${url}/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ userId, password }),
+    body: JSON.stringify(data),
     credentials: "include",
   });
 
@@ -92,3 +94,4 @@ export const refreshAccessToken = async (refreshToken: string) => {
   const data = await response.json();
   return data.accessToken;
 };
+

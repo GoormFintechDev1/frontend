@@ -18,9 +18,9 @@ export default function Home() {
   
   // localStorage.setItem('post-storage', JSON.stringify(testData));
 
-  usePostsQuery();
-  const result = usePostsStore((state) => state.posts)
-  const data = JSON.parse(result);
+  // usePostsQuery();
+  // const result = usePostsStore((state) => state.posts)
+  // const data = JSON.parse(result);
   // let data;
   // try {
   //     data = result ? JSON.parse(result) : []; // 비어있거나 JSON 형식이 아닐 경우 빈 배열 할당
