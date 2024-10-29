@@ -11,7 +11,7 @@
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: white) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
@@ -37,7 +37,7 @@ body {
   @apply flex flex-col space-y-2;
 }
 
-/* label-input 세트 간격 정의 */
+/* label */
 .label-base {
   @apply text-base font-semibold;
 }
