@@ -69,7 +69,7 @@ export default function Register2({ onReadySubmit }: Props) {
         <div className="flex-grow"></div>
         
         <div className="py-8">
-          <Button type="submit">다음</Button>
+          <Button type="submit" href="./login">다음</Button>
         </div>
       </form>
     </div>

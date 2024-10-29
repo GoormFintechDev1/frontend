@@ -1,5 +1,7 @@
 "use client";
 
+import Navbar from "@/components/Navbar";
+
 // import Card from "@/components/Card";
 // import Navbar from "@/components/Navbar";
 // import { usePostsQuery } from "@/hooks/usePostsQuery";
@@ -14,7 +16,7 @@ export default function Home() {
     { id: 5, title: "Test Post 5", price: 5000, time: "5초전" }
   ];
   
-  localStorage.setItem('post-storage', JSON.stringify(testData));
+  // localStorage.setItem('post-storage', JSON.stringify(testData));
 
   // usePostsQuery();
   // const result = usePostsStore((state) => state.posts)
@@ -40,8 +42,8 @@ export default function Home() {
             />
           </>
         ))}
-      </div>
-      <Navbar/> */}
+      </div>*/}
+      <Navbar/> 
     </>
     
   );
