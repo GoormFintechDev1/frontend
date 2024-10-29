@@ -43,16 +43,19 @@ export const loginUser = async (userId: string, password: string) => {
 };
 
 export const joinUser = async (
-  email: string,
+  account: string,
   password: string,
-  name: string
+  nickname: string,
+  name: string,
+  phoneNumber: string,
+  address: string,
 ) => {
-  const response = await fetch(`${url}/join`, {
+  const response = await fetch(`${url}/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email, password, name }),
+    body: JSON.stringify({ account, password, nickname, name, phoneNumber, address }),
     credentials: "include",
   });
 

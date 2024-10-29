@@ -2,6 +2,7 @@
 
 import Register1 from "@/components/Register1";
 import Register2 from "@/components/Register2";
+import { useRegisterMutation } from "@/hooks/useAuthQuery";
 import { useEffect, useState } from "react";
 
 interface FormType {
@@ -10,7 +11,7 @@ interface FormType {
     password: string,
 
 }
-interface FormType2 {
+export interface FormType2 extends FormType {
     username: string,
     phone: string,
     address: string,
@@ -19,7 +20,14 @@ interface FormType2 {
 export default function Register() {
 
     const [step, setStep] = useState<number>(1)
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState<FormType2>({
+        userId: "",
+        password: "",
+        nickname: "",
+        username: "",
+        phone: "",
+        address: "",
+    });
     const [isReady, setIsReady] = useState(false);
 
     const handleNextStep = (data:FormType) => {
@@ -33,17 +41,22 @@ export default function Register() {
         setStep(prev)
     }
 
+    const mutation = useRegisterMutation();
+
     const handleSubmit = (data:FormType2) => {
         setFormData((prev) => ({...prev, ...data})); //비동기로 동작하니까...
+        console.log(formData);
         setIsReady(true);
     }
-
+    
+    
     useEffect(()=>{
         if(isReady){
             setIsReady(false);
+            mutation.mutate(formData);
             console.log(formData)
         }
-    },[formData, isReady])
+    },[formData, isReady, mutation])
  
     return (
         <div className="h-full">

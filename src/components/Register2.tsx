@@ -5,6 +5,9 @@ import Button from "./Button";
 import { useState } from "react";
 import AdderssInput from "./AdderssInput";
 interface InputType {
+    userId: string,
+    password: string,
+    nickname: string,
     username: string,
     phone: string, 
     address: string
