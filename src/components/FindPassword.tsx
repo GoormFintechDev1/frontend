@@ -13,7 +13,7 @@ export default function FindPassword() {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen">
+        <div className="flex items-center justify-center h-full">
             <form onSubmit={handleSubmit}>
                 <p className="text-xl font-bold mb-10">비밀번호 찾기</p>
                 

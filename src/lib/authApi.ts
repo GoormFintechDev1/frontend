@@ -1,3 +1,4 @@
+import { FormDataType } from "@/app/register/page";
 import { LoginFormType } from "@/components/Login";
 
 const enviroment = process.env.NODE_ENV;
@@ -44,20 +45,13 @@ export const loginUser = async (data:LoginFormType) => {
   return response;
 };
 
-export const joinUser = async (
-  account: string,
-  password: string,
-  nickname: string,
-  name: string,
-  phoneNumber: string,
-  address: string,
-) => {
+export const joinUser = async (formData:FormDataType) => {
   const response = await fetch(`${url}/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ account, password, nickname, name, phoneNumber, address }),
+    body: JSON.stringify(formData),
     credentials: "include",
   });
 
@@ -95,3 +89,43 @@ export const refreshAccessToken = async (refreshToken: string) => {
   return data.accessToken;
 };
 
+export const checkAccount = async ( account: string ) => {
+  const response = await fetch(`${url}/duplication/account`,{
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({account}),
+    credentials: "include"
+  })
+  
+  if(!response.ok) throw new Error("아이디 중복 검사 실패");
+  const data = await response.json();
+  return data
+  
+}
+
+export const checkNickname = async (nickName:string) => {
+  const response = await fetch(`${url}/duplication/nickname`,{
+    method:'POST',
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({nickName}),
+  })
+
+  if(!response.ok) throw new Error("닉네임 중복 검사 실패");
+  const data = await response.json();
+  return data
+
+}
+
+
+export const checkPhoneNumber = async (phoneNumber:string) => {
+  const response = await fetch(`${url}/duplication/phone`,{
+    method:'POST',
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({phoneNumber}),
+  })
+
+  if(!response.ok) throw new Error("전화번호 중복 검사 실패");
+  const data = await response.json();
+  return data
+
+}

@@ -1,12 +1,13 @@
 "use client"
 
+import { useCheckAccount, useCheckNickname } from "@/hooks/useAuthQuery";
 import { useEffect, useState } from "react";
 // import Button from "@/components/Button";
 
 import { useForm, SubmitHandler } from "react-hook-form";
 
 interface InputType {
-    userId: string,
+    account: string,
     nickname: string, 
     password: string
 }
@@ -17,7 +18,7 @@ interface Props {
 
 export default function Register1({onNext}:Props){
 
-    const {register, handleSubmit, watch, formState: { errors }} = useForm<InputType>({ mode: "onChange" });
+    const {register, handleSubmit, watch, setError,clearErrors, formState: { errors }} = useForm<InputType>({ mode: "onChange" });
     const onSubmit: SubmitHandler<InputType> = (data) => onNext(data);
     const password = watch("password");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -25,6 +26,8 @@ export default function Register1({onNext}:Props){
     const [isLengthValid, setIsLengthValid] = useState(false);
     const [hasLetter, setHasLetter] = useState(false);
     const [hasNumber, setHasNumber] = useState(false);
+    const [isAccountAvailable, setIsAccountAvailable] = useState("");
+    const [isNicknameAvailable, setIsNicknameAvailable] = useState("");
 
     useEffect(() => {
         if (password)
@@ -38,6 +41,38 @@ export default function Register1({onNext}:Props){
         setIsMatch(password === confirmPassword);
     }, [password, confirmPassword]);
 
+    
+    //아이디 중복 검사
+    const account = watch("account");
+    const checkAccountMutation = useCheckAccount();
+    const handleCheckAccount = () => {
+        clearErrors("account");
+        checkAccountMutation.mutate(account, {
+            onSuccess: (data) => {
+                if(data) setError("account", { type: "manual", message: "중복된 아이디입니다." });
+                else  setIsAccountAvailable("사용 가능한 아이디입니다.");
+            }, 
+            onError: () => {
+                setError("account", { type: "manual", message: "아이디 중복 검사 중 문제가 발생했습니다." });
+            }
+        })
+    }
+
+    const checkNicknameMutation = useCheckNickname();
+    const nickname = watch("nickname");
+    const handleCheckNickname = () => {
+        clearErrors("nickname");
+        checkNicknameMutation.mutate(nickname, {
+            onSuccess: (data) => {
+                if(data) setError("account", { type: "manual", message: "중복된 닉네임입니다." });
+                else  setIsNicknameAvailable("사용 가능한 닉네임입니다.");
+            }, 
+            onError: () => {
+                setError("account", { type: "manual", message: "닉네임 중복 검사 중 문제가 발생했습니다." });
+            }
+        })
+    }
+
     return (
         <div className="h-full">
             <form className="flex flex-col space-y-6 h-full" onSubmit={handleSubmit(onSubmit)}>
@@ -46,7 +81,7 @@ export default function Register1({onNext}:Props){
                     <label className="label-base">아이디</label>
                     <div className="flex gap-3">
                         <input className="input-base flex-grow" placeholder="아이디를 입력하세요."
-                            {...register("userId", {
+                            {...register("account", {
                             required: "아이디를 입력하세요.",
                             minLength: {
                                 value: 5,
@@ -62,12 +97,11 @@ export default function Register1({onNext}:Props){
                             }
                             })}
                         />
-                        <button className="p-3 bg-gray-200 rounded-xl text-xs">중복 확인</button>
+                        <button className="p-3 bg-gray-200 rounded-xl text-xs" onClick={handleCheckAccount}>중복 확인</button>
                         </div>
                     {/* <p className="helper-text text-blue-600">사용할 수 있는 아이디입니다.</p> */}
-                    {errors.userId && (
-                            <p className="helper-text text-red-600">{errors.userId.message}</p>
-                        )}
+                    {errors.account && ( <p className="helper-text text-red-600">{errors.account.message}</p>)}
+                    {!errors.account && isAccountAvailable && ( <p className="helper-text text-blue-600">{isAccountAvailable}</p>)}
                 </div>
                 <div className="label-input-set">
                     <label className="label-base">닉네임</label>
@@ -80,12 +114,10 @@ export default function Register1({onNext}:Props){
                             }
                         })}
                         />
-                        <button className="p-3 bg-gray-200 rounded-xl text-xs">중복 확인</button>
+                        <button className="p-3 bg-gray-200 rounded-xl text-xs" onClick={handleCheckNickname}>중복 확인</button>
                     </div>
-                    {errors.nickname && (
-                        <p className="helper-text text-red-600">{errors.nickname.message}</p>
-                        )}
-                {/* <p className="helper-text text-red-600">사용할 수 없는 닉네임입니다.</p> */}
+                    {errors.nickname && ( <p className="helper-text text-red-600">{errors.nickname.message}</p>)}
+                    {!errors.nickname && isNicknameAvailable && ( <p className="helper-text text-blue-600">{isNicknameAvailable}</p>)}
                 </div>
                 <div className="label-input-set">
                     <label className="label-base">비밀번호</label>

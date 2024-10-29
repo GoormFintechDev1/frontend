@@ -6,14 +6,14 @@ import { useRegisterMutation } from "@/hooks/useAuthQuery";
 import { useEffect, useState } from "react";
 
 interface FormType {
-    userId: string,
+    account: string,
     nickname: string,
     password: string,
 
 }
 interface FormType2 {
-    username: string,
-    phone: string,
+    name: string,
+    phoneNumber: string,
     address: string,
 }
 
@@ -22,13 +22,13 @@ export interface FormDataType extends FormType, FormType2 {}
 
 export default function Register() {
 
-    const [step, setStep] = useState<number>(1)
+    const [step, setStep] = useState<number>(2)
     const [formData, setFormData] = useState<FormDataType>({
-        userId: "",
+        account: "",
         nickname: "",
         password: "",
-        username: "",
-        phone: "",
+        name: "",
+        phoneNumber: "",
         address: "",
     });
     const [isReady, setIsReady] = useState(false);
@@ -55,7 +55,6 @@ export default function Register() {
         if(isReady){
             setIsReady(false);
             mutation.mutate(formData);
-            console.log(formData)
         }
     },[formData, isReady, mutation])
  
