@@ -1,38 +1,25 @@
-FROM  node:18-alpine AS base
+# 베이스 이미지 설정
+FROM node:18-alpine AS base
 
-# Install dependencies only when needed
-FROM base AS deps
+# 필요한 라이브러리 설치
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Install dependencies based on the preferred package manger
+# 의존성 설치
 COPY package.json package-lock.json* ./
-RUN npm ci
+RUN npm install
 
-# 1. Build stage (Next.js standalone 모드로 빌드)
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+# 1. Development 모드로 실행하기 위한 설정
+FROM base AS dev
 
-# 앱 소스 복사
+# 소스 코드를 복사하여 컨테이너에 포함시킴
 COPY . .
 
-# Next.js standalone 모드로 빌드 (standalone 모드를 통해 독립적인 Node.js 서버 실행 가능)
-RUN npm run build
-
-# 7. public 폴더가 존재하지 않을 경우 빈 public 폴더 생성
-RUN mkdir -p /app/public
-
-# 2. Production stage (Node.js 서버 실행 및 Nginx 리버스 프록시 설정)
-FROM base AS runner
-
-# 빌드 결과물을 복사 (Next.js standalone과 필요한 모든 파일)
-COPY --from=builder /app/.next/standalone .
-COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/public ./public
-
+# 포트 설정
 EXPOSE 3000
 
 ENV PORT 3000
+ENV NODE_ENV development
 
-CMD ["node", "server.js"]
+# 개발 서버 실행 (파일 변경 시 자동 반영)
+CMD ["npm", "run", "dev"]

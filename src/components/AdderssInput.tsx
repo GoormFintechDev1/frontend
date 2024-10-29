@@ -19,7 +19,7 @@ function AddressInput({ onAddressSelect, value }: Props) {
         value={value}
         readOnly
       />
-      <AddressSearch onAddressSelect={handleAddressSelect} />
+      <AddressSearch onAddressSelect={handleAddressSelect}/>
     </div>
   );
 }

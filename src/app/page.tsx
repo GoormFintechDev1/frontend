@@ -1,9 +1,9 @@
 "use client";
 
-import Card from "@/components/Card";
-import Navbar from "@/components/Navbar";
-import { usePostsQuery } from "@/hooks/usePostsQuery";
-import { usePostsStore } from "@/stores/usePostsStore";
+// import Card from "@/components/Card";
+// import Navbar from "@/components/Navbar";
+// import { usePostsQuery } from "@/hooks/usePostsQuery";
+// import { usePostsStore } from "@/stores/usePostsStore";
 
 export default function Home() {
   const testData = [
@@ -16,13 +16,13 @@ export default function Home() {
   
   localStorage.setItem('post-storage', JSON.stringify(testData));
 
-  usePostsQuery();
-  const result = usePostsStore((state) => state.posts)
-  const data = JSON.parse(result);
+  // usePostsQuery();
+  // const result = usePostsStore((state) => state.posts)
+  // const data = JSON.parse(result);
   
   return (
     <>
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <input
           type="text"
           placeholder="검색어를 입력하세요"
@@ -41,7 +41,7 @@ export default function Home() {
           </>
         ))}
       </div>
-      <Navbar/>
+      <Navbar/> */}
     </>
     
   );
