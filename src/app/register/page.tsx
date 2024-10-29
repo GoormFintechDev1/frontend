@@ -11,19 +11,22 @@ interface FormType {
     password: string,
 
 }
-export interface FormType2 extends FormType {
+interface FormType2 {
     username: string,
     phone: string,
     address: string,
 }
 
+export interface FormDataType extends FormType, FormType2 {}
+
+
 export default function Register() {
 
     const [step, setStep] = useState<number>(1)
-    const [formData, setFormData] = useState<FormType2>({
+    const [formData, setFormData] = useState<FormDataType>({
         userId: "",
-        password: "",
         nickname: "",
+        password: "",
         username: "",
         phone: "",
         address: "",
@@ -45,10 +48,8 @@ export default function Register() {
 
     const handleSubmit = (data:FormType2) => {
         setFormData((prev) => ({...prev, ...data})); //비동기로 동작하니까...
-        console.log(formData);
         setIsReady(true);
     }
-    
     
     useEffect(()=>{
         if(isReady){

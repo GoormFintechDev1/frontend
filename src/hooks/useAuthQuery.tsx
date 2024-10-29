@@ -1,4 +1,4 @@
-import { FormType2 } from "@/app/register/page"
+import { FormDataType } from "@/app/register/page"
 import { authUser, joinUser } from "@/lib/authApi"
 import { useMutation, useQuery } from "@tanstack/react-query"
 
@@ -14,7 +14,7 @@ export const useAuthQuery = () => {
 
 export const useRegisterMutation = () => {
   return useMutation({
-    mutationFn: (formData: FormType2) => joinUser(
+    mutationFn: (formData: FormDataType) => joinUser(
         formData.userId,
         formData.password,
         formData.nickname,
