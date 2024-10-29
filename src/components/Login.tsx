@@ -1,25 +1,29 @@
 'use client';
 
+import { useLoginMutation } from '@/hooks/useAuthQuery';
 import Image from 'next/image';
 import { useState } from 'react';
+import Button from './Button';
 
-interface LoginFormType {
-    userId: string;
+export interface LoginFormType {
+    account: string;
     password: string;
 }
 
 export default function Login() {
-    const [formData, setFormData] = useState<LoginFormType>({ userId: '', password: '' });
+    const [formData, setFormData] = useState<LoginFormType>({ account: '', password: '' });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
+    const mutation = useLoginMutation();
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Login Data:', formData);
         // 로그인 로직을 추가하거나, API 호출 등을 여기에 구현
+        mutation.mutate(formData);
     };
 
     return (
@@ -33,8 +37,8 @@ export default function Login() {
                 <label className="label-base">아이디</label>
                 <input
                     type="text"
-                    name="userId"
-                    value={formData.userId}
+                    name="account"
+                    value={formData.account}
                     onChange={handleChange}
                     placeholder="아이디를 입력하세요."
                     className="w-full mb-4 p-2 border rounded mt-3"
@@ -50,7 +54,7 @@ export default function Login() {
                     className="w-full mb-4 p-2 border rounded mt-3"
                 />
 
-                <button type="submit" className="button mt-3">로그인</button>
+                <Button type="submit" href='./'>로그인</Button>
                 </div>
 
                 <div className="flex justify-center mt-4 text-sm text-gray-500 ">
