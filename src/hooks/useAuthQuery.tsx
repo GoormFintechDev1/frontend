@@ -1,5 +1,6 @@
 import { FormDataType } from "@/app/register/page"
-import { authUser, joinUser } from "@/lib/authApi"
+import { LoginFormType } from "@/components/Login"
+import { authUser, joinUser, loginUser } from "@/lib/authApi"
 import { useMutation, useQuery } from "@tanstack/react-query"
 
 export const useAuthQuery = () => {
@@ -27,6 +28,21 @@ export const useRegisterMutation = () => {
     },
     onError: (error) => {
         console.error("회원가입 실패 ", error);
+    }
+  })
+}
+
+
+export const useLoginMutation = () => {
+  return useMutation({
+    mutationFn: (loginData: LoginFormType) => loginUser(
+      loginData
+    ),
+    onSuccess: () => {
+      console.log("로그인 성공");
+    },
+    onError: (error) => {
+      console.log("로그인 실패", error);
     }
   })
 }
