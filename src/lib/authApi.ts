@@ -94,7 +94,6 @@ export const checkAccount = async ( account: string ) => {
     method: "POST",
     headers: {"Content-Type":"application/json"},
     body: JSON.stringify({account}),
-    credentials: "include"
   })
   
   if(!response.ok) throw new Error("아이디 중복 검사 실패");
