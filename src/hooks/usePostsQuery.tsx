@@ -1,8 +1,9 @@
 "use client";
 
+import { fetchUsers } from "@/app/post/page";
 import { getPostList } from "@/lib/postApi"
 import { usePostsStore } from "@/stores/usePostsStore";
-import { useQuery } from "@tanstack/react-query"
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
 import { useEffect } from "react";
 
 interface PostType {
@@ -10,6 +11,16 @@ interface PostType {
   title: string;
   price: number;
   time: string;
+}
+
+export interface Users {
+  id: number;
+  name: string;
+  userId: number;
+}
+
+export interface UserQuery {
+  pageSize: number;
 }
 
 export const usePostsQuery = () => {
@@ -28,3 +39,13 @@ export const usePostsQuery = () => {
 
   return data;
 }
+
+export const useUsers = () =>
+  useInfiniteQuery<Users[], Error>({
+    queryKey: ["users"],
+    queryFn: fetchUsers,
+    initialPageParam: 1,
+    getNextPageParam(lastPage, allPages) {
+      return lastPage.length > 0 ? allPages.length + 1 : undefined;
+    },
+  });
