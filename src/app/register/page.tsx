@@ -22,7 +22,7 @@ export interface FormDataType extends FormType, FormType2 {}
 
 export default function Register() {
 
-    const [step, setStep] = useState<number>(2)
+    const [step, setStep] = useState<number>(1)
     const [formData, setFormData] = useState<FormDataType>({
         account: "",
         nickname: "",
