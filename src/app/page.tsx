@@ -2,7 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import Revenue from "@/components/main/Revenue";
-import Profit from "@/components/main/profit";
+import Profit from "@/components/main/Profit";
 import Expenses from "@/components/main/Expenses";
 import Goals from "@/components/main/Goals";
 
