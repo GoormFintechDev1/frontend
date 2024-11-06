@@ -28,6 +28,9 @@ export default function Register1({onNext}:Props){
     const [hasNumber, setHasNumber] = useState(false);
     const [isAccountAvailable, setIsAccountAvailable] = useState("");
     const [isNicknameAvailable, setIsNicknameAvailable] = useState("");
+    const [isAccontChecked, setIsAccountChecked] = useState(false);
+    const [isNicknameChecked, setIsNicknameChecked] = useState(false);
+
 
     useEffect(() => {
         if (password)
