@@ -26,8 +26,6 @@ export default function convertToKoreanWon(value: number): string {
     currentValue %= 100;
   }
 
-  console.log(currentValue);
-
   // 원 단위 (1원~99원)
   if (currentValue > 0) {
     result += ` ${currentValue}원`;
