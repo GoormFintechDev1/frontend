@@ -15,7 +15,7 @@ const NavbarBtn = (props: BtnProps) => {
   const pathname = usePathname();
   return (
     <button 
-      className={`flex flex-col justify-center items-center w-[50px] h-[50px] rounded-lg`}
+      className={`flex flex-col justify-center items-center w-[100px] h-[50px] rounded-lg`}
       onClick={() => router.push(`${props.path}`)}
     >
       <Image
