@@ -4,10 +4,10 @@ import AddressInput from "@/components/AdderssInput";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import { BusinessInfo } from "@/interface/business";
-import { useValidateBR } from "@/hooks/useAuthQuery";
 import { useRouter } from "next/navigation";
+import { useValidateBR } from "@/hooks/useBRQuery";
 
-export default function ValidateBR(){
+export default function Validate(){
 
     const router  = useRouter();
 
@@ -31,7 +31,10 @@ export default function ValidateBR(){
     const onSubmit: SubmitHandler<BusinessInfo> = (data) => {
         console.log(data);
         validateBRMutation.mutate(data,{
-            onSuccess: () => { router.push('/')},
+            onSuccess: () => { 
+                router.push('/');
+                localStorage.setItem("firstLogin", "false");
+            },
             onError: () => {
                 alert('사업자등록번호가 유효하지 않습니다.');
             }

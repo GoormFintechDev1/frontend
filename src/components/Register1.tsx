@@ -1,4 +1,4 @@
-import { useCheckAccount } from "@/hooks/useAuthQuery";
+import { useCheckloginId } from "@/hooks/useAuthQuery";
 import { InputType } from "@/interface/register";
 import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -11,17 +11,17 @@ export default function Register1({ onNext }: Props) {
     const { register, handleSubmit, watch, setError, clearErrors, formState: { errors } } = useForm<InputType>({ mode: "onChange" });
     const onSubmit: SubmitHandler<InputType> = (data) => onNext(data);
     const password = watch("password");
-    const account = watch("account");
+    const loginId = watch("loginId");
 
     const [confirmPassword, setConfirmPassword] = useState("");
     const [isMatch, setIsMatch] = useState(false);
     const [isLengthValid, setIsLengthValid] = useState(false);
     const [hasLetter, setHasLetter] = useState(false);
     const [hasNumber, setHasNumber] = useState(false);
-    const [isAccountAvailable, setIsAccountAvailable] = useState("");
-    const [isAccountChecked, setIsAccountChecked] = useState(false);
+    const [isloginIdAvailable, setIsloginIdAvailable] = useState("");
+    const [isloginIdChecked, setIsloginIdChecked] = useState(false);
 
-    const checkAccountMutation = useCheckAccount();
+    const checkloginIdMutation = useCheckloginId();
 
     // 패스워드 유효성 검사
     useEffect(() => {
@@ -39,29 +39,33 @@ export default function Register1({ onNext }: Props) {
 
     // 아이디 변경 시 중복 확인 상태 초기화
     useEffect(() => {
-        setIsAccountChecked(false);
-        setIsAccountAvailable("");
-        clearErrors("account");
-    }, [account]);
+        setIsloginIdChecked(false);
+        setIsloginIdAvailable("");
+        clearErrors("loginId");
+    }, [loginId]);
 
     // 중복 확인 버튼 클릭 핸들러
-    const handleCheckAccount = () => {
-        clearErrors("account");
-        checkAccountMutation.mutate(account, {
+    const handleCheckloginId = () => {
+        if(loginId === "" || errors.loginId) return;
+
+        clearErrors("loginId");
+    
+        checkloginIdMutation.mutate(loginId, {
             onSuccess: (data) => {
-                if (data) setError("account", { type: "manual", message: "중복된 아이디입니다." });
+                if (data) setError("loginId", { type: "manual", message: "중복된 아이디입니다." });
                 else {
-                    setIsAccountAvailable("사용 가능한 아이디입니다.");
-                    setIsAccountChecked(true);
+                    console.log(data)
+                    setIsloginIdAvailable("사용 가능한 아이디입니다.");
+                    setIsloginIdChecked(true);
                 }
             },
             onError: () => {
-                setError("account", { type: "manual", message: "아이디 중복 검사 중 문제가 발생했습니다." });
+                setError("loginId", { type: "manual", message: "아이디 중복 검사 중 문제가 발생했습니다." });
             }
         });
     };
 
-    const isButtonEnabled = isAccountChecked && !errors.account && isMatch && isLengthValid && hasLetter && hasNumber;
+    const isButtonEnabled = isloginIdChecked && !errors.loginId && isMatch && isLengthValid && hasLetter && hasNumber;
 
     return (
         <div className="h-full">
@@ -73,7 +77,7 @@ export default function Register1({ onNext }: Props) {
                         <input
                             className="input-base flex-grow"
                             placeholder="아이디를 입력하세요."
-                            {...register("account", {
+                            {...register("loginId", {
                                 required: "아이디를 입력하세요.",
                                 minLength: {
                                     value: 5,
@@ -90,14 +94,14 @@ export default function Register1({ onNext }: Props) {
                             })}
                         />
                         <button
-                            className={`p-3 rounded-xl text-xs ${isAccountChecked ?  "bg-gray-200 text-gray-700": "bg-emerald-400 text-white font-bold"}`}
-                            onClick={handleCheckAccount}
+                            className={`p-3 rounded-xl text-xs ${isloginIdChecked ?  "bg-gray-200 text-gray-700": "bg-emerald-400 text-white font-bold"}`}
+                            onClick={handleCheckloginId}
                             type="button"
                         > 중복 확인</button>
                     </div>
-                    {errors.account && <p className="helper-text text-red-600">{errors.account.message}</p>}
-                    {!errors.account && isAccountAvailable && (
-                        <p className="helper-text text-blue-600">{isAccountAvailable}</p>
+                    {errors.loginId && <p className="helper-text text-red-600">{errors.loginId.message}</p>}
+                    {!errors.loginId && isloginIdAvailable && (
+                        <p className="helper-text text-blue-600">{isloginIdAvailable}</p>
                     )}
                 </div>
                 <div className="label-input-set">

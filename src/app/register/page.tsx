@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 
 export default function Register() {
 
-    const [step, setStep] = useState<number>(2)
+    const [step, setStep] = useState<number>(1)
     const [formData, setFormData] = useState<FormDataType>({
         account: "",
         password: "",
@@ -50,6 +50,7 @@ export default function Register() {
             setIsReady(false);
             mutation.mutate(formData, {
                 onSuccess: ()=>{
+                    localStorage.setItem("firstLogin", "true");
                     router.push('/info?first=회원가입 완료!&second=🎉&buttonmessage=로그인&href=/login');
                 }
             });

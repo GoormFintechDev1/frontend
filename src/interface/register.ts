@@ -1,6 +1,6 @@
 
 export interface InputType {
-    account: string;
+    loginId: string;
     password: string;
 }
 

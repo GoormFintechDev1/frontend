@@ -1,8 +1,7 @@
 
-import { LoginFormType } from "@/components/Login"
-import { BusinessInfo } from "@/interface/business"
+import { LoginType } from "@/interface/login"
 import { FormDataType } from "@/interface/register"
-import { authUser, checkAccount, checkEmail, checkNickname, checkPhoneNumber, joinUser, loginUser, validateBR } from "@/lib/authApi"
+import { authUser, checkloginId, checkEmail, checkNickname, checkPhoneNumber, joinUser, loginUser } from "@/lib/authApi"
 import { useMutation, useQuery } from "@tanstack/react-query"
 
 export const useAuthQuery = () => {
@@ -27,7 +26,7 @@ export const useRegisterMutation = () => {
 
 export const useLoginMutation = () => {
   return useMutation({
-    mutationFn: (loginData: LoginFormType) => loginUser(
+    mutationFn: (loginData: LoginType) => loginUser(
       loginData
     ),
     onSuccess: () => {
@@ -40,9 +39,9 @@ export const useLoginMutation = () => {
 }
 
 
-export const useCheckAccount = () => {
+export const useCheckloginId = () => {
   return useMutation({
-    mutationFn: (account:string) => checkAccount(account),
+    mutationFn: (loginId:string) => checkloginId(loginId),
   })
 }
 
@@ -64,8 +63,3 @@ export const useCheckEmail = () => {
   })
 }
 
-export const useValidateBR = () => {
-  return useMutation({
-    mutationFn: (data:BusinessInfo) => validateBR(data),
-  })
-}

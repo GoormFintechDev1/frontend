@@ -4,14 +4,13 @@ import { useLoginMutation } from '@/hooks/useAuthQuery';
 import Image from 'next/image';
 import { useState } from 'react';
 import Button from './Button';
-
-export interface LoginFormType {
-    account: string;
-    password: string;
-}
+import { useRouter } from 'next/navigation';
+import { LoginType } from '@/interface/login';
 
 export default function Login() {
-    const [formData, setFormData] = useState<LoginFormType>({ account: '', password: '' });
+    const router = useRouter();
+
+    const [formData, setFormData] = useState<LoginType>({ loginId: '', password: '' });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -23,7 +22,17 @@ export default function Login() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         // 로그인 로직을 추가하거나, API 호출 등을 여기에 구현
-        mutation.mutate(formData);
+        mutation.mutate(formData, {
+            onSuccess: () => {
+                const firstLogin = JSON.parse(localStorage.getItem("firstLogin") || "false");
+
+                if(firstLogin){
+                    router.push('/validate');
+                } else {
+                    router.push('/');
+                }
+            }
+        });
     };
 
     return (
@@ -37,8 +46,8 @@ export default function Login() {
                     <label className="label-base">아이디</label>
                     <input
                         type="text"
-                        name="account"
-                        value={formData.account}
+                        name="loginId"
+                        value={formData.loginId}
                         onChange={handleChange}
                         placeholder="아이디를 입력하세요."
                         className="input-base"
@@ -57,7 +66,7 @@ export default function Login() {
                 </div>
                 
 
-                <Button type="submit" href='./'>로그인</Button>
+                <Button type="submit">로그인</Button>
 
 
                 <div className="flex justify-center mt-4 text-sm text-gray-500 ">

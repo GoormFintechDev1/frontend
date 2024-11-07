@@ -2,7 +2,7 @@
 
 import { SubmitHandler, useForm } from "react-hook-form";
 // import Button from "./Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCheckEmail, useCheckPhoneNumber } from "@/hooks/useAuthQuery";
 import { InputType2 } from "@/interface/register";
 
@@ -27,9 +27,29 @@ export default function Register2({ onReadySubmit }: Props) {
   const email = watch("email");
 
   const checkPhoneNumberMutation = useCheckPhoneNumber();
+
+  useEffect(() => {
+    // 전화번호나 이메일이 변경될 때 중복 확인 상태 초기화
+    if (phoneNumber !== "") {
+      setIsPhoneNumberChecked(false);
+      setIsPhoneNumberAvailable("");
+      clearErrors("phoneNumber");
+    }
+
+  }, [phoneNumber, clearErrors]);
+
+  useEffect(()=>{
+    if (email !== "") {
+      setIsEmailChecked(false);
+      setIsEmailAvailable("");
+      clearErrors("email");
+    }
+  },[email, clearErrors])
   
   // 전화번호 중복 확인
   const handleCheckPhoneNumber = () => {
+    if (phoneNumber === "" || errors.phoneNumber) return;
+
     clearErrors("phoneNumber");
     checkPhoneNumberMutation.mutate(phoneNumber, {
         onSuccess: (data) => {
@@ -49,8 +69,10 @@ export default function Register2({ onReadySubmit }: Props) {
   };
 
   const checkEmailMutation = useCheckEmail();
-  // 이메일 중복 확인
+
   const handleCheckEmail = () => {
+    if (email === "" || errors.email ) return; 
+    
     clearErrors("email");
     checkEmailMutation.mutate(email, {
         onSuccess: (data) => {
