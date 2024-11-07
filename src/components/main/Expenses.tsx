@@ -1,16 +1,18 @@
+"use client";
+
 import { useExpensesData } from '@/hooks/useReportQuery';
 import convertToKoreanWon from '@/utils/currency';
 import Link from 'next/link';
 import React from 'react'
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
-import Loading from '../Loading';
+import {ExpensesLoading} from '../Loading';
 import Error from '../Error';
 
 const Expenses = () => {
   const {data: expensesData, isLoading, error} = useExpensesData();
 
   if (isLoading) {
-    return <Loading />
+    return <ExpensesLoading />
   }
 
   if (error) {
@@ -21,8 +23,23 @@ const Expenses = () => {
     <div className="box col-span-2 flex flex-col justify-between bg-white py-3 px-2 rounded-2xl shadow h-56">
       <div className="flex justify-between items-center">
         <h2 className="text-sm font-semibold">이번 달 지출</h2>
-        <span className="text-gray-500">
-          <Link href="/expenses">&#62;</Link>
+        <span>
+          <Link href="/expenses">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6 text-gray-500"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m8.25 4.5 7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </Link>
         </span>
       </div>
       <div className="flex justify-center items-center gap-8 h-full">
