@@ -3,7 +3,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 // import Button from "./Button";
 import { useState } from "react";
-import { useCheckPhoneNumber } from "@/hooks/useAuthQuery";
+import { useCheckEmail, useCheckPhoneNumber } from "@/hooks/useAuthQuery";
 import { InputType2 } from "@/interface/register";
 
 interface Props {
@@ -48,10 +48,11 @@ export default function Register2({ onReadySubmit }: Props) {
     })
   };
 
+  const checkEmailMutation = useCheckEmail();
   // 이메일 중복 확인
   const handleCheckEmail = () => {
     clearErrors("email");
-    checkPhoneNumberMutation.mutate(email, {
+    checkEmailMutation.mutate(email, {
         onSuccess: (data) => {
             if(data) {
                 setError("email", { type: "manual", message: "가입되어 있는 이메일입니다." });

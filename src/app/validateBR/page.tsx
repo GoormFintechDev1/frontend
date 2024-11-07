@@ -4,14 +4,15 @@ import AddressInput from "@/components/AdderssInput";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import { BusinessInfo } from "@/interface/business";
-import Button from "@/components/Button";
-import { error } from "console";
+import { useValidateBR } from "@/hooks/useAuthQuery";
+import { useRouter } from "next/navigation";
 
+export default function ValidateBR(){
 
-export default function BusinessRegister(){
+    const router  = useRouter();
 
     const [address, setAddress] = useState("");
-    const { register, handleSubmit, watch, clearErrors, setValue, formState: { errors, isValid } } = useForm<BusinessInfo>({mode:'onChange'});
+    const { register, handleSubmit, setValue, formState: { errors, isValid } } = useForm<BusinessInfo>({mode:'onChange'});
 
 
     const handleAddressSelect = (selectedAddress: string) => {
@@ -25,8 +26,16 @@ export default function BusinessRegister(){
         }
       };
 
+    const validateBRMutation = useValidateBR();
+
     const onSubmit: SubmitHandler<BusinessInfo> = (data) => {
         console.log(data);
+        validateBRMutation.mutate(data,{
+            onSuccess: () => { router.push('/')},
+            onError: () => {
+                alert('사업자등록번호가 유효하지 않습니다.');
+            }
+        });
     };
 
     const isButtonEnabled = isValid && address !== "";

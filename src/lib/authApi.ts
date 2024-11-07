@@ -1,6 +1,8 @@
 
 import { LoginFormType } from "@/components/Login";
+import { BusinessInfo } from "@/interface/business";
 import { FormDataType } from "@/interface/register";
+import { format } from "path";
 
 const enviroment = process.env.NODE_ENV;
 
@@ -141,4 +143,18 @@ export const checkEmail = async (email:string) => {
   const data = await response.json();
   return data
 
+}
+
+export const validateBR = async(data:BusinessInfo) => {
+  const response = await fetch(`${url}/business/check`, {
+    method:'POST',
+    headers: {"Context-Type":"application/json"},
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error("사업자 인증 실패...");
+  }
+
+  return response;
 }
