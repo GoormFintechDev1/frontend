@@ -1,60 +1,78 @@
 'use client'
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import Button from "./Button";
+// import Button from "./Button";
 import { useState } from "react";
-import AddressInput from "./AdderssInput";
 import { useCheckPhoneNumber } from "@/hooks/useAuthQuery";
-
-interface InputType {
-  name: string;
-  phoneNumber: string;
-  address: string;
-}
+import { InputType2 } from "@/interface/register";
 
 interface Props {
-  onReadySubmit: (data: InputType) => void;
+  onReadySubmit: (data: InputType2) => void;
   onPrev: () => void;
 }
 
 export default function Register2({ onReadySubmit }: Props) {
-  const { register, handleSubmit, setValue, watch, clearErrors, setError, formState: { errors } } = useForm<InputType>({mode:'onChange'});
+  const { register, handleSubmit, watch, clearErrors, setError, formState: { errors, isValid } } = useForm<InputType2>({mode:'onChange'});
   
-  const onSubmit: SubmitHandler<InputType> = (data) => {
+  const onSubmit: SubmitHandler<InputType2> = (data) => {
     onReadySubmit(data);
   };
-  
-  const [address, setAddress] = useState("");
+
   const [isPhoneNumberAvailable, setIsPhoneNumberAvailable] = useState("");
+  const [isEmailAvailable, setIsEmailAvailable] = useState("");
+  const [isPhoneNumberChecked, setIsPhoneNumberChecked] = useState(false);
+  const [isEmailChecked, setIsEmailChecked] = useState(false);
 
-  const handleAddressSelect = (selectedAddress: string) => {
-    setAddress(selectedAddress);
-    setValue("address", selectedAddress);
-  };
-
-  const handleKeyDown = (e:React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-        e.preventDefault(); 
-    }
-    };
+  const phoneNumber = watch("phoneNumber");
+  const email = watch("email");
 
   const checkPhoneNumberMutation = useCheckPhoneNumber();
-  const phoneNumber = watch("phoneNumber");
+  
+  // 전화번호 중복 확인
   const handleCheckPhoneNumber = () => {
-      clearErrors("phoneNumber");
-      checkPhoneNumberMutation.mutate(phoneNumber, {
-          onSuccess: (data) => {
-              if(data) setError("phoneNumber", { type: "manual", message: "가입되어 있는 전화번호입니다." });
-              else  setIsPhoneNumberAvailable("사용 가능한 전화번호입니다.");
-          }, 
-          onError: () => {
-              setError("phoneNumber", { type: "manual", message: "전화번호 중복 검사 중 문제가 발생했습니다." });
-          }
-      })
-  }  
+    clearErrors("phoneNumber");
+    checkPhoneNumberMutation.mutate(phoneNumber, {
+        onSuccess: (data) => {
+            if(data) {
+                setError("phoneNumber", { type: "manual", message: "가입되어 있는 전화번호입니다." });
+                setIsPhoneNumberChecked(false);
+            } else {
+                setIsPhoneNumberAvailable("사용 가능한 전화번호입니다.");
+                setIsPhoneNumberChecked(true);
+            }
+        }, 
+        onError: () => {
+            setError("phoneNumber", { type: "manual", message: "전화번호 중복 검사 중 문제가 발생했습니다." });
+            setIsPhoneNumberChecked(false);
+        }
+    })
+  };
+
+  // 이메일 중복 확인
+  const handleCheckEmail = () => {
+    clearErrors("email");
+    checkPhoneNumberMutation.mutate(email, {
+        onSuccess: (data) => {
+            if(data) {
+                setError("email", { type: "manual", message: "가입되어 있는 이메일입니다." });
+                setIsEmailChecked(false);
+            } else {
+                setIsEmailAvailable("사용 가능한 이메일입니다.");
+                setIsEmailChecked(true);
+            }
+        }, 
+        onError: () => {
+            setError("email", { type: "manual", message: "이메일 중복 검사 중 문제가 발생했습니다." });
+            setIsEmailChecked(false);
+        }
+    })
+  };
+
+  // 다음 버튼 활성화 조건
+  const isButtonEnabled = isValid && isPhoneNumberChecked && isEmailChecked;
 
   return (
-    <div className="h-full" onKeyDown={handleKeyDown}>
+    <div className="h-full">
       <form className="flex flex-col space-y-8 h-full" onSubmit={handleSubmit(onSubmit)}>
         <p className="text-xl font-bold">회원가입</p>
         
@@ -62,6 +80,50 @@ export default function Register2({ onReadySubmit }: Props) {
           <label className="label-base">이름</label>
           <input className="input-base flex-grow" placeholder="이름을 입력하세요." {...register("name", { required: "이름을 입력하세요." })}/>
           {errors.name && (<p className="helper-text text-red-500">{errors.name.message}</p> )}
+        </div>
+
+        <div className="label-input-set">
+          <label className="label-base">주민등록번호</label>
+          <div className="flex items-center space-x-2 w-full">
+              <input 
+                  className="input-base w-1/2" 
+                  placeholder="생년월일" 
+                  type="text"
+                  maxLength={6}
+                  pattern="\d{6}"
+                  onInput={(e) => {
+                    const target = e.target as HTMLInputElement;
+                    target.value = target.value.replace(/\D/g, ''); // 숫자 외 입력 방지
+                  }}
+                  {...register("identityNumber.front", { required: "주민등록번호 앞자리를 입력하세요.",
+                     minLength: {
+                        value: 6,
+                        message: "주민등록번호 앞자리를 입력하세요.",
+                     }, 
+                     maxLength: 6 })}
+              />
+              <p className="text-gray-500">-</p>
+              <div className="flex items-center w-1/2 space-x-4">
+                  <input 
+                      className="input-base w-14 text-center" 
+                      type="text" 
+                      placeholder="성별"
+                      maxLength={1}
+                      pattern="\d{1}"
+                      onInput={(e) => {
+                        const target = e.target as HTMLInputElement;
+                        target.value = target.value.replace(/\D/g, ''); // 숫자 외 입력 방지
+                      }}
+                      {...register("identityNumber.back", { required: "주민등록번호 뒷자리를 입력하세요.", minLength: 1, maxLength: 1 })}
+                  />
+                  <p className="text-3xl text-gray-400 flex-grow">******</p>
+              </div>
+          </div>
+          {(errors.identityNumber?.front || errors.identityNumber?.back) && (
+              <p className="helper-text text-red-500">
+                  {errors.identityNumber?.front?.message || errors.identityNumber?.back?.message}
+              </p>
+          )}
         </div>
 
         <div className="label-input-set">
@@ -75,22 +137,37 @@ export default function Register2({ onReadySubmit }: Props) {
                   }
               })}
             />
-            <button className="p-3 bg-gray-200 rounded-xl text-xs" onClick={handleCheckPhoneNumber}>중복 확인</button>
+            <button type="button"  className={`p-3 rounded-xl text-xs ${isEmailChecked ? 'bg-gray-200 text-gray-700' : 'bg-emerald-400 text-white font-bold'}`}
+                disabled={isEmailChecked} onClick={handleCheckPhoneNumber}>중복 확인</button>
           </div>
           {errors.phoneNumber && ( <p className="helper-text text-red-500">{errors.phoneNumber.message}</p>)}
           {!errors.phoneNumber && isPhoneNumberAvailable && ( <p className="helper-text text-blue-600">{isPhoneNumberAvailable}</p>)}
         </div>
 
         <div className="label-input-set">
-          <label className="label-base">주소</label>
-          <AddressInput value={address} onAddressSelect={handleAddressSelect} />
-          {errors.address && ( <p className="text-xs font-light text-red-500">{errors.address.message}</p>)}
+          <label className="label-base">이메일</label>
+          <div className="flex gap-3">
+            <input className="input-base flex-grow" placeholder="이메일을 입력하세요."
+              {...register("email", { required: "이메일을 입력하세요.",
+                  pattern: {
+                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                      message: "유효한 이메일을 입력해주세요."
+                  }
+              })}
+            />
+            <button type="button" className={`p-3 rounded-xl text-xs ${isEmailChecked ? 'bg-gray-200 text-gray-700' : 'bg-emerald-400 text-white font-bold'}`}
+                    disabled={isEmailChecked} onClick={handleCheckEmail}>중복 확인</button>
+          </div>
+          {errors.email && ( <p className="helper-text text-red-500">{errors.email.message}</p>)}
+          {!errors.email && isEmailAvailable && ( <p className="helper-text text-blue-600">{isEmailAvailable}</p>)}
         </div>
 
-        <div className="flex-grow"></div>
+        <div className="flex-grow"></div> 
         
         <div className="py-8">
-          <Button type="submit" href="./login">다음</Button>
+          <button type="submit" disabled={!isButtonEnabled} className={`button ${isButtonEnabled ? "" : "!bg-gray-200 !text-gray-700"}`}>
+            회원가입
+          </button>
         </div>
 
       </form>

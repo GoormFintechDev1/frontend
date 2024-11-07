@@ -27,35 +27,38 @@ export default function Login() {
     };
 
     return (
-        <div className="flex items-center justify-center h-full">
-            <form onSubmit={handleSubmit}>
-                 <div className="flex justify-start mb-12">
+        <div className="flex flex-col items-center justify-center h-full">
+            <form onSubmit={handleSubmit} className='w-full flex flex-col space-y-8'>
+                 <div className="flex justify-start mb-4">
                     <Image src="/logo.png" alt="로고" width={70} height={70} /> {/* 필요에 따라 크기 조정 */}
                 </div>
                 
-                <div>
-                <label className="label-base">아이디</label>
-                <input
-                    type="text"
-                    name="account"
-                    value={formData.account}
-                    onChange={handleChange}
-                    placeholder="아이디를 입력하세요."
-                    className="w-full mb-4 p-2 border rounded mt-3"
-                />
-
-                <label className="label-base">비밀번호</label>
-                <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder="비밀번호를 입력하세요."
-                    className="w-full mb-4 p-2 border rounded mt-3"
-                />
+                <div className='label-input-set'>
+                    <label className="label-base">아이디</label>
+                    <input
+                        type="text"
+                        name="account"
+                        value={formData.account}
+                        onChange={handleChange}
+                        placeholder="아이디를 입력하세요."
+                        className="input-base"
+                    />
+                </div>
+                <div className='label-input-set '>
+                    <label className="label-base">비밀번호</label>
+                    <input
+                        type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        placeholder="비밀번호를 입력하세요."
+                        className="input-base"
+                    />
+                </div>
+                
 
                 <Button type="submit" href='./'>로그인</Button>
-                </div>
+
 
                 <div className="flex justify-center mt-4 text-sm text-gray-500 ">
                     <a href="/findpassword" className="mr-10">비밀번호 찾기</a>

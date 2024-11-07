@@ -16,7 +16,7 @@ const Revenue = () => {
   }
 
   return (
-    <div className="flex flex-col justify-between bg-white py-3 px-2 rounded-2xl shadow">
+    <div className="box space-y-3">
       <div className="flex justify-between items-center">
         <h2 className="text-sm font-semibold">이번 달 매출</h2>
         <span className="text-gray-500">

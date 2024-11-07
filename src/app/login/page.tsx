@@ -1,5 +1,11 @@
 import Login from "@/components/Login";
 
 export default function LoginPage() {
-    return <Login />;
+    return (
+        <div className="container">
+            <Login />
+        </div>
+    )
+        
+
 }

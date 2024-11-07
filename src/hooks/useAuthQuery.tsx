@@ -1,5 +1,6 @@
-import { FormDataType } from "@/app/register/page"
+
 import { LoginFormType } from "@/components/Login"
+import { FormDataType } from "@/interface/register"
 import { authUser, checkAccount, checkNickname, checkPhoneNumber, joinUser, loginUser } from "@/lib/authApi"
 import { useMutation, useQuery } from "@tanstack/react-query"
 
@@ -16,9 +17,6 @@ export const useAuthQuery = () => {
 export const useRegisterMutation = () => {
   return useMutation({
     mutationFn: (formData: FormDataType) => joinUser(formData),
-    onSuccess: () => {
-        console.log("회원가입 성공");
-    },
     onError: (error) => {
         console.error("회원가입 실패 ", error);
     }

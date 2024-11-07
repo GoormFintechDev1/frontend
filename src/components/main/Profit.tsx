@@ -3,7 +3,7 @@ import Link from "next/link"
 
 const Profit = () => {
   return (
-    <div className="flex flex-col bg-white py-3 px-2 rounded-2xl shadow">
+    <div className="box">
       <div className="flex justify-between items-center">
         <h2 className="text-sm font-semibold">지난 달 순이익</h2>
         <span className="text-gray-500">

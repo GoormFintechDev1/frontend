@@ -1,5 +1,6 @@
-import { FormDataType } from "@/app/register/page";
+
 import { LoginFormType } from "@/components/Login";
+import { FormDataType } from "@/interface/register";
 
 const enviroment = process.env.NODE_ENV;
 
@@ -124,6 +125,19 @@ export const checkPhoneNumber = async (phoneNumber:string) => {
   })
 
   if(!response.ok) throw new Error("전화번호 중복 검사 실패");
+  const data = await response.json();
+  return data
+
+}
+
+export const checkEmail = async (email:string) => {
+  const response = await fetch(`${url}/duplication/email`,{
+    method:'POST',
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({email}),
+  })
+
+  if(!response.ok) throw new Error("이메일 중복 검사 실패");
   const data = await response.json();
   return data
 
