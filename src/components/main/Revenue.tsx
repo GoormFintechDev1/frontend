@@ -2,15 +2,16 @@ import { useRevenueQuery } from "@/hooks/useReportQuery";
 import convertToKoreanWon from "@/utils/currency";
 import Link from "next/link";
 import { Bar, BarChart, Cell, LabelList, ResponsiveContainer } from "recharts";
-import Loading from "../Loading";
+import {RevenueLoading} from "../Loading";
 import Error from "../Error";
 
 const Revenue = () => {
   const {data: revenueData, isLoading, error} = useRevenueQuery();
 
   if (isLoading) {
-    return <Loading />
+    return <RevenueLoading />
   }
+
   if (error) {
     return <Error />
   }
@@ -19,8 +20,23 @@ const Revenue = () => {
     <div className="flex flex-col justify-between bg-white py-3 px-2 rounded-2xl shadow">
       <div className="flex justify-between items-center">
         <h2 className="text-sm font-semibold">이번 달 매출</h2>
-        <span className="text-gray-500">
-          <Link href="/revenue">&#62;</Link>
+        <span>
+          <Link href="/revenue">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6 text-gray-500"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m8.25 4.5 7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </Link>
         </span>
       </div>
       <ResponsiveContainer width={"100%"} height={100}>

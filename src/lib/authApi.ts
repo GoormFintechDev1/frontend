@@ -10,7 +10,7 @@ if (enviroment === "production") {
 
 export const authUser = async () => {
   try {
-    const response = await fetch(`${url}/check`, {
+    const response = await fetch(`${url}/check-login`, {
       method: "GET",
       credentials: "include",
     });

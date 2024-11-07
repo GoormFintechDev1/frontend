@@ -7,7 +7,6 @@ import Expenses from "@/components/main/Expenses";
 import Goals from "@/components/main/Goals";
 
 export default function Home() {
-
   return (
     <div id="main" className="container">
       <div className="flex justify-between items-center mb-4">
