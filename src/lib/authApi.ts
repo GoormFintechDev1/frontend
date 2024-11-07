@@ -1,5 +1,7 @@
-import { FormDataType } from "@/app/register/page";
-import { LoginFormType } from "@/components/Login";
+
+import { LoginType } from "@/interface/login";
+import { FormDataType } from "@/interface/register";
+
 
 const enviroment = process.env.NODE_ENV;
 
@@ -28,7 +30,7 @@ export const authUser = async () => {
   }
 };
 
-export const loginUser = async (data:LoginFormType) => {
+export const loginUser = async (data:LoginType) => {
   const response = await fetch(`${url}/login`, {
     method: "POST",
     headers: {
@@ -56,7 +58,7 @@ export const joinUser = async (formData:FormDataType) => {
   });
 
   if (!response.ok) {
-    throw new Error("로그인 실패...");
+    throw new Error("회원가입 실패...");
   }
 
   return response;
@@ -89,11 +91,11 @@ export const refreshAccessToken = async (refreshToken: string) => {
   return data.accessToken;
 };
 
-export const checkAccount = async ( account: string ) => {
-  const response = await fetch(`${url}/duplication/account`,{
+export const checkloginId = async ( loginId: string ) => {
+  const response = await fetch(`${url}/duplication/loginId`,{
     method: "POST",
     headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({account}),
+    body: JSON.stringify({loginId}),
   })
   
   if(!response.ok) throw new Error("아이디 중복 검사 실패");
@@ -124,6 +126,19 @@ export const checkPhoneNumber = async (phoneNumber:string) => {
   })
 
   if(!response.ok) throw new Error("전화번호 중복 검사 실패");
+  const data = await response.json();
+  return data
+
+}
+
+export const checkEmail = async (email:string) => {
+  const response = await fetch(`${url}/duplication/email`,{
+    method:'POST',
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({email}),
+  })
+
+  if(!response.ok) throw new Error("이메일 중복 검사 실패");
   const data = await response.json();
   return data
 

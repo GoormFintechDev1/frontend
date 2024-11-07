@@ -20,7 +20,7 @@ const Expenses = () => {
   }
 
   return (
-    <div className="col-span-2 flex flex-col justify-between bg-white py-3 px-2 rounded-2xl shadow h-56">
+    <div className="box col-span-2 flex flex-col justify-between bg-white py-3 px-2 rounded-2xl shadow h-56">
       <div className="flex justify-between items-center">
         <h2 className="text-sm font-semibold">이번 달 지출</h2>
         <span>

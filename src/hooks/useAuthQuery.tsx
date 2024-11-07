@@ -1,6 +1,7 @@
-import { FormDataType } from "@/app/register/page"
-import { LoginFormType } from "@/components/Login"
-import { authUser, checkAccount, checkNickname, checkPhoneNumber, joinUser, loginUser } from "@/lib/authApi"
+
+import { LoginType } from "@/interface/login"
+import { FormDataType } from "@/interface/register"
+import { authUser, checkloginId, checkEmail, checkNickname, checkPhoneNumber, joinUser, loginUser } from "@/lib/authApi"
 import { useMutation, useQuery } from "@tanstack/react-query"
 
 export const useAuthQuery = () => {
@@ -16,9 +17,6 @@ export const useAuthQuery = () => {
 export const useRegisterMutation = () => {
   return useMutation({
     mutationFn: (formData: FormDataType) => joinUser(formData),
-    onSuccess: () => {
-        console.log("회원가입 성공");
-    },
     onError: (error) => {
         console.error("회원가입 실패 ", error);
     }
@@ -28,7 +26,7 @@ export const useRegisterMutation = () => {
 
 export const useLoginMutation = () => {
   return useMutation({
-    mutationFn: (loginData: LoginFormType) => loginUser(
+    mutationFn: (loginData: LoginType) => loginUser(
       loginData
     ),
     onSuccess: () => {
@@ -41,9 +39,9 @@ export const useLoginMutation = () => {
 }
 
 
-export const useCheckAccount = () => {
+export const useCheckloginId = () => {
   return useMutation({
-    mutationFn: (account:string) => checkAccount(account),
+    mutationFn: (loginId:string) => checkloginId(loginId),
   })
 }
 
@@ -58,3 +56,10 @@ export const useCheckPhoneNumber = () => {
     mutationFn: (phoneNumber:string) => checkPhoneNumber(phoneNumber),
   })
 }
+
+export const useCheckEmail = () => {
+  return useMutation({
+    mutationFn: (email:string) => checkEmail(email),
+  })
+}
+

@@ -28,7 +28,7 @@ function AddressSearch({ onAddressSelect }:Props) {
 
   return (
     <div>
-      <button className="p-3 bg-gray-200 rounded-xl text-xs h-full" onClick={handleOpenPostcode}>우편번호 검색</button>
+      <button className="p-3 bg-emerald-400 text-white rounded-xl text-xs font-bold h-full" onClick={handleOpenPostcode}>우편번호 검색</button>
     </div>
   );
 }
