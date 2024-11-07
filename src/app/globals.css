@@ -2,12 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 로컬 폰트 적용 부분 */
 :root {
+  --font-goorm-sans-bold: 'goorm-sans-bold', sans-serif;
+  --font-goorm-sans-medium: 'goorm-sans-medium', sans-serif;
+  --font-goorm-sans-regular: 'goorm-sans-regular', sans-serif;
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: white) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
@@ -15,7 +19,68 @@
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  /* max-width: 800px; */
+  height: 100vh;
+  /* padding: 2rem;  */
+  color: var(--foreground); /* 텍스트 색상 */
+  background: var(--background); /* 배경 색상 */
+  font-family: var(--font-goorm-sans-regular); /* 로컬 폰트를 기본 폰트로 적용 */
+}
+
+.container {
+  margin-left: auto; 
+  margin-right: auto; 
+  max-width: 800px;
+  height: 100vh;
+  padding: 2rem; 
+}
+
+#main {
+  background: #f9f9f9;
+}
+
+/* 커스텀 */
+
+/* input 관련 */
+/* label-input 세트 간격 정의 */
+.label-input-set {
+  @apply flex flex-col space-y-2;
+}
+
+/* label */
+.label-base {
+  @apply text-base font-semibold;
+}
+
+.label-sm {
+  @apply text-sm font-semibold;
+}
+
+/* 인풋-플레이스홀더 */
+.input-base {
+  @apply h-14 p-3 border rounded-xl border-[#d9d9d9] placeholder:text-xs placeholder:text-gray-600 focus:border-emerald-400 outline-none;
+}
+
+/* 안내 문구 */
+.helper-text {
+  @apply text-xs font-light pl-1;
+}
+
+.button {
+  @apply w-full bg-emerald-400 text-white font-bold h-14 rounded-xl
+}
+
+.disabled-button {
+  @apply w-full bg-gray-300 text-white font-bold h-14 rounded-xl
+}
+
+.main-text {
+  @apply text-lg font-bold
+}
+
+/* main - box */
+
+.box{
+  @apply flex flex-col bg-white p-4 rounded-2xl;
+  box-shadow: 0px 0px 10px rgba(214, 214, 214, 0.25);
 }
