@@ -1,8 +1,8 @@
 "use client";
 
+import 'react-calendar/dist/Calendar.css';
 import Calendar from 'react-calendar';
 import { useState, useEffect } from "react";
-import 'react-calendar/dist/Calendar.css';
 
 export default function Revenue() {
   const [isClient, setIsClient] = useState(false); // 클라이언트에서만 렌더링
@@ -12,12 +12,14 @@ export default function Revenue() {
   const [selectedSalesData, setSelectedSalesData] = useState({ total: 0, card: 0, cash: 0 });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+
+  // Hydration Error
   useEffect(() => {
     // 클라이언트가 렌더링된 후에 상태를 초기화
     setDate(new Date());
     setActiveStartDate(new Date());
     setIsClient(true);
-  }, []);
+  }, []);  
 
   // 예시 매출 데이터
   const salesData = {
@@ -69,6 +71,7 @@ export default function Revenue() {
   if (!isClient) return null;
 
   return (
+    <div className='container'>
     <div className="flex flex-col h-screen">
       {/* Header */}
       <header className="flex items-center justify-between py-3">
@@ -87,7 +90,7 @@ export default function Revenue() {
             총 매출: 
             <span className="text-blue-500 ml-4">{monthlySalesData.total.toLocaleString()} 원</span>
           </div>
-          <div className="text-base text-gray-400 font-thin">
+          <div className="text-base text-gray-600 font-thin">
             <span>카드 매출: {monthlySalesData.card.toLocaleString()} 원</span>
             <br />
             <span>현금 매출: {monthlySalesData.cash.toLocaleString()} 원</span>
@@ -110,7 +113,7 @@ export default function Revenue() {
                 <div className="text-black text-sm mt-1">{daySales.toLocaleString()} </div>
               ) : null;
             }}
-            className="w-full text-lg"
+            className="w-full text-xl"
             view="month"
             minDetail="month"
             maxDetail="month"
@@ -119,7 +122,7 @@ export default function Revenue() {
         </section>
       )}
 
-      {/* Bottom Slide-Up Modal */}
+      {/* Modal */}
       {isModalOpen && (
         <div
           className="fixed inset-0 flex items-end justify-center bg-black bg-opacity-30"
@@ -127,7 +130,7 @@ export default function Revenue() {
         >
           <div
             className="bg-white rounded-t-lg w-full max-w-lg p-6 animate-slide-up text-center relative"
-            onClick={(e) => e.stopPropagation()} // 모달 내부 클릭 시 닫히지 않도록
+            onClick={(e) => e.stopPropagation()} 
           >
 
             {/* Close Button */}
@@ -137,7 +140,7 @@ export default function Revenue() {
             >
               &times;
             </button>
-            <div className="border-b pb-2 mb-2">
+            <div className="border-b w-3/4 mx-auto pb-2 mb-2"> 
               <h2 className="text-lg font-semibold mb-3">
                 {date?.toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', weekday: 'long' })}
               </h2>
@@ -153,7 +156,7 @@ export default function Revenue() {
                 <span className="mx-2">{selectedSalesData.cash.toLocaleString()}</span>
                 <span>원</span>
               </div>
-              <div className="text-lg font-semibold border-t pt-4 flex items-center">
+              <div className="text-lg font-semibold border-t w-3/4 mx-auto pt-4 text-center"> 
                 <span>총 매출:</span>
                 <span className="text-blue-500 mx-2">{selectedSalesData.total.toLocaleString()}</span>
                 <span>원</span>
@@ -162,6 +165,7 @@ export default function Revenue() {
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 };
