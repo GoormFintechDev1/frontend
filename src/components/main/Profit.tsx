@@ -1,9 +1,13 @@
 import convertToKoreanWon from "@/utils/currency"
 import Link from "next/link"
 
-const Profit = () => {
+interface RevenueProps {
+  height: string;
+}
+
+const Profit: React.FC<RevenueProps> = ({height}) => {
   return (
-    <div className="box">
+    <div className="box" style={{height}}>
       <div className="flex justify-between items-center">
         <h2 className="text-sm font-semibold">지난 달 순이익</h2>
         <span>
@@ -14,7 +18,7 @@ const Profit = () => {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-6 text-gray-500"
+              className="size-6 text-gray-400"
             >
               <path
                 strokeLinecap="round"

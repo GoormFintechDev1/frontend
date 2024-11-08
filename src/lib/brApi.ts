@@ -15,7 +15,7 @@ export const validateBR = async(data:BusinessInfo) => {
       body: JSON.stringify(data),
       credentials: "include",
     });
-  
+   
     if (!response.ok) {
       throw new Error("사업자 인증 실패...");
     }

@@ -3,13 +3,17 @@
 import 'react-calendar/dist/Calendar.css';
 import Calendar from 'react-calendar';
 import { useState, useEffect } from "react";
+import Navbar from '@/components/Navbar';
+import Image from 'next/image';
+import { useMonthlyRevenue } from '@/hooks/useRevenueQuery';
 
 export default function Revenue() {
+
   const [isClient, setIsClient] = useState(false); // 클라이언트에서만 렌더링
   const [date, setDate] = useState<Date | null>(null);
   const [activeStartDate, setActiveStartDate] = useState<Date | null>(null);
-  const [monthlySalesData, setMonthlySalesData] = useState({ total: 0, card: 0, cash: 0 });
-  const [selectedSalesData, setSelectedSalesData] = useState({ total: 0, card: 0, cash: 0 });
+  // const [monthlySalesData, setMonthlySalesData] = useState({ total: 0, card: 0, cash: 0 });
+  const [selectedSalesData, setSelectedSalesData] = useState({ totalIncome: 0, cardIncome: 0, cashIncome: 0 });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
 
@@ -22,40 +26,43 @@ export default function Revenue() {
   }, []);  
 
   // 예시 매출 데이터
-  const salesData = {
-    '2024-11-01': { total: 10000, card: 7000, cash: 3000 },
-    '2024-11-02': { total: 20000, card: 12000, cash: 8000 },
-    '2024-11-03': { total: 43000, card: 33000, cash: 10000 },
-    '2024-11-04': { total: 25000, card: 15000, cash: 10000 },
-    '2024-11-05': { total: 60000, card: 40000, cash: 20000 },
-  };
+  // const salesData = {
+  //   '2024-11-01': { total: 10000, card: 7000, cash: 3000 },
+  //   '2024-11-02': { total: 20000, card: 12000, cash: 8000 },
+  //   '2024-11-03': { total: 43000, card: 33000, cash: 10000 },
+  //   '2024-11-04': { total: 25000, card: 15000, cash: 10000 },
+  //   '2024-11-05': { total: 60000, card: 40000, cash: 20000 },
+  // };
 
-  useEffect(() => {
-    if (activeStartDate) {
-      const year = activeStartDate.getFullYear();
-      const month = activeStartDate.getMonth() + 1;
+  // useEffect(() => {
+  //   if (activeStartDate) {
+  //     const year = activeStartDate.getFullYear();
+  //     const month = activeStartDate.getMonth() + 1;
 
-      let total = 0;
-      let card = 0;
-      let cash = 0;
+  //     let total = 0;
+  //     let card = 0;
+  //     let cash = 0;
 
-      Object.keys(salesData).forEach((date) => {
-        const [dataYear, dataMonth] = date.split('-').map(Number);
+  //     Object.keys(salesData).forEach((date) => {
+  //       const [dataYear, dataMonth] = date.split('-').map(Number);
 
-        if (dataYear === year && dataMonth === month) {
-          total += salesData[date].total;
-          card += salesData[date].card;
-          cash += salesData[date].cash;
-        }
-      });
+  //       if (dataYear === year && dataMonth === month) {
+  //         total += salesData[date].total;
+  //         card += salesData[date].card;
+  //         cash += salesData[date].cash;
+  //       }
+  //     });
 
-      setMonthlySalesData({ total, card, cash });
-    }
-  }, [activeStartDate]);
+  //     setMonthlySalesData({ total, card, cash });
+  //   }
+  // }, [activeStartDate]);
+
 
   const handleDateClick = (clickedDate: Date) => {
-    const formattedDate = clickedDate.toISOString().split('T')[0];
-    const sales = salesData[formattedDate] || { total: 0, card: 0, cash: 0 };
+    const temp = new Date(clickedDate); //포맷팅하면 날짜가 하루 늦게 찍혀서... 
+    temp.setDate(temp.getDate() + 1);
+    const formattedDate = temp.toISOString().split('T')[0];
+    const sales = saleData.find((d)=> d.date === formattedDate) || { totalIncome: 0, cardIncome: 0, cashIncome: 0 };
     setSelectedSalesData(sales);
     setDate(clickedDate);
     setIsModalOpen(true);
@@ -67,33 +74,44 @@ export default function Revenue() {
     setActiveStartDate(activeStartDate);
   };
 
+  //data fetching
+  const year = activeStartDate ? activeStartDate.getFullYear() : new Date().getFullYear();
+  const month = activeStartDate ? activeStartDate.getMonth() + 1 : new Date().getMonth() + 1;
+  
+  const { data, isLoading, error } = useMonthlyRevenue(year, month);
+  const saleData = data?.dailyIncomeList;
+  const monthlyTotalIncome = data?.monthlyTotalncome;
+  const monthlyCardIncome = data?.monthlyCardIncome;
+  const monthlyCashIncome = data?.monthlyCashIncome;
+
+
   // 클라이언트에서 렌더링이 완료되기 전까지는 렌더링하지 않음
   if (!isClient) return null;
 
   return (
     <div className='container'>
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col">
       {/* Header */}
       <header className="flex items-center justify-between py-3">
-        <button className="text-lg font-semibold">{'<'}</button>
+        <Image alt="back" src={'/icons/back.png'} width={25} height={25}></Image>
       </header>
       <div>
-        <h1 className="text-2xl font-semibold px-3 py-2">
+        <h1 className="text-xl font-semibold px-3 py-2">
           {activeStartDate?.toLocaleDateString('ko-KR', { month: 'long' })} 매출
         </h1>
       </div>
 
       {/* Sales Summary */}
       <section className="p-4">
-        <div className="space-y-1 text-xl font-bold">
-          <div className="text-gray-600">
-            총 매출: 
-            <span className="text-blue-500 ml-4">{monthlySalesData.total.toLocaleString()} 원</span>
+        <div className="space-y-1 text-base font-bold">
+          <div className="">
+            총 매출
+            <span className="text-blue-500 ml-4">{monthlyTotalIncome?.toLocaleString()} 원</span>
           </div>
-          <div className="text-base text-gray-600 font-thin">
-            <span>카드 매출: {monthlySalesData.card.toLocaleString()} 원</span>
+          <div className="text-sm text-gray-600 font-thin">
+            <span>카드 매출 {monthlyCardIncome?.toLocaleString()} 원</span>
             <br />
-            <span>현금 매출: {monthlySalesData.cash.toLocaleString()} 원</span>
+            <span>현금 매출 {monthlyCashIncome?.toLocaleString()} 원</span>
           </div>
         </div>
       </section>
@@ -107,11 +125,13 @@ export default function Revenue() {
             onActiveStartDateChange={handleMonthChange}
             onClickDay={handleDateClick} // 날짜 클릭 시 모달 오픈
             tileContent={({ date }) => {
-              const formattedTileDate = date.toISOString().split('T')[0];
-              const daySales = salesData[formattedTileDate]?.total;
+              const temp = new Date(date);
+              temp.setDate(date.getDate()+1);
+              const formattedTileDate = temp.toISOString().split('T')[0];
+              const daySales = saleData?.find((d)=> d.date === formattedTileDate)?.totalIncome;
               return daySales ? (
-                <div className="text-black text-sm mt-1">{daySales.toLocaleString()} </div>
-              ) : null;
+                <div className="text-black text-sm mt-1">{daySales}</div>
+              ) : <div></div>;
             }}
             className="w-full text-xl"
             view="month"
@@ -125,7 +145,7 @@ export default function Revenue() {
       {/* Modal */}
       {isModalOpen && (
         <div
-          className="fixed inset-0 flex items-end justify-center bg-black bg-opacity-30"
+          className="fixed inset-0 mb-[83px] flex items-end justify-center bg-black bg-opacity-30"
           onClick={closeModal}
         >
           <div
@@ -148,17 +168,17 @@ export default function Revenue() {
             <div className="flex flex-col items-center space-y-4">
               <div className="text-lg flex items-center">
                 <span className="font-medium">카드 매출:</span>
-                <span className="mx-2">{selectedSalesData.card.toLocaleString()}</span>
+                <span className="mx-2">{selectedSalesData?.cardIncome.toLocaleString()}</span>
                 <span>원</span>
               </div>
               <div className="text-lg flex items-center">
                 <span className="font-medium">현금 매출:</span>
-                <span className="mx-2">{selectedSalesData.cash.toLocaleString()}</span>
+                <span className="mx-2">{selectedSalesData?.cashIncome.toLocaleString()}</span>
                 <span>원</span>
               </div>
               <div className="text-lg font-semibold border-t w-3/4 mx-auto pt-4 text-center"> 
                 <span>총 매출:</span>
-                <span className="text-blue-500 mx-2">{selectedSalesData.total.toLocaleString()}</span>
+                <span className="text-blue-500 mx-2">{selectedSalesData?.totalIncome.toLocaleString()}</span>
                 <span>원</span>
               </div>
             </div>
@@ -166,6 +186,7 @@ export default function Revenue() {
         </div>
       )}
     </div>
+    <Navbar/>
     </div>
   );
 };

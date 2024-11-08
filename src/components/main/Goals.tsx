@@ -2,9 +2,13 @@ import convertToKoreanWon from '@/utils/currency'
 import Link from 'next/link'
 import React from 'react'
 
-const Goals = () => {
+interface RevenueProps {
+  height: string;
+}
+
+const Goals: React.FC<RevenueProps> = ({height}) =>  {
   return (
-    <div className="box col-span-2 flex flex-col justify-between bg-white py-3 px-2 rounded-2xl shadow h-56">
+    <div className="box col-span-2 justify-between" style={{height}}>
       <div className="flex justify-between items-center">
         <h2 className="text-sm font-semibold">이번 달 목표</h2>
         <span>
@@ -15,7 +19,7 @@ const Goals = () => {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-6 text-gray-500"
+              className="size-6 text-gray-400"
             >
               <path
                 strokeLinecap="round"
