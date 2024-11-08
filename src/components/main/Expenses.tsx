@@ -1,6 +1,6 @@
 "use client";
 
-import { useExpensesData } from '@/hooks/useReportQuery';
+import { useExpensesData } from '@/hooks/useExpensesQuery';
 import convertToKoreanWon from '@/utils/currency';
 import Link from 'next/link';
 import React from 'react'
