@@ -2,7 +2,7 @@
 
 import Error from "@/components/Error";
 import { Loading } from "@/components/Loading";
-import { useExpensesData } from "@/hooks/useReportQuery";
+import { useExpensesData, useExpensesDetailData } from "@/hooks/useReportQuery";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
@@ -10,6 +10,26 @@ import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 const ExpensesPage = () => {
   const router = useRouter();
   const { data: expensesData, isLoading, error } = useExpensesData();
+
+  const {data: expensesDetailData} = useExpensesDetailData();
+
+  if (expensesDetailData) {
+    console.log("exponsesDetailData", expensesDetailData);
+  }
+
+  let chartData = [{
+    name: "",
+    value: 0,
+  }];
+  if (expensesData) {
+    chartData = Object.entries(expensesData?.categoryExpenses).map(
+      ([key, value]) => {
+        return { name: key, value: value };
+      }
+    );
+  }
+
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
   if (isLoading) {
     return <Loading />;
@@ -79,15 +99,18 @@ const ExpensesPage = () => {
           <ResponsiveContainer width="100%" height={200}>
             <PieChart>
               <Pie
-                data={expensesData}
+                data={chartData}
                 dataKey="value"
                 outerRadius={70}
                 innerRadius={50}
                 startAngle={270}
                 endAngle={630}
               >
-                {expensesData?.map((entry, index) => (
-                  <Cell key={`cell-${index}`} />
+                {chartData?.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
                 ))}
               </Pie>
             </PieChart>
@@ -96,39 +119,20 @@ const ExpensesPage = () => {
         <div className="flex items-center gap-8 mb-4">
           <div className="flex flex-col w-full px-6 pt-2 pb-5 border-b-2 border-[#f5f5f5]">
             <ul className="flex flex-col gap-y-2">
-              {expensesData?.map((data, index) => (
+              {chartData?.map((data, index) => (
                 <li key={index} className="flex justify-between items-center">
                   <div>
                     <div
                       className={`inline-block w-3 h-3 mr-2`}
-                      style={{ backgroundColor: data.fill }}
+                      style={{ backgroundColor: COLORS[index % COLORS.length] }}
                     ></div>
                     {data.name}
                   </div>
                   <div className="flex gap-x-2">
                     {data.value}
-                    <span>&#62;</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        <div className="flex items-center gap-8 mb-4">
-          <div className="flex flex-col w-full px-6 pt-2 pb-5 border-b-2 border-[#f5f5f5]">
-            <ul className="flex flex-col gap-y-2">
-              {expensesData?.map((data, index) => (
-                <li key={index} className="flex justify-between items-center">
-                  <div>
-                    <div
-                      className={`inline-block w-3 h-3 mr-2`}
-                      style={{ backgroundColor: data.fill }}
-                    ></div>
-                    {data.name}
-                  </div>
-                  <div className="flex gap-x-2">
-                    {data.value}
-                    <span>&#62;</span>
+                    <span>
+                      <Link href={`/expense/detail`}>&#62;</Link>
+                    </span>
                   </div>
                 </li>
               ))}

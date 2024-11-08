@@ -11,6 +11,20 @@ import Error from '../Error';
 const Expenses = () => {
   const {data: expensesData, isLoading, error} = useExpensesData();
 
+  let chartData = [{
+    name: "",
+    value: 0,
+  }];
+  if (expensesData) {
+    chartData = Object.entries(expensesData?.categoryExpenses).map(
+      ([key, value]) => {
+        return { name: key, value: value };
+      }
+    );
+  }
+
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+
   if (isLoading) {
     return <ExpensesLoading />
   }
@@ -46,7 +60,7 @@ const Expenses = () => {
         <ResponsiveContainer width={120} height="100%">
           <PieChart>
             <Pie
-              data={expensesData}
+              data={chartData}
               dataKey="value"
               outerRadius={40}
               innerRadius={20}
@@ -54,8 +68,9 @@ const Expenses = () => {
               endAngle={630}
             >
               {
-                expensesData?.map((entry, index) => (
+                chartData?.map((entry, index) => (
                   <Cell key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
                   />
                 ))
               }
@@ -70,10 +85,10 @@ const Expenses = () => {
             오늘은 <span>{convertToKoreanWon(20000)}</span> 지출했어요!
           </p>
           <ul>
-            {expensesData?.map((data, index) => (
+            {chartData?.map((data, index) => (
               <li key={index} className="flex justify-center items-center">
                 <div className={`inline-block w-3 h-3 mr-2`}
-                  style={{backgroundColor: data.fill}}></div>
+                  style={{backgroundColor: COLORS[index % COLORS.length]}}></div>
                 {data.name}
               </li>
             ))}

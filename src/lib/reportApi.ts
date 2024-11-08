@@ -1,3 +1,10 @@
+const enviroment = process.env.NODE_ENV;
+
+let url = "http://localhost:8080/api/account";
+if (enviroment === "production") {
+  url = "https://domain/api/account";
+}
+
 export const getRevenueData = async () => {
   const data = [
     { name: "9월", value: 5000, fill: "#E5E7EB" },
@@ -9,11 +16,23 @@ export const getRevenueData = async () => {
 }
 
 export const getExpensesData = async () => {
-  const data = [
-    { name: "공과금", value: 150000, fill: "#ff6384" },
-    { name: "인건비", value: 100000, fill: "#ffa384" },
-    { name: "재료비", value: 50000, fill: "#ffe384" },
-  ]
+  const response = await fetch(`${url}/expense?month=2024-11`, {
+    method: "GET",
+    credentials: "include",
+  })
+
+  const data = await response.json();
+
+  return data;
+}
+
+export const getExpensesDetailData = async () => {
+  const response = await fetch(`${url}/expense/detail?month=2024-11`, {
+    method: "GET",
+    credentials: "include",
+  })
+
+  const data = await response.json();
 
   return data;
 }
