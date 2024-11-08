@@ -5,7 +5,11 @@ import { Bar, BarChart, Cell, LabelList, ResponsiveContainer } from "recharts";
 import {RevenueLoading} from "../Loading";
 import Error from "../Error";
 
-const Revenue = () => {
+interface RevenueProps {
+  height: string;
+}
+
+const Revenue: React.FC<RevenueProps> = ({height}) => {
   const {data: revenueData, isLoading, error} = useRevenueQuery();
 
   if (isLoading) {
@@ -17,7 +21,7 @@ const Revenue = () => {
   }
 
   return (
-    <div className="box space-y-3">
+    <div className="box space-y-3" style={{ height }}>
       <div className="flex justify-between items-center">
         <h2 className="text-sm font-semibold">이번 달 매출</h2>
         <span>
@@ -28,7 +32,7 @@ const Revenue = () => {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-6 text-gray-500"
+              className="size-6 text-gray-400"
             >
               <path
                 strokeLinecap="round"
@@ -39,7 +43,7 @@ const Revenue = () => {
           </Link>
         </span>
       </div>
-      <ResponsiveContainer width={"100%"} height={100}>
+      <ResponsiveContainer width={"100%"} height={"85%"}>
         <BarChart data={revenueData}>
           {/* <XAxis dataKey="name" /> */}
           {/* <YAxis /> */}
