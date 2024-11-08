@@ -2,7 +2,7 @@
 
 import Error from "@/components/Error";
 import { Loading } from "@/components/Loading";
-import { useExpensesData, useExpensesDetailData } from "@/hooks/useReportQuery";
+import { useExpensesData, useExpensesDetailData } from "@/hooks/useExpensesQuery";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
