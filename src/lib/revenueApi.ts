@@ -17,3 +17,16 @@ export const getMonthlyIncome = async(year:number , month:number) => {
 
     return response.json();
 }
+
+export const getIncomeHistory = async(year:number , month:number) => {
+  const query = year+'-'+month;
+  const params = new URLSearchParams({ month:query });
+  const response = await fetch(`${url}/income-history?${params.toString()}`, {
+      method: "GET",
+      credentials: "include",
+    });
+  
+  if(!response.ok) new Error("매출 히스토리 조회 오류");
+
+  return response.json();
+}
