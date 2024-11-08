@@ -3,8 +3,12 @@
 import 'react-calendar/dist/Calendar.css';
 import Calendar from 'react-calendar';
 import { useState, useEffect } from "react";
+import Navbar from '@/components/Navbar';
+import Image from 'next/image';
+import { useMonthlyRevenue } from '@/hooks/useRevenueQuery';
 
 export default function Revenue() {
+
   const [isClient, setIsClient] = useState(false); // 클라이언트에서만 렌더링
   const [date, setDate] = useState<Date | null>(null);
   const [activeStartDate, setActiveStartDate] = useState<Date | null>(null);
@@ -53,6 +57,7 @@ export default function Revenue() {
     }
   }, [activeStartDate]);
 
+
   const handleDateClick = (clickedDate: Date) => {
     const formattedDate = clickedDate.toISOString().split('T')[0];
     const sales = salesData[formattedDate] || { total: 0, card: 0, cash: 0 };
@@ -67,30 +72,39 @@ export default function Revenue() {
     setActiveStartDate(activeStartDate);
   };
 
+  //data fetching
+  const year = activeStartDate ? activeStartDate.getFullYear() : new Date().getFullYear();
+  const month = activeStartDate ? activeStartDate.getMonth() + 1 : new Date().getMonth() + 1;
+  
+  const { data, isLoading, error } = useMonthlyRevenue(year, month);
+  const saleData = data?.dailyIncomeList;
+  const totalIncome = data?.monthlyTotalncome;
+
+
   // 클라이언트에서 렌더링이 완료되기 전까지는 렌더링하지 않음
   if (!isClient) return null;
 
   return (
     <div className='container'>
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col">
       {/* Header */}
       <header className="flex items-center justify-between py-3">
-        <button className="text-lg font-semibold">{'<'}</button>
+        <Image alt="back" src={'/icons/back.png'} width={25} height={25}></Image>
       </header>
       <div>
-        <h1 className="text-2xl font-semibold px-3 py-2">
+        <h1 className="text-xl font-semibold px-3 py-2">
           {activeStartDate?.toLocaleDateString('ko-KR', { month: 'long' })} 매출
         </h1>
       </div>
 
       {/* Sales Summary */}
       <section className="p-4">
-        <div className="space-y-1 text-xl font-bold">
-          <div className="text-gray-600">
+        <div className="space-y-1 text-base font-bold">
+          <div className="">
             총 매출: 
-            <span className="text-blue-500 ml-4">{monthlySalesData.total.toLocaleString()} 원</span>
+            <span className="text-blue-500 ml-4">{data?.monthlyTotalncome.toLocaleString()} 원</span>
           </div>
-          <div className="text-base text-gray-600 font-thin">
+          <div className="text-sm text-gray-600 font-thin">
             <span>카드 매출: {monthlySalesData.card.toLocaleString()} 원</span>
             <br />
             <span>현금 매출: {monthlySalesData.cash.toLocaleString()} 원</span>
@@ -108,10 +122,10 @@ export default function Revenue() {
             onClickDay={handleDateClick} // 날짜 클릭 시 모달 오픈
             tileContent={({ date }) => {
               const formattedTileDate = date.toISOString().split('T')[0];
-              const daySales = salesData[formattedTileDate]?.total;
+              const daySales = saleData?.find((d)=> d.date === formattedTileDate)?.totalIncome;
               return daySales ? (
-                <div className="text-black text-sm mt-1">{daySales.toLocaleString()} </div>
-              ) : null;
+                <div className="text-black text-sm mt-1">{daySales}</div>
+              ) : <div></div>;
             }}
             className="w-full text-xl"
             view="month"
@@ -166,6 +180,7 @@ export default function Revenue() {
         </div>
       )}
     </div>
+    <Navbar/>
     </div>
   );
 };
