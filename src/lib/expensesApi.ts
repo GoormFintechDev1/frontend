@@ -5,8 +5,8 @@ if (enviroment === "production") {
   url = "https://domain/api/account";
 }
 
-export const getExpensesData = async () => {
-  const response = await fetch(`${url}/expense?month=2024-11`, {
+export const getExpensesData = async (currentMonth: string) => {
+  const response = await fetch(`${url}/expense?month=${currentMonth}`, {
     method: "GET",
     credentials: "include",
   })

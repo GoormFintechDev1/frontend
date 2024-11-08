@@ -7,13 +7,14 @@ import React from 'react'
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import {ExpensesLoading} from '../Loading';
 import Error from '../Error';
+import { paramMonth } from '@/utils/calculateDay';
 
 interface RevenueProps {
   height: string;
 }
 
 const Expenses: React.FC<RevenueProps> = ({height}) => {
-  const {data: expensesData, isLoading, error} = useExpensesData();
+  const {data: expensesData, isLoading, error} = useExpensesData(paramMonth);
 
   let chartData = [{
     name: "",
