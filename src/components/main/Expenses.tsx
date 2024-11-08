@@ -7,9 +7,10 @@ import React from 'react'
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import {ExpensesLoading} from '../Loading';
 import Error from '../Error';
+import { paramMonth } from '@/utils/calculateDay';
 
 const Expenses = () => {
-  const {data: expensesData, isLoading, error} = useExpensesData();
+  const {data: expensesData, isLoading, error} = useExpensesData(paramMonth);
 
   let chartData = [{
     name: "",

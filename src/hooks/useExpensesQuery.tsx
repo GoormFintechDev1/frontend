@@ -4,9 +4,9 @@ import { exponseDetailDTOType, exponseDTOType } from "@/interface/expenses"
 import { getExpensesData, getExpensesDetailData } from "@/lib/expensesApi"
 import { useQuery } from "@tanstack/react-query"
 
-export const useExpensesData = () => useQuery<exponseDTOType>({
-  queryKey: ["expensesData"],
-  queryFn: getExpensesData,
+export const useExpensesData = (currentMonth: string) => useQuery<exponseDTOType>({
+  queryKey: ["expensesData", currentMonth],
+  queryFn: () => getExpensesData(currentMonth),
 })
 
 export const useExpensesDetailData = () => useQuery<exponseDetailDTOType>({

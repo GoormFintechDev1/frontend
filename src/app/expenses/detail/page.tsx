@@ -1,38 +1,32 @@
 "use client";
 
+import { useExpensesDetailData } from "@/hooks/useExpensesQuery";
+import { useRouter, useSearchParams } from "next/navigation";
 import Error from "@/components/Error";
-import { useExpensesData } from "@/hooks/useExpensesQuery";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
-import ExpensesPageLoading from "./loading";
-import { paramMonth, currentMonth, handleNextMonth, handlePrevMonth } from "@/utils/calculateDay";
-import { useState } from "react";
+import ExpensesDetailPageLoading from "./loading";
 
-const ExpensesPage = () => {
-  const [month, setMonth] = useState(paramMonth);
-
+const ExpensesDetailPage = () => {
   const router = useRouter();
-  const { data: expensesData, isLoading, error } = useExpensesData(month);
+  const params = useSearchParams();
 
-  let chartData = [
-    {
-      name: "",
-      value: 0,
-    },
-  ];
-  if (expensesData) {
-    chartData = Object.entries(expensesData?.categoryExpenses).map(
-      ([key, value]) => {
-        return { name: key, value: value };
-      }
-    );
+  const {
+    data: expensesDetailData,
+    isLoading,
+    error,
+  } = useExpensesDetailData();
+
+  const filteredData = expensesDetailData?.expenseDetails.filter(detail => detail.category === params.get("category")) || [];
+
+  if (expensesDetailData) {
+    console.log("exponsesDetailData", expensesDetailData);
   }
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
   if (isLoading) {
-    return <ExpensesPageLoading />;
+    return <ExpensesDetailPageLoading />;
   }
 
   if (error) {
@@ -61,7 +55,7 @@ const ExpensesPage = () => {
           </Link>
         </div>
         <div className="flex items-center gap-x-3">
-          <button onClick={() => setMonth(handlePrevMonth(month))}>
+          <div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -76,10 +70,9 @@ const ExpensesPage = () => {
                 d="M15.75 19.5 8.25 12l7.5-7.5"
               />
             </svg>
-          </button>
-          {/* 월 표현 방식 - DB는 YYYY-mm 형식의 param을 받음 */}
-          <h2 className="text-sm font-semibold">{currentMonth(month)}</h2>
-          <button onClick={() => setMonth(handleNextMonth(month))}>
+          </div>
+          <h2 className="text-sm font-semibold">11월</h2>
+          <div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -94,24 +87,24 @@ const ExpensesPage = () => {
                 d="m8.25 4.5 7.5 7.5-7.5 7.5"
               />
             </svg>
-          </button>
+          </div>
         </div>
         <div className="flex mb-4">
           <ResponsiveContainer width="100%" height={200}>
             <PieChart>
               <Pie
-                data={chartData}
-                dataKey="value"
+                data={filteredData}
+                dataKey="amount"
                 outerRadius={70}
                 innerRadius={50}
                 startAngle={270}
                 endAngle={630}
               >
-                {chartData?.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
+                {filteredData.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
                 ))}
               </Pie>
             </PieChart>
@@ -120,30 +113,31 @@ const ExpensesPage = () => {
         <div className="flex items-center gap-8 mb-4">
           <div className="flex flex-col w-full px-6 pt-2 pb-5 border-b-2 border-[#f5f5f5]">
             <ul className="flex flex-col gap-y-2">
-              {chartData?.map((data, index) => (
-                <li key={index} className="flex justify-between items-center">
-                  <div>
-                    <div
-                      className={`inline-block w-3 h-3 mr-2`}
-                      style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                    ></div>
-                    {data.name}
-                  </div>
-                  <div className="flex gap-x-2">
-                    {data.value}
-                    <span>
-                      <Link
-                        href={{
-                          pathname: `/expenses/detail`,
-                          query: `category=${data.name}`,
-                        }}
-                      >
-                        &#62;
-                      </Link>
-                    </span>
-                  </div>
-                </li>
-              ))}
+              {filteredData.map(
+                (data, index) =>
+                  data.category === params.get("category") && (
+                    <li
+                      key={index}
+                      className="flex justify-between items-center"
+                    >
+                      <div>
+                        <div
+                          className={`inline-block w-3 h-3 mr-2`}
+                          style={{
+                            backgroundColor: COLORS[index % COLORS.length],
+                          }}
+                        ></div>
+                        {data.category}
+                      </div>
+                      <div className="flex gap-x-2">
+                        {data.amount}
+                        <span>
+                          <Link href={`/expense/detail`}>&#62;</Link>
+                        </span>
+                      </div>
+                    </li>
+                  )
+              )}
             </ul>
           </div>
         </div>
@@ -152,4 +146,4 @@ const ExpensesPage = () => {
   );
 };
 
-export default ExpensesPage;
+export default ExpensesDetailPage;
