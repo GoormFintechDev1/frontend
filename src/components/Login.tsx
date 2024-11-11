@@ -36,7 +36,7 @@ export default function Login() {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center h-full">
+        <div className="flex flex-col items-center justify-center h-full p-3">
             <form onSubmit={handleSubmit} className='w-full flex flex-col space-y-8'>
                  <div className="flex justify-start mb-4">
                     <Image src="/logo.png" alt="로고" width={70} height={70} /> {/* 필요에 따라 크기 조정 */}
