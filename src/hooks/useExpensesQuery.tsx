@@ -10,6 +10,7 @@ import useExpensesStore from "@/stores/useExpensesStore";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
+
 export const useExpensesData = (currentMonth: string) => {
   const { data, isLoading, error } = useQuery<exponseDTOType>({
     queryKey: ["expensesData", currentMonth],

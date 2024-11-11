@@ -6,6 +6,14 @@ import { useState, useEffect } from "react";
 import Navbar from '@/components/Navbar';
 import Image from 'next/image';
 import { useMonthlyRevenue } from '@/hooks/useRevenueQuery';
+import Link from 'next/link';
+
+interface DayIncome {
+  date: string,
+  totalIncome: number,
+  cardIncome: number,
+  cashIncome: number
+}
 
 export default function Revenue() {
 
@@ -89,16 +97,20 @@ export default function Revenue() {
   if (!isClient) return null;
 
   return (
-    <div className='container'>
+    <div className='container p-3'>
     <div className="flex flex-col">
       {/* Header */}
-      <header className="flex items-center justify-between py-3">
-        <Image alt="back" src={'/icons/back.png'} width={25} height={25}></Image>
-      </header>
-      <div>
-        <h1 className="text-xl font-semibold px-3 py-2">
+      <div className="flex items-center justify-between mb-3">
+        <Link href={"/"}>
+          <Image alt="back" src={'/icons/arrow.png'} width={25} height={25}></Image>
+        </Link>
+      </div>
+      <div className='flex flex-row p-3 items-center' >
+        <div><Image src={'/icons/smallLeft.png'} alt={'left'} width={18} height={18}></Image></div>
+        <h1 className="text-xl font-semibold p-3">
           {activeStartDate?.toLocaleDateString('ko-KR', { month: 'long' })} 매출
         </h1>
+        <div><Image src={'/icons/smallRight.png'} alt={'right'} width={18} height={18}></Image></div>
       </div>
 
       {/* Sales Summary */}
@@ -128,7 +140,10 @@ export default function Revenue() {
               const temp = new Date(date);
               temp.setDate(date.getDate()+1);
               const formattedTileDate = temp.toISOString().split('T')[0];
-              const daySales = saleData?.find((d)=> d.date === formattedTileDate)?.totalIncome;
+              const daySales = saleData?.filter((d:DayIncome)=> d.date === formattedTileDate)?.reduce((acc:number,cur:DayIncome)=>{
+                acc += cur.totalIncome
+                return acc
+              },0);
               return daySales ? (
                 <div className="text-black text-sm mt-1">{daySales}</div>
               ) : <div></div>;
@@ -145,11 +160,11 @@ export default function Revenue() {
       {/* Modal */}
       {isModalOpen && (
         <div
-          className="fixed inset-0 mb-[83px] flex items-end justify-center bg-black bg-opacity-30"
+          className="fixed inset-0 flex items-end justify-center bg-black bg-opacity-30 z-10"
           onClick={closeModal}
         >
           <div
-            className="bg-white rounded-t-lg w-full max-w-lg p-6 animate-slide-up text-center relative"
+            className="bg-white rounded-t-xl w-full max-w-lg p-6 animate-slide-up text-center relative"
             onClick={(e) => e.stopPropagation()} 
           >
 

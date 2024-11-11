@@ -68,7 +68,7 @@ export default function Register1({ onNext }: Props) {
     const isButtonEnabled = isloginIdChecked && !errors.loginId && isMatch && isLengthValid && hasLetter && hasNumber;
 
     return (
-        <div className="h-full">
+        <div className="h-full p-3">
             <form className="flex flex-col space-y-6 h-full" onSubmit={handleSubmit(onSubmit)}>
                 <p className="text-xl font-bold">회원가입</p>
                 <div className="label-input-set">

@@ -21,6 +21,7 @@ const Revenue: React.FC<RevenueProps> = ({height}) => {
     { name: month-1+'월', value: data?.totalIncome1Ago, fill: "#E5E7EB" },
     { name: month+'월', value: data?.totalIncome0Ago, fill: "#6EE7B7" },
   ];
+
   
   if (isLoading) {
     return <RevenueLoading />
@@ -74,7 +75,7 @@ const Revenue: React.FC<RevenueProps> = ({height}) => {
       </ResponsiveContainer>
       <p className="text-center text-theme font-bold">
         {revenueData?.map((entry) => (
-          entry.name === month ? convertToKoreanWon(entry.value) : ""
+          entry.name === month+'월' ? convertToKoreanWon(entry.value) : ""
         ))}
       </p>
     </div>

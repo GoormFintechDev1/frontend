@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
+import Navbar from "@/components/Navbar";
+import Link from "next/link";
 
 export default function Income() {
     const [month, setMonth] = useState(11);
@@ -24,7 +27,7 @@ export default function Income() {
     return (
 
         // 애니메이션
-        <div className="container min-h-screen flex flex-col justify-center items-center relative overflow-hidden">
+        <div className="container h-full items-center relative overflow-hidden">
             {showFireworks && (
                 <div className="fixed inset-0 z-50 flex justify-center items-center pointer-events-none">
                     <div className="fireworks-container">
@@ -48,65 +51,68 @@ export default function Income() {
                     </div>
                 </div>
             )}
+            <div className="mb-3">
+                <Link href={"/"}>
+                    <Image alt="back" src={'/icons/arrow.png'} width={25} height={25}></Image>
+                </Link>
+            </div>
+            <div className="flex flex-col w-full max-w-md text-center p-3">
+                
+                <div className="flex justify-center items-center ">
+                    <Image alt="back" onClick={handlePreviousMonth} src={'/icons/smallLeft.png'} width={18} height={18}></Image>
+                    <h1 className="text-xl font-semibold p-3">{month}월 순이익</h1>
+                    <Image alt="back" onClick={handleNextMonth} src={'/icons/smallRight.png'} width={18} height={18}></Image>
+                </div>
+                <div className="mt-16">
+                    <div className="text-lg font-medium mb-4">이번 달 총 순수익은?</div>
+                    <div className="text-2xl font-bold text-blue-600 mb-6">{income.toLocaleString()}원</div>
+                </div>
 
-            <div className="container">
-                <div className="w-full max-w-md text-center">
-                    <div className="flex justify-between items-center mb-6">
-                        <button onClick={handlePreviousMonth} className="text-2xl">{'<'}</button>
-                        <div className="text-xl font-semibold">{month}월</div>
-                        <button onClick={handleNextMonth} className="text-2xl">{'>'}</button>
-                    </div>
-
-                    <div className="mt-16">
-                        <div className="text-lg font-medium mb-4">이번 달 총 순수익은?</div>
-                        <div className="text-2xl font-bold text-black mb-6">{income.toLocaleString()}원 입니다.</div>
-                    </div>
-
-                    <div className="text-left text-gray-600 space-y-2 ml-20 mt-20">
-                        <div>➕ 총 매출: 100,000,000원</div>
-                        <div>➖ 매출 원가: 4,000,000원</div>
-                        <div>➖ 운영비용: 2,500,000원 </div>
-                        <div>➖ 세금: 1,000,000원 </div>
-                    </div>
-
-                    <div className="mt-48 flex justify-center w-full ">
-                        <button className="button">
-                            월간 리포트 보러 가기
-                        </button>
-                    </div>
+                <div className="text-left flex-grow text-gray-600 space-y-2 ml-20 mt-20">
+                    <div>➕ 총 매출: 100,000,000원</div>
+                    <div>➖ 매출 원가: 4,000,000원</div>
+                    <div>➖ 운영비용: 2,500,000원 </div>
+                    <div>➖ 세금: 1,000,000원 </div>
+                </div>
+                {/* <div className="flex-grow"></div> */}
+                <div className="mt-48 flex justify-center w-full ">
+                    <button className="button">
+                        월간 리포트 보러 가기
+                    </button>
                 </div>
             </div>
 
-            <style jsx>{`
-                .fireworks-container {
-                    position: relative;
-                    width: 100%;
-                    height: 100%;
-                    pointer-events: none;
-                    overflow: hidden;
+        <Navbar/>
+
+        <style jsx>{`
+            .fireworks-container {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                overflow: hidden;
+            }
+            .coin {
+                position: absolute;
+                width: 30px; 
+                height: 30px;
+                background-image: url("/coin.png"); 
+                background-size: cover;
+                top: 50%;
+                left: 50%;
+                animation: explode 0.4s ease-out forwards;
+                transform: translate(-50%, -50%);
+            }
+            @keyframes explode {
+                0% {
+                    transform: translate(-50%, -50%) scale(0.5);
+                    opacity: 1;
                 }
-                .coin {
-                    position: absolute;
-                    width: 30px; 
-                    height: 30px;
-                    background-image: url("/coin.png"); 
-                    background-size: cover;
-                    top: 50%;
-                    left: 50%;
-                    animation: explode 0.4s ease-out forwards;
-                    transform: translate(-50%, -50%);
+                100% {
+                    transform: translate(var(--x), var(--y)) scale(1.5); /* 크기 조정 */
+                    opacity: 0;
                 }
-                @keyframes explode {
-                    0% {
-                        transform: translate(-50%, -50%) scale(0.5);
-                        opacity: 1;
-                    }
-                    100% {
-                        transform: translate(var(--x), var(--y)) scale(1.5); /* 크기 조정 */
-                        opacity: 0;
-                    }
-                }
-            `}</style>
+            }
+        `}</style>
         </div>
-    );
-}
+);}

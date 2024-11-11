@@ -1,5 +1,7 @@
 "use client";
 import { PieChart, Pie, Cell, Label } from "recharts";
+import Image from "next/image";
+import Link from "next/link";
 
 const data = [
     { name: "Completed", value: 65 },
@@ -25,7 +27,9 @@ export default function Objective() {
         <div className="container">
             <div className="container mx-auto p-4">
                 <div className="flex items-center mb-4">
-                    <button className="mr-2 text-gray-600 text-lg">{"<"}</button>
+                    <Link href="/">
+                        <Image src={'/icons/Back.png'} alt="back" width={25} height={25}></Image>
+                    </Link>
                 </div>
                 <div className="mb-8">
                     <h1 className="text-xl font-extralight text-center">목표를 관리해보세요!</h1>
