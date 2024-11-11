@@ -6,19 +6,27 @@ import Error from "@/components/Error";
 import Link from "next/link";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import ExpensesDetailPageLoading from "./loading";
+import dayjs from "dayjs";
+import { formatNumberWithComma } from "@/utils/currency";
+import useExpensesStore from "@/stores/useExpensesStore";
+dayjs().format();
 
 const ExpensesDetailPage = () => {
   const router = useRouter();
   const params = useSearchParams();
 
-  const {
-    data: expensesDetailData,
-    isLoading,
-    error,
-  } = useExpensesDetailData();
+  const {isLoading, error} = useExpensesDetailData(params.get("month")!);
 
-  const filteredData = expensesDetailData?.expenseDetails.filter(detail => detail.category === params.get("category")) || [];
+  const expensesDetailData = useExpensesStore((state) => state.expensesDetailsData);
 
+  const filteredData =
+    expensesDetailData?.expenseDetails.filter(
+      (detail) =>
+        detail.category === params.get("category") &&
+        dayjs(detail.transactionDate).format("YYYY-MM") === params.get("month")
+    ) || [];
+
+  console.log(filteredData);
   if (expensesDetailData) {
     console.log("exponsesDetailData", expensesDetailData);
   }
@@ -55,39 +63,7 @@ const ExpensesDetailPage = () => {
           </Link>
         </div>
         <div className="flex items-center gap-x-3">
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-4 text-gray-500"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 19.5 8.25 12l7.5-7.5"
-              />
-            </svg>
-          </div>
-          <h2 className="text-sm font-semibold">11월</h2>
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-4 text-gray-500"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m8.25 4.5 7.5 7.5-7.5 7.5"
-              />
-            </svg>
-          </div>
+          <h2 className="text-sm font-semibold">세부정보</h2>
         </div>
         <div className="flex mb-4">
           <ResponsiveContainer width="100%" height={200}>
@@ -101,10 +77,10 @@ const ExpensesDetailPage = () => {
                 endAngle={630}
               >
                 {filteredData.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
-                    />
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
                 ))}
               </Pie>
             </PieChart>
@@ -118,22 +94,30 @@ const ExpensesDetailPage = () => {
                   data.category === params.get("category") && (
                     <li
                       key={index}
-                      className="flex justify-between items-center"
+                      className="flex items-baseline p-2 border-b border-gray-200"
                     >
-                      <div>
-                        <div
-                          className={`inline-block w-3 h-3 mr-2`}
-                          style={{
-                            backgroundColor: COLORS[index % COLORS.length],
-                          }}
-                        ></div>
-                        {data.category}
-                      </div>
-                      <div className="flex gap-x-2">
-                        {data.amount}
-                        <span>
-                          <Link href={`/expense/detail`}>&#62;</Link>
-                        </span>
+                      <div
+                        className="inline-block w-3 h-3 mr-2"
+                        style={{
+                          backgroundColor: COLORS[index % COLORS.length],
+                        }}
+                      ></div>
+                      <div className="w-full">
+                        <div className="flex justify-between">
+                          <p className="font-semibold">{data.storeName}</p>
+                          <p className="text-sm text-gray-500">
+                            {dayjs(data.transactionDate).format("YYYY-MM-DD")}
+                          </p>
+                        </div>
+                        <div className="flex justify-between mt-1">
+                          <p className="text-sm text-gray-700">
+                            {data.category}
+                          </p>
+                          <p className="text-sm font-semibold text-right">
+                            {data.transactionMeans}{" "}
+                            {formatNumberWithComma(data.amount)}
+                          </p>
+                        </div>
                       </div>
                     </li>
                   )

@@ -1,4 +1,4 @@
-import convertToKoreanWon from '@/utils/currency'
+import { convertToKoreanWon } from '@/utils/currency'
 import Link from 'next/link'
 import React from 'react'
 
