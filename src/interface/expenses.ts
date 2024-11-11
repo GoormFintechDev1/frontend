@@ -1,3 +1,12 @@
+export interface chartDataProps {
+  chartData: {
+    name: string,
+    value: number
+  }[],
+  COLORS: string[],
+  month?: string,
+}
+
 export interface exponseDTOType {
   totalMonthExpenses: number,
   totalTodayExpense: number,
@@ -12,7 +21,7 @@ export interface exponseDetailDTOType {
   expenseDetails: ExpenseDetail[]
 }
 
-interface ExpenseDetail {
+export interface ExpenseDetail {
   transactionDate: Date,
   transactionMeans: TransactionMeansEnum,
   amount: number,

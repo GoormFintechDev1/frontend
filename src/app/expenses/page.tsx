@@ -1,36 +1,53 @@
 "use client";
 
 import Error from "@/components/Error";
-import { useExpensesData } from "@/hooks/useExpensesQuery";
+import { useExpensesDetailData } from "@/hooks/useExpensesQuery";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import ExpensesPageLoading from "./loading";
-import { paramMonth, currentMonth, handleNextMonth, handlePrevMonth } from "@/utils/calculateDay";
+import {
+  paramMonth,
+  currentMonth,
+  handleNextMonth,
+  handlePrevMonth,
+  groupByWeek,
+} from "@/utils/calculateDay";
 import { useState } from "react";
 import useExpensesStore from "@/stores/useExpensesStore";
+import ExpensesPieChart from "@/components/expenses/ExpensesPieChart";
+import ExpensesData from "@/components/expenses/ExpensesData";
+import dayjs from "dayjs";
+import { ExpenseDetail } from "@/interface/expenses";
+import ExpensesWeekData from "@/components/expenses/ExpensesWeekData";
+dayjs().format();
 
 const ExpensesPage = () => {
   const [month, setMonth] = useState(paramMonth);
+  const [activeToggle, setActiveToggle] = useState(false);
 
   const router = useRouter();
-  const { isLoading, error } = useExpensesData(month);
+  const { isLoading, error } = useExpensesDetailData(month);
 
-  // Access Zustand store states
-  const expensesData = useExpensesStore((state) => state.expensesData);
+  const expensesData = useExpensesStore((state) => state.expensesDetailsData);
 
-  let chartData = [
-    {
-      name: "",
-      value: 0,
-    },
-  ];
+  console.log(expensesData);
+
+  let chartData = [{ name: "", value: 0 }];
+  let groupedExpenses: Record<number, ExpenseDetail[]> = {};
+
   if (expensesData) {
-    chartData = Object.entries(expensesData?.categoryExpenses).map(
+    chartData = Object.entries(expensesData.categoryTotalExpenses).map(
       ([key, value]) => {
         return { name: key, value: value };
       }
     );
+
+    groupedExpenses = groupByWeek(expensesData.expenseDetails);
+  }
+  console.log(groupedExpenses);
+
+  const toggleWeekData = () => {
+    setActiveToggle((activeToggle) => !activeToggle);
   }
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
@@ -100,57 +117,16 @@ const ExpensesPage = () => {
             </svg>
           </button>
         </div>
-        <div className="flex mb-4">
-          <ResponsiveContainer width="100%" height={200}>
-            <PieChart>
-              <Pie
-                data={chartData}
-                dataKey="value"
-                outerRadius={70}
-                innerRadius={50}
-                startAngle={270}
-                endAngle={630}
-              >
-                {chartData?.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
-        <div className="flex items-center gap-8 mb-4">
-          <div className="flex flex-col w-full px-6 pt-2 pb-5 border-b-2 border-[#f5f5f5]">
-            <ul className="flex flex-col gap-y-2">
-              {chartData?.map((data, index) => (
-                <li key={index} className="flex justify-between items-center">
-                  <div>
-                    <div
-                      className={`inline-block w-3 h-3 mr-2`}
-                      style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                    ></div>
-                    {data.name}
-                  </div>
-                  <div className="flex gap-x-2">
-                    {data.value}
-                    <span>
-                      <Link
-                        href={{
-                          pathname: `/expenses/detail`,
-                          query: {category: data.name, month: month},
-                        }}
-                      >
-                        &#62;
-                      </Link>
-                    </span>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <>
+          <ExpensesPieChart chartData={chartData} COLORS={COLORS} />
+          <ExpensesData chartData={chartData} COLORS={COLORS} month={month} />
+        </>
+        <button onClick={toggleWeekData}>주간별 상세보기</button>
+        {activeToggle && (
+          <>
+            <ExpensesWeekData month={month} groupedExpenses={groupedExpenses} />
+          </>
+        )}
       </div>
     </div>
   );
