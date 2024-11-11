@@ -4,6 +4,13 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
+import { useProfitDetail } from "@/hooks/useProfitQuery";
+import Button from "@/components/Button";
+import { paramMonth } from "@/utils/calculateDay";
+
+import dayjs from "dayjs";
+dayjs().format();
+
 
 export default function Income() {
     const [month, setMonth] = useState(11);
@@ -23,6 +30,9 @@ export default function Income() {
     const handleNextMonth = () => {
         setMonth((prev) => (prev < 12 ? prev + 1 : 1));
     };
+    
+    const {data: profit} = useProfitDetail(paramMonth);
+    console.log(profit);
 
     return (
 
@@ -56,7 +66,7 @@ export default function Income() {
                     <Image alt="back" src={'/icons/arrow.png'} width={25} height={25}></Image>
                 </Link>
             </div>
-            <div className="flex flex-col w-full max-w-md text-center p-3">
+            <div className="flex flex-col w-full h-full max-w-md text-center p-3">
                 
                 <div className="flex justify-center items-center ">
                     <Image alt="back" onClick={handlePreviousMonth} src={'/icons/smallLeft.png'} width={18} height={18}></Image>
@@ -65,20 +75,20 @@ export default function Income() {
                 </div>
                 <div className="mt-16">
                     <div className="text-lg font-medium mb-4">이번 달 총 순수익은?</div>
-                    <div className="text-2xl font-bold text-blue-600 mb-6">{income.toLocaleString()}원</div>
+                    <div className="text-2xl font-bold text-blue-600 mb-6">{profit?.netProfit.toLocaleString()}원</div>
                 </div>
 
                 <div className="text-left flex-grow text-gray-600 space-y-2 ml-20 mt-20">
-                    <div>➕ 총 매출: 100,000,000원</div>
-                    <div>➖ 매출 원가: 4,000,000원</div>
-                    <div>➖ 운영비용: 2,500,000원 </div>
-                    <div>➖ 세금: 1,000,000원 </div>
+                    <div>➕ 총 매출: {profit?.incomeTotal.toLocaleString()}원</div>
+                    <div>➖ 매출 원가: {profit?.saleCost.toLocaleString()}원</div>
+                    <div>➖ 운영비용: {profit?. operatingExpense.toLocaleString()}원 </div>
+                    <div>➖ 세금: {profit?.taxes.toLocaleString()}원 </div>
                 </div>
                 {/* <div className="flex-grow"></div> */}
-                <div className="mt-48 flex justify-center w-full ">
-                    <button className="button">
+                <div className="flex justify-center w-full mb-[100px]">
+                    <Button className="button" href="/report">
                         월간 리포트 보러 가기
-                    </button>
+                    </Button>
                 </div>
             </div>
 

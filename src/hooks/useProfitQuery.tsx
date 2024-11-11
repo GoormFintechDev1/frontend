@@ -8,9 +8,9 @@ export const useLastPorfit = (year:number, month:number) => {
     })
   }
   
-  export const useProfitDetail = (year:number, month:number) => {
+export const useProfitDetail = (date:string) => {
     return useQuery({
-      queryKey: ['lastProfit', year, month],
-      queryFn: () => getProfitDetail(year, month),
+      queryKey: ['profitDetail', date],
+      queryFn: () => getProfitDetail(date),
     })
-  }
+}

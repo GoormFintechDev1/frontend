@@ -1,5 +1,4 @@
-export const convertToKoreanWon = (value: number): string => {
-  if (value < 1000) return `${value}`; // 천 원 미만일 때는 원으로 표시
+export function convertToKoreanWon(value: number): string {
   if (value === 0) return "0원"; // 0일 때는 0원으로 표시
 
   const isNegative = value < 0;
