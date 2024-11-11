@@ -16,30 +16,29 @@ const dataExpense = [
 const labelStyle = {
     fontSize: "14px",
     fontWeight: "bold",
-    fill: "#059669" 
+    fill: "#10B981" 
 };
 
-const COLORS = ["#059669", "#E2E8F0"];  // 매출 목표 색상
-const EXPENSE_COLORS = ["#FB7185", "#E2E8F0"];   //지출 목표 색상
+const COLORS = ["#0FA573", "#E2E8F0"];  // 매출 목표 색상
+const EXPENSE_COLORS = ["#FB7185", "#E2E8F0"]
 
 export default function Objective() {
     return (
-        <div className="container">
-            <div className="container mx-auto p-4">
-                <div className="flex items-center mb-4">
-                    <Link href="/">
-                        <Image src={'/icons/Back.png'} alt="back" width={25} height={25}></Image>
-                    </Link>
-                </div>
-                <div className="mb-8">
-                    <h1 className="text-xl font-extralight text-center">목표를 관리해보세요!</h1>
-                </div>
+        <div className="container mx-auto p-4">
+            <div className="flex items-center mb-4">
+                <button className="mr-2 text-gray-600 text-lg">{"<"}</button>
+            </div>
+            <div className="mb-8">
+                <h1 className="text-xl font-extralight text-center">목표를 관리해보세요!</h1>
+            </div>
 
                 {/* 매출 목표 */}
-                <div className="bg-white rounded-lg shadow p-4 mb-4">
+                {/* 매출 목표 */}
+            <Link href="/goals/detail?page=revenue">
+                <div className="bg-white rounded-lg shadow p-4 mb-4 cursor-pointer">
                     <h2 className="text-lg font-bold mb-2">매출 목표</h2>
                     <div className="flex items-center">
-                        <div className="w-1/2">
+                        <div className="w-1/2 flex justify-center items-center">
                             <PieChart width={95} height={100}>
                                 <Pie
                                     data={data}
@@ -64,16 +63,17 @@ export default function Objective() {
                         </div>
                         <div className="w-1/2 text-right">
                             <span className="text-gray-500 text-lg">목표</span>
-                            <p className="text-emerald-600 text-xl font-semibold">200만원</p>
+                            <p className="text-emerald-500 text-xl font-semibold">200만원</p>
                         </div>
                     </div>
                 </div>
-
+                </Link>                        
                 {/* 지출 목표 */}
-                <div className="bg-white rounded-lg shadow p-4 mt-10">
+                <Link href="/goals/detail?page=expense">
+                <div className="bg-white rounded-lg shadow p-4 mt-10 cursor-pointer">
                     <h2 className="text-lg font-bold mb-2">지출 목표</h2>
                     <div className="flex items-center">
-                        <div className="w-1/2">
+                        <div className="w-1/2 flex justify-center items-center">
                             <PieChart width={95} height={100}>
                                 <Pie
                                     data={dataExpense}
@@ -91,18 +91,19 @@ export default function Objective() {
                                     <Label
                                 value={`${dataExpense[0].value}%`}  
                                 position="center"
-                                style={{ ...labelStyle, fill: "#FB7185" }} 
+                                style={{ ...labelStyle, fill: "#FB7185"}}
                             />
                                 </Pie>
                             </PieChart>
                         </div>
                         <div className="w-1/2 text-right">
-                            <span className="text-gray-500 text-lg">예산 ()</span>
+                        <span className="text-gray-500 text-lg">예산</span>
                             <p className="text-rose-400 text-xl font-semibold">50만원</p>
                         </div>
                     </div>
                 </div>
-            </div>
+            </Link>
+
         </div>
     );
 }

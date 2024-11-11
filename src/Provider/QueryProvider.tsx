@@ -10,7 +10,6 @@ const QueryProvider = ({ children }: { children: React.ReactNode }) => {
     new QueryClient({
       queryCache: new QueryCache({
         onError: (error: any) => {
-          console.log(error);
           if (error.status === 403) {
             router.push('/login');
           }
