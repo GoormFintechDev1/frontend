@@ -1,3 +1,4 @@
+import { ExpenseDetail } from "@/interface/expenses";
 import dayjs from "dayjs";
 dayjs().format();
 
@@ -30,5 +31,19 @@ export const getWeekOfMonth = (date: string) => {
   return Math.ceil((dayOfMonth + offset) / 7);
 };
 
-// 예시 사용
-console.log(getWeekOfMonth('2024-11-11')); // 해당 날짜가 몇 번째 주인지 계산
+// Extracting and grouping data by week number
+export const groupByWeek = (expenses: ExpenseDetail[]) => {
+  const groupedByWeek: Record<number, ExpenseDetail[]> = {};
+
+  expenses.forEach((expense) => {
+    const date = new Date(expense.transactionDate);
+    const week = getWeekOfMonth(dayjs(date).format("YYYY-MM-DD"));
+
+    if (!groupedByWeek[week]) {
+      groupedByWeek[week] = [];
+    }
+    groupedByWeek[week].push(expense);
+  });
+
+  return groupedByWeek;
+};
