@@ -1,5 +1,5 @@
-import { useLastPorfit } from "@/hooks/useExpensesQuery";
-import { useRevenueHistory } from "@/hooks/useRevenueQuery";
+
+import { useLastPorfit } from "@/hooks/useProfitQuery";
 import convertToKoreanWon from "@/utils/currency"
 import Link from "next/link"
 
