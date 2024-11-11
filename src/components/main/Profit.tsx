@@ -1,3 +1,5 @@
+import { useLastPorfit } from "@/hooks/useExpensesQuery";
+import { useRevenueHistory } from "@/hooks/useRevenueQuery";
 import convertToKoreanWon from "@/utils/currency"
 import Link from "next/link"
 
@@ -6,6 +8,12 @@ interface RevenueProps {
 }
 
 const Profit: React.FC<RevenueProps> = ({height}) => {
+  const year = new Date().getFullYear();
+  const month = new Date().getMonth() + 1;
+
+  const {data} = useLastPorfit(year, month);
+  // console.log(data);
+
   return (
     <div className="box" style={{height}}>
       <div className="flex justify-between items-center">
@@ -31,7 +39,7 @@ const Profit: React.FC<RevenueProps> = ({height}) => {
       </div>
       <div className="flex flex-col h-full justify-center items-center">
         <p className="text-blue-600 text-base font-bold">
-          {convertToKoreanWon(2500000)}
+          {convertToKoreanWon(data)}
         </p>
       </div>
     </div>

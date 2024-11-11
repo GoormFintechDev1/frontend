@@ -1,17 +1,27 @@
-import { useRevenueQuery } from "@/hooks/useReportQuery";
 import convertToKoreanWon from "@/utils/currency";
 import Link from "next/link";
 import { Bar, BarChart, Cell, LabelList, ResponsiveContainer } from "recharts";
 import {RevenueLoading} from "../Loading";
 import Error from "../Error";
+import { useRevenueHistory } from "@/hooks/useRevenueQuery";
 
 interface RevenueProps {
   height: string;
 }
 
 const Revenue: React.FC<RevenueProps> = ({height}) => {
-  const {data: revenueData, isLoading, error} = useRevenueQuery();
 
+  const year = new Date().getFullYear();
+  const month = new Date().getMonth() +1;
+
+  const { data, isLoading, error } = useRevenueHistory(year, month);
+
+  const revenueData = [
+    { name: month-2+'월', value: data?.totalIncome2Ago, fill: "#E5E7EB" },
+    { name: month-1+'월', value: data?.totalIncome1Ago, fill: "#E5E7EB" },
+    { name: month+'월', value: data?.totalIncome0Ago, fill: "#6EE7B7" },
+  ];
+  
   if (isLoading) {
     return <RevenueLoading />
   }
@@ -64,7 +74,7 @@ const Revenue: React.FC<RevenueProps> = ({height}) => {
       </ResponsiveContainer>
       <p className="text-center text-theme font-bold">
         {revenueData?.map((entry) => (
-          entry.name === "11월" ? convertToKoreanWon(entry.value) : ""
+          entry.name === month ? convertToKoreanWon(entry.value) : ""
         ))}
       </p>
     </div>
