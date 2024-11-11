@@ -1,4 +1,5 @@
-export default function convertToKoreanWon(value: number): string {
+export const convertToKoreanWon = (value: number): string => {
+  if (value < 1000) return `${value}`; // 천 원 미만일 때는 원으로 표시
   if (value === 0) return "0원"; // 0일 때는 0원으로 표시
 
   const isNegative = value < 0;
@@ -36,4 +37,9 @@ export default function convertToKoreanWon(value: number): string {
   }
 
   return (isNegative ? '-' : '') + result.trim() + "원"; // 음수일 경우 '-' 추가 후 반환
+}
+
+export const formatNumberWithComma = (value: number): string => {
+  return value.toString()
+    .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + " 원";
 }

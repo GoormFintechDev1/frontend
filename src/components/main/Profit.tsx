@@ -1,6 +1,6 @@
 
 import { useLastPorfit } from "@/hooks/useProfitQuery";
-import convertToKoreanWon from "@/utils/currency"
+import { convertToKoreanWon } from "@/utils/currency"
 import Link from "next/link"
 
 interface RevenueProps {

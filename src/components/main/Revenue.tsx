@@ -1,4 +1,4 @@
-import convertToKoreanWon from "@/utils/currency";
+import { convertToKoreanWon } from "@/utils/currency";
 import Link from "next/link";
 import { Bar, BarChart, Cell, LabelList, ResponsiveContainer } from "recharts";
 import {RevenueLoading} from "../Loading";
