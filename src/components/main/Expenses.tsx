@@ -1,20 +1,24 @@
 "use client";
 
 import { useExpensesData } from '@/hooks/useExpensesQuery';
-import convertToKoreanWon from '@/utils/currency';
+import { convertToKoreanWon } from '@/utils/currency';
 import Link from 'next/link';
 import React from 'react'
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import {ExpensesLoading} from '../Loading';
 import Error from '../Error';
 import { paramMonth } from '@/utils/calculateDay';
+import useExpensesStore from '@/stores/useExpensesStore';
 
 interface RevenueProps {
   height: string;
 }
 
 const Expenses: React.FC<RevenueProps> = ({height}) => {
-  const {data: expensesData, isLoading, error} = useExpensesData(paramMonth);
+  const { isLoading, error } = useExpensesData(paramMonth);
+
+  // Access Zustand store states
+  const expensesData = useExpensesStore((state) => state.expensesData);
 
   let chartData = [{
     name: "",
