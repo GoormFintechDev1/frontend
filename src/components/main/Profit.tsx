@@ -1,9 +1,21 @@
-import convertToKoreanWon from "@/utils/currency"
+
+import { useLastPorfit } from "@/hooks/useProfitQuery";
+import { convertToKoreanWon } from "@/utils/currency"
 import Link from "next/link"
 
-const Profit = () => {
+interface RevenueProps {
+  height: string;
+}
+
+const Profit: React.FC<RevenueProps> = ({height}) => {
+  const year = new Date().getFullYear();
+  const month = new Date().getMonth() + 1;
+
+  const {data} = useLastPorfit(year, month);
+  // console.log(data);
+
   return (
-    <div className="box">
+    <div className="box" style={{height}}>
       <div className="flex justify-between items-center">
         <h2 className="text-sm font-semibold">지난 달 순이익</h2>
         <span>
@@ -14,7 +26,7 @@ const Profit = () => {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-6 text-gray-500"
+              className="size-6 text-gray-400"
             >
               <path
                 strokeLinecap="round"
@@ -27,7 +39,7 @@ const Profit = () => {
       </div>
       <div className="flex flex-col h-full justify-center items-center">
         <p className="text-blue-600 text-base font-bold">
-          {convertToKoreanWon(2500000)}
+          {convertToKoreanWon(data)}
         </p>
       </div>
     </div>

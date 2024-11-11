@@ -2,7 +2,7 @@
 
 import { ResponsiveContainer } from "recharts";
 
-const ExpensesPageLoading = () => {
+const ExpensesDetailPageLoading = () => {
   return (
     <div className="container animate-pulse">
       <div className="col-span-2 flex flex-col justify-between">
@@ -42,4 +42,4 @@ const ExpensesPageLoading = () => {
   );
 };
 
-export default ExpensesPageLoading;
+export default ExpensesDetailPageLoading

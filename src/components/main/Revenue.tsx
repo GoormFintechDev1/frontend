@@ -1,13 +1,29 @@
-import { useRevenueQuery } from "@/hooks/useReportQuery";
-import convertToKoreanWon from "@/utils/currency";
+import { convertToKoreanWon } from "@/utils/currency";
 import Link from "next/link";
 import { Bar, BarChart, Cell, LabelList, ResponsiveContainer } from "recharts";
 import {RevenueLoading} from "../Loading";
 import Error from "../Error";
+import { useRevenueHistory } from "@/hooks/useRevenueQuery";
 
-const Revenue = () => {
-  const {data: revenueData, isLoading, error} = useRevenueQuery();
+interface RevenueProps {
+  height: string;
+}
 
+const Revenue: React.FC<RevenueProps> = ({height}) => {
+
+  const year = new Date().getFullYear();
+  const month = new Date().getMonth() +1;
+
+  const { data, isLoading, error } = useRevenueHistory(year, month);
+  // console.log(error)
+
+  const revenueData = [
+    { name: month-2+'월', value: data?.totalIncome2Ago, fill: "#E5E7EB" },
+    { name: month-1+'월', value: data?.totalIncome1Ago, fill: "#E5E7EB" },
+    { name: month+'월', value: data?.totalIncome0Ago, fill: "#6EE7B7" },
+  ];
+
+  
   if (isLoading) {
     return <RevenueLoading />
   }
@@ -17,7 +33,7 @@ const Revenue = () => {
   }
 
   return (
-    <div className="box space-y-3">
+    <div className="box space-y-3" style={{ height }}>
       <div className="flex justify-between items-center">
         <h2 className="text-sm font-semibold">이번 달 매출</h2>
         <span>
@@ -28,7 +44,7 @@ const Revenue = () => {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-6 text-gray-500"
+              className="size-6 text-gray-400"
             >
               <path
                 strokeLinecap="round"
@@ -39,7 +55,7 @@ const Revenue = () => {
           </Link>
         </span>
       </div>
-      <ResponsiveContainer width={"100%"} height={100}>
+      <ResponsiveContainer width={"100%"} height={"85%"}>
         <BarChart data={revenueData}>
           {/* <XAxis dataKey="name" /> */}
           {/* <YAxis /> */}
@@ -60,7 +76,7 @@ const Revenue = () => {
       </ResponsiveContainer>
       <p className="text-center text-theme font-bold">
         {revenueData?.map((entry) => (
-          entry.name === "11월" ? convertToKoreanWon(entry.value) : ""
+          entry.name === month+'월' ? convertToKoreanWon(entry.value) : ""
         ))}
       </p>
     </div>
