@@ -42,3 +42,4 @@ export const convertToKoreanWon = (value: number): string => {
 export const formatNumberWithComma = (value: number): string => {
   return value.toString()
     .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + " 원";
+}
