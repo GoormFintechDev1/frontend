@@ -1,7 +1,7 @@
 "use client";
+import Link from "next/link";
 import { PieChart, Pie, Cell, Label } from "recharts";
 import Image from "next/image";
-import Link from "next/link";
 
 const data = [
     { name: "Completed", value: 65 },
@@ -20,7 +20,7 @@ const labelStyle = {
 };
 
 const COLORS = ["#0FA573", "#E2E8F0"];  // 매출 목표 색상
-const EXPENSE_COLORS = ["#FB7185", "#E2E8F0"]
+const EXPENSE_COLORS = ["#FB7185", "#E2E8F0"];   // 지출 목표 색상
 
 export default function Objective() {
     return (
@@ -54,10 +54,10 @@ export default function Objective() {
                                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                     ))}
                                     <Label
-                                value={`${data[0].value}%`}  
-                                position="center"
-                                style={labelStyle}
-                            />
+                                        value={`${data[0].value}%`}  
+                                        position="center"
+                                        style={labelStyle}
+                                    />
                                 </Pie>
                             </PieChart>
                         </div>
@@ -103,7 +103,6 @@ export default function Objective() {
                     </div>
                 </div>
             </Link>
-
         </div>
     );
 }
