@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { PieChart, Pie, Cell, Label } from "recharts";
 import Image from "next/image";
-import Link from "next/link";
 
 const data = [
     { name: "Completed", value: 65 },
