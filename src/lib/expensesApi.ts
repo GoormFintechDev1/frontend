@@ -16,8 +16,8 @@ export const getExpensesData = async (currentMonth: string) => {
   return data;
 }
 
-export const getExpensesDetailData = async () => {
-  const response = await fetch(`${url}/expense/detail?month=2024-11`, {
+export const getExpensesDetailData = async (paramMonth: string) => {
+  const response = await fetch(`${url}/expense/detail?month=${paramMonth}`, {
     method: "GET",
     credentials: "include",
   })
@@ -28,15 +28,3 @@ export const getExpensesDetailData = async () => {
 }
 
 
-export const getLastProfit = async(year:number , month:number) => {
-  const query = year+'-'+month;
-  const params = new URLSearchParams({ month:query });
-  const response = await fetch(`${url}/profit?${params.toString()}`, {
-      method: "GET",
-      credentials: "include",
-    });
-  
-  if(!response.ok) new Error("지난 달 순이익 조회 오류");
-
-  return response.json();
-}

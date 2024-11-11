@@ -95,7 +95,7 @@ export default function Register2({ onReadySubmit }: Props) {
   const isButtonEnabled = isValid && isPhoneNumberChecked && isEmailChecked;
 
   return (
-    <div className="h-full">
+    <div className="h-full p-3">
       <form className="flex flex-col space-y-8 h-full" onSubmit={handleSubmit(onSubmit)}>
         <p className="text-xl font-bold">회원가입</p>
         

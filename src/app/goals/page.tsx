@@ -1,6 +1,8 @@
 "use client";
 import Link from "next/link";
 import { PieChart, Pie, Cell, Label } from "recharts";
+import Image from "next/image";
+import Link from "next/link";
 
 const data = [
     { name: "Completed", value: 65 },
@@ -31,8 +33,9 @@ export default function Objective() {
                 <h1 className="text-xl font-extralight text-center">목표를 관리해보세요!</h1>
             </div>
 
-            {/* 매출 목표 */}
-            <Link href="/objdetail?page=revenue">
+                {/* 매출 목표 */}
+                {/* 매출 목표 */}
+            <Link href="/goals/detail?page=revenue">
                 <div className="bg-white rounded-lg shadow p-4 mb-4 cursor-pointer">
                     <h2 className="text-lg font-bold mb-2">매출 목표</h2>
                     <div className="flex items-center">
@@ -65,10 +68,9 @@ export default function Objective() {
                         </div>
                     </div>
                 </div>
-            </Link>
-
-            {/* 지출 목표 */}
-            <Link href="/objdetail?page=expense">
+                </Link>                        
+                {/* 지출 목표 */}
+                <Link href="/goals/detail?page=expense">
                 <div className="bg-white rounded-lg shadow p-4 mt-10 cursor-pointer">
                     <h2 className="text-lg font-bold mb-2">지출 목표</h2>
                     <div className="flex items-center">
@@ -88,15 +90,15 @@ export default function Objective() {
                                         <Cell key={`cell-${index}`} fill={EXPENSE_COLORS[index % EXPENSE_COLORS.length]} />
                                     ))}
                                     <Label
-                                        value={`${dataExpense[0].value}%`}  
-                                        position="center"
-                                        style={{ ...labelStyle, fill: "#FB7185" }} 
-                                    />
+                                value={`${dataExpense[0].value}%`}  
+                                position="center"
+                                style={{ ...labelStyle, fill: "#FB7185"}}
+                            />
                                 </Pie>
                             </PieChart>
                         </div>
                         <div className="w-1/2 text-right">
-                            <span className="text-gray-500 text-lg">예산</span>
+                        <span className="text-gray-500 text-lg">예산</span>
                             <p className="text-rose-400 text-xl font-semibold">50만원</p>
                         </div>
                     </div>

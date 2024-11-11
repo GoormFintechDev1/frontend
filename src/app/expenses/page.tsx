@@ -8,12 +8,16 @@ import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import ExpensesPageLoading from "./loading";
 import { paramMonth, currentMonth, handleNextMonth, handlePrevMonth } from "@/utils/calculateDay";
 import { useState } from "react";
+import useExpensesStore from "@/stores/useExpensesStore";
 
 const ExpensesPage = () => {
   const [month, setMonth] = useState(paramMonth);
 
   const router = useRouter();
-  const { data: expensesData, isLoading, error } = useExpensesData(month);
+  const { isLoading, error } = useExpensesData(month);
+
+  // Access Zustand store states
+  const expensesData = useExpensesStore((state) => state.expensesData);
 
   let chartData = [
     {
@@ -135,7 +139,7 @@ const ExpensesPage = () => {
                       <Link
                         href={{
                           pathname: `/expenses/detail`,
-                          query: `category=${data.name}`,
+                          query: {category: data.name, month: month},
                         }}
                       >
                         &#62;
