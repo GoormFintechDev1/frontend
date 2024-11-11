@@ -15,6 +15,7 @@ const Revenue: React.FC<RevenueProps> = ({height}) => {
   const month = new Date().getMonth() +1;
 
   const { data, isLoading, error } = useRevenueHistory(year, month);
+  // console.log(error)
 
   const revenueData = [
     { name: month-2+'월', value: data?.totalIncome2Ago, fill: "#E5E7EB" },

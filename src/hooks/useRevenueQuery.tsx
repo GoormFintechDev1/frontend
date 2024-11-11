@@ -1,7 +1,6 @@
 
 import { getIncomeHistory, getMonthlyIncome } from "@/lib/revenueApi";
-import { useQuery, UseQueryOptions } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useQuery} from "@tanstack/react-query";
 
 export const useMonthlyRevenue = (year:number, month:number) => {
     return useQuery({
@@ -11,15 +10,9 @@ export const useMonthlyRevenue = (year:number, month:number) => {
 }
 
 export const useRevenueHistory = (year: number, month: number) => {
-  const router = useRouter();
 
   return useQuery({
     queryKey: ['incomeHistory', year, month],
     queryFn: () => getIncomeHistory(year, month),
-    onError: (error: any) => {
-      if (error.status === 403) {
-        router.push('/login'); 
-      }
-    },
-  } as UseQueryOptions<any, any> );
+  });
 };
