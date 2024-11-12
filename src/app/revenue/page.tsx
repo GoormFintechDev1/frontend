@@ -105,7 +105,7 @@ export default function Revenue() {
           <Image alt="back" src={'/icons/arrow.png'} width={25} height={25}></Image>
         </Link>
       </div>
-      <div className='flex flex-row p-3 items-center' >
+      <div className='flex flex-row items-center' >
         <div><Image src={'/icons/smallLeft.png'} alt={'left'} width={18} height={18}></Image></div>
         <h1 className="text-xl font-semibold p-3">
           {activeStartDate?.toLocaleDateString('ko-KR', { month: 'long' })} 매출
@@ -114,7 +114,7 @@ export default function Revenue() {
       </div>
 
       {/* Sales Summary */}
-      <section className="p-4">
+      <section className="p-2">
         <div className="space-y-1 text-base font-bold">
           <div className="">
             총 매출

@@ -1,3 +1,5 @@
+import { SetGoal } from "@/interface/goal";
+
 const enviroment = process.env.NODE_ENV;
 
 let url = "http://localhost:8080/api/goal";
@@ -27,4 +29,37 @@ export const getRevenueGoal = async(date: string) => {
     if(!response.ok) new Error("지출 목표 조회 실패");
   
     return response.json();
+  }
+
+
+  export const setGoals = async(data:SetGoal) => {
+    const response = await fetch(`${url}/set`,{
+      method:"POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+
+    if(!response.ok) new Error("지출 목표 조회 실패");
+
+    return response;
+  }
+
+
+
+  export const updateGoals = async(data:SetGoal) => {
+    const response = await fetch(`${url}/update`,{
+      method:"PUT",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+
+    if(!response.ok) new Error("지출 목표 조회 실패");
+
+    return response;
   }
