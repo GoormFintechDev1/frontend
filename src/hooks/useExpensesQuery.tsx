@@ -1,6 +1,6 @@
 "use client";
 
-import { exponseDetailDTOType, exponseDTOType } from "@/interface/expenses";
+import { expenseDetailDTOType, expenseDTOType } from "@/interface/expenses";
 import {
   getExpensesData,
   getExpensesDetailData,
@@ -10,7 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
 export const useExpensesData = (currentMonth: string) => {
-  const { data, isLoading, error } = useQuery<exponseDTOType>({
+  const { data, isLoading, error } = useQuery<expenseDTOType>({
     queryKey: ["expensesData", currentMonth],
     queryFn: () => getExpensesData(currentMonth),
   });
@@ -27,7 +27,7 @@ export const useExpensesData = (currentMonth: string) => {
 };
 
 export const useExpensesDetailData = (paramMonth: string) => {
-  const { data, isLoading, error } = useQuery<exponseDetailDTOType>({
+  const { data, isLoading, error } = useQuery<expenseDetailDTOType>({
     queryKey: ["expensesDetailData"],
     queryFn: () => getExpensesDetailData(paramMonth),
   });

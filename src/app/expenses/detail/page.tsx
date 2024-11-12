@@ -9,6 +9,7 @@ import ExpensesDetailPageLoading from "./loading";
 import dayjs from "dayjs";
 import { formatNumberWithComma } from "@/utils/currency";
 import useExpensesStore from "@/stores/useExpensesStore";
+import Image from "next/image";
 dayjs().format();
 
 const ExpensesDetailPage = () => {
@@ -20,15 +21,19 @@ const ExpensesDetailPage = () => {
   const expensesDetailData = useExpensesStore((state) => state.expensesDetailsData);
 
   const filteredData =
-    expensesDetailData?.expenseDetails.filter(
-      (detail) =>
-        detail.category === params.get("category") &&
-        dayjs(detail.transactionDate).format("YYYY-MM") === params.get("month")
-    ) || [];
+    expensesDetailData?.expenseDetails.filter((detail) => {
+      const category = detail.category === params.get("category");
+      const month = dayjs(detail.transactionDate).format("YYYY-MM") === params.get("month")
+      const week = params.get("week")
+        ? Math.ceil(new Date(detail.transactionDate).getDate() / 7).toString() === params.get("week")
+        : true;
+
+      return category && month && week;
+    }) || []
 
   console.log(filteredData);
   if (expensesDetailData) {
-    console.log("exponsesDetailData", expensesDetailData);
+    console.log("expensesDetailData", expensesDetailData);
   }
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
@@ -46,20 +51,7 @@ const ExpensesDetailPage = () => {
       <div className="col-span-2 flex flex-col justify-between">
         <div className="mb-4">
           <Link href={"#"} onClick={router.back}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-              />
-            </svg>
+            <Image src={"/icons/arrow.png"} alt="arrow" width={24} height={24} />
           </Link>
         </div>
         <div className="flex items-center gap-x-3">
