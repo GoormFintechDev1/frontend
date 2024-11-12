@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { useExpenseGoal, useRevenueGoal } from "@/hooks/useGoalQuery";
 import { paramMonth2 } from "@/utils/calculateDay";
+import Link from "next/link";
 dayjs().format();
 
 
@@ -104,9 +105,13 @@ export default function ObjDetail() {
                     {"<"}
                 </button>
             </div>
-            <h1 className="text-2xl font-extralight mb-4 text-center">
-                {pageType === "revenue" ? "매출 목표 상세페이지" : "지출 목표 상세페이지"}
-            </h1>
+            <div className="flex flex-row">
+                <h1 className="text-2xl font-extralight mb-4 text-center">
+                    {pageType === "revenue" ? "매출 목표 상세페이지" : "지출 목표 상세페이지"}
+                </h1>
+                <Link href="/setGoals"><p>수정하기</p></Link>
+            </div>
+            
 
             {/* 월별 정보 */}
             <div className="flex items-center justify-between mb-4">
