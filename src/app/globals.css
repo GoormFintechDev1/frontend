@@ -32,7 +32,7 @@ body {
   margin-right: auto; 
   max-width: 800px;
   height: 100vh;
-  padding: 20px; 
+  padding: 25px; 
   padding-bottom: 83px; /* navbar 만큼 padding-bottom 값 추가 */
 }
 

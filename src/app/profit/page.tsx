@@ -31,7 +31,7 @@ export default function Income() {
     };
     
     const {data: profit} = useProfitDetail(paramMonth);
-    console.log(profit);
+    // console.log(profit);
 
     return (
 

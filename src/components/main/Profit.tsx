@@ -1,5 +1,5 @@
 
-import { useLastPorfit } from "@/hooks/useProfitQuery";
+import { useLastProfit } from "@/hooks/useProfitQuery";
 import { convertToKoreanWon } from "@/utils/currency"
 import Link from "next/link"
 
@@ -11,7 +11,7 @@ const Profit: React.FC<RevenueProps> = ({height}) => {
   const year = new Date().getFullYear();
   const month = new Date().getMonth() + 1;
 
-  const {data} = useLastPorfit(year, month);
+  const {data} = useLastProfit(year, month);
   // console.log(data);
 
   return (
