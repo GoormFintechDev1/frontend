@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 import QueryProvider from "@/Provider/QueryProvider";
-import { AuthProvider } from "@/Provider/AuthProvider";
 
 // goorm-sans 폰트 설정
 const goormSansBold = localFont({
@@ -46,9 +45,7 @@ export default function RootLayout({
         `}
       >
         <QueryProvider>
-          <AuthProvider>
-            {children}
-          </AuthProvider>
+          {children}
         </QueryProvider>
       </body>
     </html>

@@ -1,13 +1,11 @@
 export interface chartDataProps {
-  chartData: {
-    name: string,
-    value: number
-  }[],
+  chartData: expenseDetailDTOType,
   COLORS: string[],
+  categoryColorMap: Record<string, string>,
   month?: string,
 }
 
-export interface exponseDTOType {
+export interface expenseDTOType {
   totalMonthExpenses: number,
   totalTodayExpense: number,
   categoryExpenses: {
@@ -15,7 +13,7 @@ export interface exponseDTOType {
   }
 }
 
-export interface exponseDetailDTOType {
+export interface expenseDetailDTOType {
   totalMonthExpenses: number,
   categoryTotalExpenses: Record<string, number>
   expenseDetails: ExpenseDetail[]

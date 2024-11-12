@@ -32,13 +32,12 @@ export const getWeekOfMonth = (date: string) => {
 };
 
 // Extracting and grouping data by week number
-export const groupByWeek = (expenses: ExpenseDetail[]) => {
+export const groupByWeek = (expenses: ExpenseDetail[]): Record<number, ExpenseDetail[]> => {
   const groupedByWeek: Record<number, ExpenseDetail[]> = {};
 
   expenses.forEach((expense) => {
     const date = new Date(expense.transactionDate);
-    const week = getWeekOfMonth(dayjs(date).format("YYYY-MM-DD"));
-
+    const week = Math.ceil(date.getDate() / 7); // 주차 계산 (단순히 날짜 기반으로 계산)
     if (!groupedByWeek[week]) {
       groupedByWeek[week] = [];
     }
