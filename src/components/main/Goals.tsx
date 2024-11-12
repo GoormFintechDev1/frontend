@@ -45,11 +45,11 @@ const Goals: React.FC<RevenueProps> = ({height}) =>  {
       <div className="flex justify-around w-full h-full">
         <div className="flex flex-col justify-center">
           <p className="text-pink-500 font-bold">매출</p>
-          <p>{Math.round(revenue?.monthlyRevenue / revenue?.revenueGoal)}%</p>
+          <p>{Math.round(revenue?.monthlyRevenue0Ago / revenue?.revenueGoal0Ago)}%</p>
         </div>
         <div className="flex flex-col justify-center">
           <p className="text-center text-pink-500 font-bold">지출</p>
-          <p>{convertToKoreanWon(expense?.monthlyExpense)} 남았어요</p>
+          <p>{convertToKoreanWon(expense?.monthlyExpense0Ago)} 남았어요</p>
         </div>
       </div>
     </div>
