@@ -1,15 +1,15 @@
-import { exponseDetailDTOType, exponseDTOType } from "@/interface/expenses";
+import { expenseDetailDTOType, expenseDTOType } from "@/interface/expenses";
 import { create } from "zustand";
 
 interface ExpensesState {
   isLoading: boolean;
   error: string | null;
-  expensesData: exponseDTOType | null;
-  expensesDetailsData: exponseDetailDTOType | null;
+  expensesData: expenseDTOType | null;
+  expensesDetailsData: expenseDetailDTOType | null;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
-  setExpensesData: (data: exponseDTOType) => void
-  setExpensesDetailsData: (data: exponseDetailDTOType) => void
+  setExpensesData: (data: expenseDTOType) => void
+  setExpensesDetailsData: (data: expenseDetailDTOType) => void
 }
 
 const useExpensesStore = create<ExpensesState>((set) => ({

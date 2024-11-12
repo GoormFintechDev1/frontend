@@ -10,7 +10,6 @@ import {
   currentMonth,
   handleNextMonth,
   handlePrevMonth,
-  groupByWeek,
 } from "@/utils/calculateDay";
 import { useState } from "react";
 import useExpensesStore from "@/stores/useExpensesStore";
@@ -29,22 +28,24 @@ const ExpensesPage = () => {
   const { isLoading, error } = useExpensesDetailData(month);
 
   const expensesDetailsData = useExpensesStore((state) => state.expensesDetailsData);
-  let groupedData: Record<number, Date[]> = {};
 
-  
-  const expenseDetails = expensesDetailsData?.expenseDetails;
-  
-  expenseDetails?.map((v) => {
-    groupedData = groupByWeek(v.transactionDate, groupedData);
-  })
-  console.log(expensesDetailsData);
-  console.log(groupedData);
+  const expensesDetails = expensesDetailsData?.expenseDetails;
 
   const toggleWeekData = () => {
     setActiveToggle((activeToggle) => !activeToggle);
   }
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+
+  // Create a category-color mapping
+  const categoryColorMap: Record<string, string> = {};
+  let colorIndex = 0;
+  expensesDetails?.forEach((expense) => {
+    if (!categoryColorMap[expense.category]) {
+      categoryColorMap[expense.category] = COLORS[colorIndex % COLORS.length];
+      colorIndex += 1;
+    }
+  });
 
   if (isLoading) {
     return <ExpensesPageLoading />;
@@ -73,13 +74,13 @@ const ExpensesPage = () => {
           </button>
         </div>
         <>
-          <ExpensesPieChart chartData={expensesDetailsData!} COLORS={COLORS} />
-          <ExpensesData chartData={expensesDetailsData!} COLORS={COLORS} month={month} />
+          <ExpensesPieChart chartData={expensesDetailsData!} COLORS={COLORS} categoryColorMap={categoryColorMap} />
+          <ExpensesData chartData={expensesDetailsData!} month={month} COLORS={COLORS}  categoryColorMap={categoryColorMap} />
         </>
         <button onClick={toggleWeekData}>주간별 상세보기</button>
         {activeToggle && (
           <>
-            {/* <ExpensesWeekData month={month} groupedExpenses={groupedExpenses} /> */}
+            <ExpensesWeekData chartData={expensesDetails!} month={month} COLORS={COLORS} categoryColorMap={categoryColorMap} />
           </>
         )}
       </div>
