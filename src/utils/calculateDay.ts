@@ -1,4 +1,3 @@
-import { ExpenseDetail } from "@/interface/expenses";
 import dayjs from "dayjs";
 dayjs().format();
 
@@ -32,18 +31,13 @@ export const getWeekOfMonth = (date: string) => {
 };
 
 // Extracting and grouping data by week number
-export const groupByWeek = (expenses: ExpenseDetail[]) => {
-  const groupedByWeek: Record<number, ExpenseDetail[]> = {};
+export const groupByWeek = (date: Date, groupedByWeek: Record<number, Date[]> = {}) => {
+  const week = getWeekOfMonth(dayjs(date).format("YYYY-MM-DD")); // 주차 계산
 
-  expenses.forEach((expense) => {
-    const date = new Date(expense.transactionDate);
-    const week = getWeekOfMonth(dayjs(date).format("YYYY-MM-DD"));
-
-    if (!groupedByWeek[week]) {
-      groupedByWeek[week] = [];
-    }
-    groupedByWeek[week].push(expense);
-  });
+  if (!groupedByWeek[week]) {
+    groupedByWeek[week] = []; // 초기화
+  }
+  groupedByWeek[week].push(date); // 주차별로 날짜 추가
 
   return groupedByWeek;
 };

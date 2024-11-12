@@ -7,7 +7,7 @@ const ExpensesData = (props: chartDataProps) => {
     <div className="flex items-center gap-8 mb-4">
       <div className="flex flex-col w-full px-6 pt-2 pb-5 border-b-2 border-[#f5f5f5]">
         <ul className="flex flex-col gap-y-2">
-          {props.chartData?.map((data, index) => (
+          {props.chartData?.expenseDetails.map((data, index) => (
             <li key={index} className="flex justify-between items-center">
               <div>
                 <div
@@ -16,15 +16,15 @@ const ExpensesData = (props: chartDataProps) => {
                     backgroundColor: props.COLORS[index % props.COLORS.length],
                   }}
                 ></div>
-                {data.name}
+                {data.category}
               </div>
               <div className="flex gap-x-2">
-                {data.value}
+                {data.amount}
                 <span>
                   <Link
                     href={{
                       pathname: `/expenses/detail`,
-                      query: { category: data.name, month: props.month },
+                      query: { category: data.category, month: props.month },
                     }}
                   >
                     &#62;

@@ -1,5 +1,6 @@
 import { ExpenseDetail } from "@/interface/expenses";
 import dayjs from "dayjs";
+import Link from "next/link";
 
 interface WeeklyExpensesProps {
   month: string,
@@ -15,8 +16,17 @@ const ExpensesWeekData = ({ month, groupedExpenses }: WeeklyExpensesProps) => {
           <ul className="flex flex-col gap-y-2">
             {expenses.map((expense, index) => (
               <li key={index} className="flex justify-between">
-                <div>{expense.category}</div>
-                <div>{expense.amount}</div>
+                <Link href={{
+                  pathname:"/expenses/detail",
+                  query: {
+                    category: expense.category,
+                    month: month,
+                    week: week,
+                  }
+                }}>
+                  <div>{expense.category}</div>
+                  <div>{expense.amount}</div>
+                </Link>
                 {/* <div>
                   {dayjs(expense.transactionDate).format("YYYY-MM-DD HH:mm")}
                 </div> */}

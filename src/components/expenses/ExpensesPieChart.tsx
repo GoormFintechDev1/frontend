@@ -10,14 +10,14 @@ const ExpensesPieChart = (props: chartDataProps) => {
       <ResponsiveContainer width="100%" height={200}>
         <PieChart>
           <Pie
-            data={props.chartData}
-            dataKey="value"
+            data={props.chartData?.expenseDetails}
+            dataKey="amount"
             outerRadius={70}
             innerRadius={50}
             startAngle={270}
             endAngle={630}
           >
-            {props.chartData?.map((entry, index) => (
+            {props.chartData?.expenseDetails.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
                 fill={props.COLORS[index % props.COLORS.length]}

@@ -10,26 +10,6 @@ if (enviroment === "production") {
   url = "https://domain/api/auth";
 }
 
-export const authUser = async () => {
-  try {
-    const response = await fetch(`${url}/check-login`, {
-      method: "GET",
-      credentials: "include",
-    });
-
-    const data = await response.json();
-
-    if (data.message === "Not Authenticated") {
-      return null;
-    }
-
-    return data;
-  } catch (error) {
-    console.error("Authentication Check Failed", error);
-    throw error;
-  }
-};
-
 export const loginUser = async (data:LoginType) => {
   const response = await fetch(`${url}/login`, {
     method: "POST",

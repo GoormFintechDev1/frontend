@@ -1,8 +1,5 @@
 export interface chartDataProps {
-  chartData: {
-    name: string,
-    value: number
-  }[],
+  chartData: exponseDetailDTOType,
   COLORS: string[],
   month?: string,
 }
