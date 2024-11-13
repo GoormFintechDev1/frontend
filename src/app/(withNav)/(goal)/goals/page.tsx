@@ -47,6 +47,8 @@ export default function Objective() {
         { name: "Remaining", value: 100 - expensePercentage }
     ];
 
+    const expenseRate = calculateRemainingBudgetPercentage(expense?.monthlyExpense0Ago, expense?.expenseGoal0Ago);
+
     return (
         <div className="container mx-auto p-4">
             <div className="back">

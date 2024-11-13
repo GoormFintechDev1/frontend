@@ -21,6 +21,11 @@ const Goals: React.FC<RevenueProps> = ({height}) =>  {
     return <GoalLoading/>
   }
 
+  let revenuePercentage = Math.round((revenue?.monthlyRevenue0Ago / revenue?.revenueGoal0Ago)*100);
+  if(isNaN(revenuePercentage)) revenuePercentage = 0;
+  let expenseMoney = expense?.expenseGoal0Ago - expense?.monthlyExpense0Ago;
+  if(!expenseMoney) expenseMoney = 0;
+
   return (
     <div className="box col-span-2 justify-between" style={{height}}>
       <div className="flex justify-between items-center">
@@ -47,11 +52,11 @@ const Goals: React.FC<RevenueProps> = ({height}) =>  {
       <div className="flex justify-around w-full h-full">
         <div className="flex flex-col justify-center space-y-3">
           <p className= "text-center">매출</p>
-          <p className='text-pink-700 font-bold'>{Math.round((revenue?.monthlyRevenue0Ago / revenue?.revenueGoal0Ago)*100)}% 달성했어요</p>
+          <p className='text-pink-700 font-bold'>{revenuePercentage}% 달성했어요</p>
         </div>
         <div className="flex flex-col justify-center space-y-3">
           <p className="text-center">지출</p>
-          <p className='text-pink-700 font-bold'>{convertToKoreanWon(expense?.expenseGoal0Ago - expense?.monthlyExpense0Ago)} 남았어요</p>
+          <p className='text-pink-700 font-bold'>{convertToKoreanWon(expenseMoney)} 남았어요</p>
         </div>
       </div>
     </div>

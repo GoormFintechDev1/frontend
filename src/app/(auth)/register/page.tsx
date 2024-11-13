@@ -12,7 +12,7 @@ export default function Register() {
 
     const [step, setStep] = useState<number>(1)
     const [formData, setFormData] = useState<FormDataType>({
-        account: "",
+        loginId: "",
         password: "",
         name: "",
         phoneNumber: "",
@@ -50,7 +50,7 @@ export default function Register() {
             setIsReady(false);
             mutation.mutate(formData, {
                 onSuccess: ()=>{
-                    localStorage.setItem("firstLogin", "true");
+                    localStorage.setItem(`firstLogin:${formData.loginId}`, "true");
                     router.push('/info?first=회원가입 완료!&second=🎉&buttonmessage=로그인&href=/login');
                 }
             });
