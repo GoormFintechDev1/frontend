@@ -30,13 +30,17 @@ export default function Objective() {
     console.log(expense);
 
     const revenuePercentage = Math.round((revenue?.monthlyRevenue0Ago / revenue?.revenueGoal0Ago) * 100);
-    const revenueData = [
+    const revenueData = revenuePercentage >= 100 
+    ? [{ name: "Completed", value: 100 }]  // 100% 이상일 때 전체를 Completed 색상으로 채우기
+    : [
         { name: "Completed", value: revenuePercentage },
         { name: "Remaining", value: 100 - revenuePercentage }
-    ];
+      ];
 
     const expensePercentage = Math.round((expense?.monthlyExpense0Ago / expense?.expenseGoal0Ago) * 100);
-    const expenseData = [
+    const expenseData = expensePercentage >= 100
+    ? [{name: "Completed", value: 100}]
+    : [
         { name: "Completed", value: expensePercentage },
         { name: "Remaining", value: 100 - expensePercentage }
     ];
@@ -71,7 +75,7 @@ export default function Objective() {
                                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                     ))}
                                     <Label
-                                        value={`${revenueData[0].value}%`}  
+                                        value={`${revenuePercentage}%`}
                                         position="center"
                                         style={labelStyle}
                                     />
@@ -108,7 +112,7 @@ export default function Objective() {
                                         <Cell key={`cell-${index}`} fill={EXPENSE_COLORS[index % EXPENSE_COLORS.length]} />
                                     ))}
                                     <Label
-                                value={`${expenseData[0].value}%`}  
+                                value={`${expensePercentage}%`}  
                                 position="center"
                                 style={{ ...labelStyle, fill: "#FB7185"}}
                             />
