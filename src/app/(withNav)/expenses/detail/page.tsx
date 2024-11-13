@@ -18,10 +18,12 @@ const ExpensesDetailPage = () => {
 
   const {isLoading, error} = useExpensesDetailData(params.get("month")!);
 
-  const expensesDetailData = useExpensesStore((state) => state.expensesDetailsData);
+  const expensesDetailsData = useExpensesStore((state) => state.expensesDetailsData);
+
+  const expensesDetails = expensesDetailsData?.expenseDetails;
 
   const filteredData =
-    expensesDetailData?.expenseDetails.filter((detail) => {
+    expensesDetailsData?.expenseDetails.filter((detail) => {
       const category = detail.category === params.get("category");
       const month = dayjs(detail.transactionDate).format("YYYY-MM") === params.get("month")
       const week = params.get("week")
@@ -31,12 +33,19 @@ const ExpensesDetailPage = () => {
       return category && month && week;
     }) || []
 
-  console.log(filteredData);
-  if (expensesDetailData) {
-    console.log("expensesDetailData", expensesDetailData);
-  }
+  const amountSum = filteredData?.reduce((acc, cur) => acc + cur.amount, 0);
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+
+  // Create a category-color mapping
+  const categoryColorMap: Record<string, string> = {};
+  let colorIndex = 0;
+  expensesDetails?.forEach((expense) => {
+    if (!categoryColorMap[expense.category]) {
+      categoryColorMap[expense.category] = COLORS[colorIndex % COLORS.length];
+      colorIndex += 1;
+    }
+  });
 
   if (isLoading) {
     return <ExpensesDetailPageLoading />;
@@ -57,7 +66,7 @@ const ExpensesDetailPage = () => {
         <div className="flex items-center gap-x-3">
           <h2 className="text-sm font-semibold">세부정보</h2>
         </div>
-        <div className="flex mb-4">
+        <div className="flex flex-col mb-4">
           <ResponsiveContainer width="100%" height={200}>
             <PieChart>
               <Pie
@@ -77,6 +86,10 @@ const ExpensesDetailPage = () => {
               </Pie>
             </PieChart>
           </ResponsiveContainer>
+          <div className="text-center">
+            <div className="font-bold text-xl px-5 py-2">{params.get("category")}</div>
+            <div className="font-bold text-xl px-5 py-2">{formatNumberWithComma(amountSum)}</div>
+          </div>
         </div>
         <div className="flex items-center gap-8 mb-4">
           <div className="flex flex-col w-full px-6 pt-2 pb-5 border-b-2 border-[#f5f5f5]">

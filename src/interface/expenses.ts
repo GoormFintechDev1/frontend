@@ -1,5 +1,5 @@
 export interface chartDataProps {
-  chartData: expenseDetailDTOType,
+  chartData: expenseDetailDTOType
   COLORS: string[],
   categoryColorMap: Record<string, string>,
   month?: string,
