@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useMonthlyRevenue } from "@/hooks/useRevenueQuery";
 import Link from "next/link";
+import { paramMonth2 } from "@/utils/calculateDay";
 
 interface DayIncome {
   date: string;
@@ -98,7 +99,7 @@ export default function Revenue() {
     ? activeStartDate.getMonth() + 1
     : new Date().getMonth() + 1;
 
-  const { data, isLoading, error } = useMonthlyRevenue(year, month);
+  const { data, isLoading, error } = useMonthlyRevenue(paramMonth2(year,month));
   const saleData = data?.dailyIncomeList;
   const monthlyTotalIncome = data?.monthlyTotalncome;
   const monthlyCardIncome = data?.monthlyCardIncome;
@@ -111,39 +112,18 @@ export default function Revenue() {
     <div className='container p-3'>
     <div className="flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between mb-3">
+      <div className="back">
         <Link href={"/"}>
           <Image alt="back" src={'/icons/arrow.png'} width={25} height={25}></Image>
         </Link>
       </div>
       <div className='flex flex-row items-center' >
         <div><Image src={'/icons/smallLeft.png'} alt={'left'} width={18} height={18}></Image></div>
-        <h1 className="text-xl font-semibold p-3">
+        <h1 className="text-xl font-semibold px-3">
           {activeStartDate?.toLocaleDateString('ko-KR', { month: 'long' })} 매출
         </h1>
         <div><Image src={'/icons/smallRight.png'} alt={'right'} width={18} height={18}></Image></div>
       </div>
-
-      {/* Sales Summary */}
-      <section className="p-2">
-        <div className="space-y-1 text-base font-bold">
-          <div className="">
-            총 매출
-            <span className="text-blue-500 ml-4">{monthlyTotalIncome?.toLocaleString()} 원</span>
-          </div>
-          <h1 className="text-xl font-semibold p-3">
-            {activeStartDate?.toLocaleDateString("ko-KR", { month: "long" })}{" "}
-            매출
-          </h1>
-          <div>
-            <Image
-              src={"/icons/smallRight.png"}
-              alt={"right"}
-              width={18}
-              height={18}
-            ></Image>
-          </div>
-        </div>
 
         {/* Sales Summary */}
         <section className="p-4">

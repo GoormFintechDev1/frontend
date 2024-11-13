@@ -4,6 +4,9 @@ import { Bar, BarChart, Cell, LabelList, ResponsiveContainer } from "recharts";
 import {RevenueLoading} from "../Loading";
 import Error from "../Error";
 import { useRevenueHistory } from "@/hooks/useRevenueQuery";
+import dayjs from "dayjs";
+import { paramMonth2 } from "@/utils/calculateDay";
+dayjs().format();
 
 interface RevenueProps {
   height: string;
@@ -14,8 +17,7 @@ const Revenue: React.FC<RevenueProps> = ({height}) => {
   const year = new Date().getFullYear();
   const month = new Date().getMonth() +1;
 
-  const { data, isLoading, error } = useRevenueHistory(year, month);
-  // console.log(error)
+  const { data, isLoading, error } = useRevenueHistory(paramMonth2(year, month));
 
   const revenueData = [
     { name: month-2+'월', value: data?.totalIncome2Ago, fill: "#E5E7EB" },
@@ -25,7 +27,7 @@ const Revenue: React.FC<RevenueProps> = ({height}) => {
 
   
   if (isLoading) {
-    return <RevenueLoading />
+    return <RevenueLoading/>
   }
 
   if (error) {

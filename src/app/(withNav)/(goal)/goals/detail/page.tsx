@@ -5,14 +5,14 @@ import dayjs from "dayjs";
 import { useExpenseGoal, useRevenueGoal } from "@/hooks/useGoalQuery";
 import { paramMonth2 } from "@/utils/calculateDay";
 import Link from "next/link";
+import Image from "next/image";
+import { convertToKoreanWon } from "@/utils/currency";
 dayjs().format();
 
 
 export default function ObjDetail() {
     const searchParams = useSearchParams();
     const pageType = searchParams.get("page"); 
-    const router = useRouter();
-
 
     const [currentIndex, setCurrentIndex] = useState(new Date().getMonth() + 1);
     const [previousData, setPreviousData] = useState(1);
@@ -24,10 +24,7 @@ export default function ObjDetail() {
     const date = paramMonth2(year, currentIndex);
 
     const {data: revenue} = useRevenueGoal(date);
-    console.log(revenue);
-  
     const {data: expense} = useExpenseGoal(date);
-    console.log(expense);
 
 
     // // 현재, 지난달, 지지난달 데이터 계산
@@ -97,47 +94,53 @@ export default function ObjDetail() {
     let nextTotal = pageType === "revenue" ? revenue?.monthlyRevenue2Ago : expense?.monthlyExpense2Ago;
     if (nextTotal === null) nextTotal = 0;
 
-
     return (
-        <div className="container mx-auto p-4">
-            <div className="flex items-center mb-4">
-                <button onClick={() => router.back()} className="mr-2 text-gray-600 text-xl font-bold">
-                    {"<"}
-                </button>
+        <div className="container mx-auto p-4 h-full">
+            <div className="back">
+                <Link href={"/goals"}>
+                <Image alt="back" src={'/icons/arrow.png'} width={25} height={25}></Image>
+                </Link>
             </div>
-            <div className="flex flex-row">
-                <h1 className="text-2xl font-extralight mb-4 text-center">
-                    {pageType === "revenue" ? "매출 목표 상세페이지" : "지출 목표 상세페이지"}
+            <div className="flex flex-row justify-between items-center mb-6">
+                <h1 className="text-xl font-bold">
+                    {pageType === "revenue" ? "매출 목표" : "지출 목표"}
                 </h1>
-                <Link href="/setGoals"><p>수정하기</p></Link>
+                <Link href="/setGoals"><p className="text-sm text-gr">수정하기</p></Link>
             </div>
             
 
             {/* 월별 정보 */}
-            <div className="flex items-center justify-between mb-4">
-                <button onClick={goToPreviousMonth} className="text-xl font-bold">{"<"}</button>
-                <span className="text-xl font-normal">{currentData}월 </span>
-                <button onClick={goToNextMonth} className="text-xl font-bold">{">"}</button>
+            <div className="flex justify-center items-center ">
+                <Image alt="back" onClick={goToPreviousMonth} src={'/icons/smallLeft.png'} width={18} height={18}></Image>
+                <h1 className="text-xl font-semibold p-3">{currentData}월</h1>
+                <Image alt="back" onClick={goToNextMonth} src={'/icons/smallRight.png'} width={18} height={18}></Image>
             </div>
-
 
             {/*자세한 목표 설정*/}
-            <div className="text-center my-10 text-xl">
-                {pageType === "revenue" ? " 매출 상세 목표 " : "지출 상세 목표 "}
+            <div className="text-center my-16 text-xl">
+                {pageType === "revenue" ? (
+                    <p className="text-gray-600"><span className="text-emerald-500 font-bold">{convertToKoreanWon(revenue?.revenueGoal0Ago)}</span> 중 &nbsp;
+                    <span className="text-black font-bold">{convertToKoreanWon(revenue?.monthlyRevenue0Ago)}</span> 달성
+                    </p>
+                ) : (
+                    <p className="text-gray-600"><span className="text-red-500 font-bold">{convertToKoreanWon(expense?.expenseGoal0Ago)}</span> 중 &nbsp;
+                    <span className="text-black font-bold">{convertToKoreanWon(expense?.monthlyExpense0Ago)}</span> 지출
+                    </p>
+                )}
             </div>
 
-
+            <div className="py-20">
             {/* 현재 달 정보 */}
             <div className="text-base font-sans mb-2">
                 <p className="mb-2">
-                    <strong>{currentData}월 </strong> <span className="font-midium">- 총 {currentTotal?.toLocaleString() || "0"}원 </span>
+                    <strong>{currentData}월 </strong> <span className="font-midium"> - {currentTotal?.toLocaleString() || "0"}원 </span>
                 </p>
-                <div className="relative w-full h-8 bg-gray-300 rounded-full overflow-hidden mb-8">
+                <div className="relative w-full h-7 bg-gray-200 rounded-md overflow-hidden mb-8">
                     <div
-                        style={{ width: "100%" }}
-                        className={`h-full ${currentColor} rounded-full flex items-center justify-center text-black text-sm font-bold p-3`}
+                        style={{ width: `${currentAchievement}%` }}
+                        className={`h-full ${currentColor} rounded-md flex items-center justify-center text-white text-sm font-bold p-3`}
                     >
-                        {currentAchievement}%
+                        <p>{currentAchievement}%</p>
                     </div>
                 </div>
             </div>
@@ -145,14 +148,14 @@ export default function ObjDetail() {
             {/* 지난 달 정보 */}
             <div className="text-base font-sans mb-2">
                 <p className="mb-2">
-                    <strong>{previousData}월 </strong> <span className="font-midium"> - 총 {previousTotal?.toLocaleString() || "0"}원 </span>
+                    <strong>{previousData}월 </strong> <span className="font-midium"> - {previousTotal?.toLocaleString() || "0"}원 </span>
                 </p>
-                <div className="relative w-full h-8 bg-gray-300 rounded-full overflow-hidden mb-8">
+                <div className="relative w-full h-7 bg-gray-200 rounded-md overflow-hidden mb-8">
                     <div
-                        style={{ width: "100%" }}
-                        className={`h-full ${previousColor} rounded-full flex items-center justify-center text-black text-sm font-bold p-3`}
+                        style={{ width: `${previousAchievement}%` }}
+                        className={`h-full ${previousColor} rounded-md flex items-center justify-center text-white text-sm font-bold p-3`}
                     >
-                        {previousAchievement}%
+                        <p>{previousAchievement}%</p>
                     </div>
                 </div>
             </div>
@@ -162,14 +165,15 @@ export default function ObjDetail() {
                 <p className="mb-2">
                     <strong>{prepreviousData}월 </strong> <span className="font-midium"> - 총 {nextTotal?.toLocaleString() || "0"}원 </span>
                 </p>
-                <div className="relative w-full h-8 bg-gray-300 rounded-full overflow-hidden">
+                <div className="relative w-full h-7 bg-gray-200 rounded-md overflow-hidden mb-8">
                     <div
-                        style={{ width: "100%" }}
-                        className={`h-full ${nextColor} rounded-full flex items-center justify-center text-black text-sm font-bold p-3`}
+                        style={{ width: `${nextAchievement}%` }}
+                        className={`h-full ${nextColor} rounded-md flex items-center justify-center text-white text-sm font-bold p-3`}
                     >
-                        {nextAchievement}%
+                        <p>{nextAchievement}%</p>
                     </div>
                 </div>
+            </div>
             </div>
 
         </div>

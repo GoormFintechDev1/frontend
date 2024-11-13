@@ -1,10 +1,12 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { PieChart, Pie, Cell, Label } from "recharts";
 import dayjs from "dayjs";
 import { useExpenseGoal, useRevenueGoal } from "@/hooks/useGoalQuery";
 import { paramMonth2 } from "@/utils/calculateDay";
 import { useState } from "react";
+import { convertToKoreanWon } from "@/utils/currency";
 dayjs().format();
 
 
@@ -47,17 +49,19 @@ export default function Objective() {
 
     return (
         <div className="container mx-auto p-4">
-            <div className="flex items-center mb-4">
-                <button className="mr-2 text-gray-600 text-lg">{"<"}</button>
+            <div className="back">
+                <Link href={"/"}>
+                <Image alt="back" src={'/icons/arrow.png'} width={25} height={25}></Image>
+                </Link>
             </div>
             <div className="mb-8">
-                <h1 className="text-xl font-extralight text-center">목표를 관리해보세요!</h1>
+                <h1 className="text-xl font-semibold">목표를 관리해보세요!</h1>
             </div>
 
                 {/* 매출 목표 */}
             <Link href="/goals/detail?page=revenue">
                 <div className="bg-white rounded-lg shadow p-4 mb-4 cursor-pointer">
-                    <h2 className="text-lg font-bold mb-2">매출 목표</h2>
+                    <p className="text-base font-medium mb-2">매출 목표</p>
                     <div className="flex items-center">
                         <div className="w-1/2 flex justify-center items-center">
                             <PieChart width={95} height={100}>
@@ -82,9 +86,9 @@ export default function Objective() {
                                 </Pie>
                             </PieChart>
                         </div>
-                        <div className="w-1/2 text-right">
+                        <div className="w-1/2 text-center">
                             <span className="text-gray-500 text-lg">목표</span>
-                            <p className="text-emerald-500 text-xl font-semibold">{revenue?.revenueGoal0Ago}원 </p>
+                            <p className="text-emerald-500 text-xl font-semibold">{convertToKoreanWon(revenue?.revenueGoal0Ago)} </p>
                         </div>
                     </div>
                 </div>
@@ -94,7 +98,7 @@ export default function Objective() {
                 {/* 지출 목표 */}
                 <Link href="/goals/detail?page=expense">
                 <div className="bg-white rounded-lg shadow p-4 mt-10 cursor-pointer">
-                    <h2 className="text-lg font-bold mb-2">지출 목표</h2>
+                    <p className="text-base font-medium mb-2">지출 목표</p>
                     <div className="flex items-center">
                         <div className="w-1/2 flex justify-center items-center">
                             <PieChart width={95} height={100}>
@@ -119,13 +123,18 @@ export default function Objective() {
                                 </Pie>
                             </PieChart>
                         </div>
-                        <div className="w-1/2 text-right">
-                        <span className="text-gray-500 text-lg">예산</span>
-                            <p className="text-rose-400 text-xl font-semibold">{expense?.monthlyExpense0Ago}원 </p>
+                        <div className="w-1/2 text-center">
+                            <span className="text-gray-500 text-lg">예산</span>
+                            <p className="text-rose-400 text-xl font-semibold">{convertToKoreanWon(expense?.monthlyExpense0Ago)} </p>
                         </div>
                     </div>
                 </div>
             </Link>
         </div>
     );
+}
+
+function calculateRemainingBudgetPercentage(currentExpense:number, budget:number) {
+    if (budget === 0) return 0; // 예산이 0일 경우 남은 비율 0%로 처리
+    return Math.round((1 - currentExpense / budget) * 100);
 }

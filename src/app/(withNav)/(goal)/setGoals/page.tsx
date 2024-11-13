@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import { useExpenseGoal, useRevenueGoal, useSetGoal, useUpdateGoal } from "@/hooks/useGoalQuery";
 import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
+import { useRouter } from "next/navigation";
 dayjs().format();
 
 export default function setGoals(){
@@ -44,10 +45,12 @@ export default function setGoals(){
     }
   }, [revenue, expense]);
 
+  const router = useRouter();
+
   return (
     <div className="container min-h-screen flex flex-col">
       <div className="flex items-center justify-between mb-6">
-        <Link href={"/"}>
+        <Link href={"#"} onClick={router.back}>
           <Image alt="back" src={'/icons/arrow.png'} width={25} height={25} />
         </Link>
       </div>
@@ -61,7 +64,7 @@ export default function setGoals(){
             <input
               className="text-emerald-500 placeholder:text-xs w-full placeholder:text-gray-600 focus:outline-none"
               placeholder="매출 목표를 설정해보세요."
-              {...register("expenseGoal", { valueAsNumber: true })}
+              {...register("revenueGoal", { valueAsNumber: true })}
             />
             <p>원</p>
           </div>
@@ -72,13 +75,13 @@ export default function setGoals(){
             <input
               className="text-red-500 placeholder:text-xs w-full placeholder:text-gray-600 focus:outline-none"
               placeholder="지출 예산을 설정해보세요."
-              {...register("revenueGoal", { valueAsNumber: true })}
+              {...register("expenseGoal", { valueAsNumber: true })}
             />
             <p>원</p>
           </div>
         </div>
         <div className="flex-grow"></div> {/* This will push the button to the bottom */}
-        <Button type="submit" href="/goals" className="!mb-[83px]">저장하기</Button> {/* Added larger bottom margin */}
+        <Button type="submit" href="/goals" className="!mb-[40px]">저장하기</Button> {/* Added larger bottom margin */}
       </form>
       <Navbar />
     </div>
