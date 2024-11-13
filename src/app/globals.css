@@ -33,6 +33,7 @@ body {
   max-width: 800px;
   height: 100vh;
   padding: 25px; 
+  padding-bottom: 83px; /* navbar 만큼 padding-bottom 값 추가 */
 }
 
 #main {

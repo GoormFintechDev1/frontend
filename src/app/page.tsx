@@ -1,6 +1,5 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
 import Revenue from "@/components/main/Revenue";
 import Profit from "@/components/main/Profit";
 import Expenses from "@/components/main/Expenses";
@@ -54,8 +53,6 @@ export default function Home() {
         {/* 이번 달 목표 */}
         <Goals height={height} />
       </div>
-
-      <Navbar />
     </div>
   );
 }

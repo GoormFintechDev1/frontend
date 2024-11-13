@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import { useProfitDetail } from "@/hooks/useProfitQuery";
 import Button from "@/components/Button";
@@ -91,8 +90,6 @@ export default function Income() {
                     </Button>
                 </div>
             </div>
-
-        <Navbar/>
 
         <style jsx>{`
             .fireworks-container {
