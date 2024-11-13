@@ -1,16 +1,21 @@
 import { create } from "zustand";
 
+interface ReportDTOType {
+  title: string,
+  contents: string[],
+}
+
 interface ReportsState {
-  content: string | string[] | object[],
-  setReportData: (data: string | string[] | object[]) => void,
+  data: ReportDTOType[],
+  setReportData: (data: ReportDTOType[]) => void,
 }
 
 const useReportsStore = create<ReportsState>((set) => ({
   // State
-  content: "",
+  data: [],
 
   //Actions
-  setReportData: (data) => set({ content: data })
+  setReportData: (data) => set({ data: data })
 }));
 
 export default useReportsStore;
