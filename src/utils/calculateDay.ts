@@ -9,17 +9,19 @@ export const paramMonth2 = (year:number, month: number) => { // DB에 전달하�
   return formattedDate;
 };
 
-export const currentMonth = (month: number) => { // 화면에 표시할 날짜 포맷
+
+/* month 를 YYYYMM 형식으로 전달 받으면 number, YYYY-MM 형식으로 전달 받으면 string */
+export const currentMonth = (month: number | string) => { // 화면에 표시할 날짜 포맷
   return dayjs(month).format("MM월");
 };
 
-export const handlePrevMonth = (month: number) => { // 현재 월 기준으로 이전 월 계산
-  const prevMonth = dayjs(month).subtract(1, 'month').format('MM월');
+export const handlePrevMonth = (month: number | string) => { // 현재 월 기준으로 이전 월 계산
+  const prevMonth = dayjs(month).subtract(1, 'month').format('YYYY-MM');
   return prevMonth
 }
 
-export const handleNextMonth = (month: number) => { // 현재 월 기준으로 다음 월 계산
-  const nextMonth = dayjs(month).add(1, 'month').format('MM월');
+export const handleNextMonth = (month: number | string) => { // 현재 월 기준으로 다음 월 계산
+  const nextMonth = dayjs(month).add(1, 'month').format('YYYY-MM');
   return nextMonth
 };
 
