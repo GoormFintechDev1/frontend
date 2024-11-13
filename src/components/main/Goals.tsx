@@ -14,10 +14,8 @@ interface RevenueProps {
 const Goals: React.FC<RevenueProps> = ({height}) =>  {
 
   const {data: revenue} = useRevenueGoal(paramMonth);
-  console.log(revenue);
 
   const {data: expense} = useExpenseGoal(paramMonth);
-  console.log(expense);
 
   return (
     <div className="box col-span-2 justify-between" style={{height}}>

@@ -86,6 +86,11 @@ body {
   box-shadow: 0px 0px 10px rgba(214, 214, 214, 0.25);
 }
 
+/* back */
+.back{
+  @apply flex items-center justify-between mb-6
+}
+
 /* 기본 캘린더 설정 */
 .react-calendar {
   width: 100% !important;
