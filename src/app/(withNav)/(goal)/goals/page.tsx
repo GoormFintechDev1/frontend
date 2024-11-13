@@ -75,7 +75,7 @@ export default function Objective() {
                                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                     ))}
                                     <Label
-                                        value={`${revenuePercentage}%`}
+                                        value={`${Math.min(revenuePercentage, 100)}%`} 
                                         position="center"
                                         style={labelStyle}
                                     />
@@ -84,7 +84,7 @@ export default function Objective() {
                         </div>
                         <div className="w-1/2 text-right">
                             <span className="text-gray-500 text-lg">목표</span>
-                            <p className="text-emerald-500 text-xl font-semibold">{revenue.revenueGoal0Ago}원 </p>
+                            <p className="text-emerald-500 text-xl font-semibold">{revenue?.revenueGoal0Ago}원 </p>
                         </div>
                     </div>
                 </div>
@@ -112,16 +112,16 @@ export default function Objective() {
                                         <Cell key={`cell-${index}`} fill={EXPENSE_COLORS[index % EXPENSE_COLORS.length]} />
                                     ))}
                                     <Label
-                                value={`${expensePercentage}%`}  
-                                position="center"
-                                style={{ ...labelStyle, fill: "#FB7185"}}
-                            />
+                                        value={`${Math.min(expensePercentage, 100)}%`} 
+                                        position="center"
+                                        style={{ ...labelStyle, fill: "#FB7185"}}
+                                    />
                                 </Pie>
                             </PieChart>
                         </div>
                         <div className="w-1/2 text-right">
                         <span className="text-gray-500 text-lg">예산</span>
-                            <p className="text-rose-400 text-xl font-semibold">{expense.monthlyExpense0Ago}원 </p>
+                            <p className="text-rose-400 text-xl font-semibold">{expense?.monthlyExpense0Ago}원 </p>
                         </div>
                     </div>
                 </div>
