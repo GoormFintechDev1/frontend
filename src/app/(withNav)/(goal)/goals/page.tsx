@@ -26,10 +26,8 @@ export default function Objective() {
     const date = paramMonth2(year, currentIndex);
 
     const {data: revenue} = useRevenueGoal(date);
-    console.log(revenue);
 
     const {data: expense} = useExpenseGoal(date);
-    console.log(expense);
 
     const revenuePercentage = Math.round((revenue?.monthlyRevenue0Ago / revenue?.revenueGoal0Ago) * 100);
     const revenueData = revenuePercentage >= 100 
@@ -89,7 +87,7 @@ export default function Objective() {
                             </PieChart>
                         </div>
                         <div className="w-1/2 text-center">
-                            <span className="text-gray-500 text-lg">목표</span>
+                            <span className="text-gray-500 text-lg">목표 금액</span>
                             <p className="text-emerald-500 text-xl font-semibold">{convertToKoreanWon(revenue?.revenueGoal0Ago)} </p>
                         </div>
                     </div>
@@ -100,7 +98,7 @@ export default function Objective() {
                 {/* 지출 목표 */}
                 <Link href="/goals/detail?page=expense">
                 <div className="bg-white rounded-lg shadow p-4 mt-10 cursor-pointer">
-                    <p className="text-base font-medium mb-2">지출 목표</p>
+                    <p className="text-base font-medium mb-2">지출 예산</p>
                     <div className="flex items-center">
                         <div className="w-1/2 flex justify-center items-center">
                             <PieChart width={95} height={100}>
@@ -126,7 +124,7 @@ export default function Objective() {
                             </PieChart>
                         </div>
                         <div className="w-1/2 text-center">
-                            <span className="text-gray-500 text-lg">예산</span>
+                            <span className="text-gray-500 text-lg">소비 금액</span>
                             <p className="text-rose-400 text-xl font-semibold">{convertToKoreanWon(expense?.monthlyExpense0Ago)} </p>
                         </div>
                     </div>

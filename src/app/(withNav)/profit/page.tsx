@@ -5,15 +5,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { useProfitDetail } from "@/hooks/useProfitQuery";
 import Button from "@/components/Button";
-import { paramMonth } from "@/utils/calculateDay";
+import { paramMonth2 } from "@/utils/calculateDay";
 
 import dayjs from "dayjs";
 dayjs().format();
 
 
 export default function Income() {
-    const [month, setMonth] = useState(11);
-    const income = 92500000;
+
+    let temp = new Date().getMonth();
+    if(!temp) temp = 12; 
+    const [month, setMonth] = useState(temp);
+    const [year, setYear] = useState(new Date().getFullYear());
     const [showFireworks, setShowFireworks] = useState(false);
 
     useEffect(() => {
@@ -22,15 +25,32 @@ export default function Income() {
         return () => clearTimeout(timer);
     }, []);
 
+    useEffect(()=>{
+
+    },[month])
+
     const handlePreviousMonth = () => {
         setMonth((prev) => (prev > 1 ? prev - 1 : 12));
     };
 
     const handleNextMonth = () => {
-        setMonth((prev) => (prev < 12 ? prev + 1 : 1));
-    };
-    
-    const {data: profit} = useProfitDetail(paramMonth);
+        const currentMonth = new Date().getMonth() + 1; // 현재 월 (1부터 시작하도록 조정)
+        const currentYear = new Date().getFullYear();
+      
+        setMonth((prev) => {
+          // 현재 연도에서 현재 월 - 1 (10월)을 넘지 않도록 제한
+          if (year === currentYear && prev >= currentMonth - 1) {
+            return prev; // 현재 월보다 한 달 이전까지만 보여줌
+          }
+          return prev < 12 ? prev + 1 : 1;
+        });
+      
+        if (month === 12) {
+          setYear((prev) => prev + 1); // 월이 12월이면 다음 해로 전환
+        }
+      };
+
+    const {data: profit} = useProfitDetail(paramMonth2(year,month));
     // console.log(profit);
 
     return (
@@ -73,15 +93,15 @@ export default function Income() {
                     <Image alt="back" onClick={handleNextMonth} src={'/icons/smallRight.png'} width={18} height={18}></Image>
                 </div>
                 <div className="mt-16">
-                    <div className="text-lg font-medium mb-4">이번 달 총 순수익은?</div>
-                    <div className="text-2xl font-bold text-blue-600 mb-6">{profit?.netProfit.toLocaleString()}원</div>
+                    <div className="text-lg font-medium mb-4">총 순수익은?</div>
+                    <div className="text-2xl font-bold text-blue-600 mb-6">{profit? profit.netProfit.toLocaleString(): 0}원</div>
                 </div>
 
                 <div className="text-left flex-grow text-gray-600 space-y-2 ml-20 mt-20">
-                    <div>➕ 총 매출: {profit?.incomeTotal.toLocaleString()}원</div>
-                    <div>➖ 매출 원가: {profit?.saleCost.toLocaleString()}원</div>
-                    <div>➖ 운영비용: {profit?. operatingExpense.toLocaleString()}원 </div>
-                    <div>➖ 세금: {profit?.taxes.toLocaleString()}원 </div>
+                    <div>➕ 총 매출: {profit?.incomeTotal?.toLocaleString() ?? 0}원</div>
+                    <div>➖ 원자재비: {profit?.saleCost?.toLocaleString() ??  0}원</div>
+                    <div>➖ 운영비용: {profit?.operatingExpense?.toLocaleString() ?? 0}원 </div>
+                    <div>➖ 세금: {profit?.taxes.toLocaleString() ?? 0}원 </div>
                 </div>
                 {/* <div className="flex-grow"></div> */}
                 <div className="flex justify-center w-full mb-[100px]">

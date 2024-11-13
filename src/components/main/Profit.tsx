@@ -10,7 +10,8 @@ interface RevenueProps {
 
 const Profit: React.FC<RevenueProps> = ({height}) => {
   const year = new Date().getFullYear();
-  const month = new Date().getMonth() + 1;
+  const month = new Date().getMonth();
+  //0일때수정해주기!
 
   const {data, isLoading} = useLastProfit(year, month);
   // console.log(data);
