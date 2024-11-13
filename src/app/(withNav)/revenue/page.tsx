@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useMonthlyRevenue } from "@/hooks/useRevenueQuery";
 import Link from "next/link";
+import { paramMonth2 } from "@/utils/calculateDay";
 
 interface DayIncome {
   date: string;
@@ -98,7 +99,7 @@ export default function Revenue() {
     ? activeStartDate.getMonth() + 1
     : new Date().getMonth() + 1;
 
-  const { data, isLoading, error } = useMonthlyRevenue(year, month);
+  const { data, isLoading, error } = useMonthlyRevenue(paramMonth2(year,month));
   const saleData = data?.dailyIncomeList;
   const monthlyTotalIncome = data?.monthlyTotalncome;
   const monthlyCardIncome = data?.monthlyCardIncome;
