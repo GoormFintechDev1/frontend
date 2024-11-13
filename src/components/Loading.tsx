@@ -15,6 +15,18 @@ export const RevenueLoading = () => {
   );
 };
 
+export const ProfitLoading = () => {
+  return (
+    <div className="flex flex-col justify-between bg-gray-100 py-4 px-3 rounded-2xl shadow animate-pulse">
+      <div className="flex justify-between items-center">
+        <div className="h-4 bg-gray-300 rounded w-1/3"></div>
+        <div className="h-4 bg-gray-300 rounded w-4"></div>
+      </div>
+      <div className="h-6 bg-gray-300 rounded w-1/2 m-auto"></div>
+    </div>
+  );
+};
+
 export const ExpensesLoading = () => {
   return (
     <div className="col-span-2 flex flex-col justify-between bg-gray-100 py-3 px-2 rounded-2xl shadow h-56 animate-pulse">
@@ -35,6 +47,29 @@ export const ExpensesLoading = () => {
               </li>
             ))}
           </ul>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const GoalLoading = () => {
+  return (
+    <div className="col-span-2 flex flex-col justify-between bg-gray-100 py-4 px-5 rounded-2xl shadow animate-pulse h-56">
+      <div className="flex justify-between items-center mb-4">
+        <div className="h-4 bg-gray-300 rounded w-1/3"></div>
+        <div className="h-4 bg-gray-300 rounded w-5"></div>
+      </div>
+      
+      <div className="flex justify-around items-center">
+        <div className="flex flex-col items-center">
+          <div className="h-4 bg-gray-300 rounded w-12 mb-2"></div>
+          <div className="h-6 bg-gray-300 rounded w-16"></div>
+        </div>
+        
+        <div className="flex flex-col items-center">
+          <div className="h-4 bg-gray-300 rounded w-12 mb-2"></div> 
+          <div className="h-6 bg-gray-300 rounded w-16"></div>
         </div>
       </div>
     </div>

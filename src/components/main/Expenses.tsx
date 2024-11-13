@@ -24,6 +24,7 @@ const Expenses: React.FC<RevenueProps> = ({height}) => {
     name: "",
     value: 0,
   }];
+
   if (expensesData) {
     chartData = Object.entries(expensesData?.categoryExpenses).map(
       ([key, value]) => {
@@ -32,7 +33,7 @@ const Expenses: React.FC<RevenueProps> = ({height}) => {
     );
   }
 
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+  const COLORS = ["#A80000", "#F30000", "#FF9F9F", "#B6B6B6"];
 
   if (isLoading) {
     return <ExpensesLoading />
@@ -41,6 +42,11 @@ const Expenses: React.FC<RevenueProps> = ({height}) => {
   if (error) {
     return <Error />
   }
+
+  const maxValue = Math.max(...chartData.map((entry) => entry.value));
+  const maxCategory = chartData.find((e)=> e.value === maxValue)?.name;
+
+  const highlightedData = chartData.filter((entry) => entry.value === maxValue);
 
   return (
     <div className="box col-span-2 justify-between" style={{ height }}>
@@ -73,13 +79,15 @@ const Expenses: React.FC<RevenueProps> = ({height}) => {
               dataKey="value"
               outerRadius={40}
               innerRadius={20}
-              startAngle={270}
-              endAngle={630}
+              startAngle={90}
+              endAngle={-270}
             >
               {
                 chartData?.map((entry, index) => (
                   <Cell key={`cell-${index}`}
                     fill={COLORS[index % COLORS.length]}
+                    stroke="#ffffff" // White stroke to separate segments
+                    strokeWidth={entry.value === maxValue ? 2 : 6}
                   />
                 ))
               }
@@ -97,11 +105,11 @@ const Expenses: React.FC<RevenueProps> = ({height}) => {
         </ResponsiveContainer>
         <div className="flex flex-col justify-center space-y-4 w-[70%]">
           <p className="text-base text-center text-red-500 font-bold">
-            {convertToKoreanWon(150000)}
+            {convertToKoreanWon(expensesData?.totalMonthExpenses as number)}
           </p>
-          <p className='text-xs text-center'>가장 큰 지출은 <span className='text-red-500 font-bold'>카테고리</span>예요.</p>
+          <p className='text-xs text-center'>가장 큰 지출은 <span className='text-red-500 font-bold'>{maxCategory}</span>예요.</p>
           <p className="text-[10px] text-center text-gray-500">
-            오늘은 <span className='text-red-400 font-bold'>{convertToKoreanWon(20000)}</span> 지출했어요!
+            오늘은 <span className='text-red-400 font-bold'>{convertToKoreanWon(expensesData?.totalTodayExpense as number)}</span> 지출했어요!
           </p>
           
         </div>

@@ -1,21 +1,14 @@
 "use client";
 import Link from "next/link";
-import { PieChart, Pie, Cell, Label } from "recharts";
 import Image from "next/image";
-import { useExpenseGoal, useRevenueGoal } from "@/hooks/useGoalQuery";
+import { PieChart, Pie, Cell, Label } from "recharts";
 import dayjs from "dayjs";
-import { paramMonth } from "@/utils/calculateDay";
+import { useExpenseGoal, useRevenueGoal } from "@/hooks/useGoalQuery";
+import { paramMonth2 } from "@/utils/calculateDay";
+import { useState } from "react";
+import { convertToKoreanWon } from "@/utils/currency";
 dayjs().format();
 
-const data = [
-    { name: "Completed", value: 65 },
-    { name: "Remaining", value: 35 },
-];
-
-// const dataExpense = [
-//     { name: "Completed", value: 60 },
-//     { name: "Remaining", value: 40 },
-// ];
 
 const labelStyle = {
     fontSize: "14px",
@@ -27,16 +20,31 @@ const COLORS = ["#0FA573", "#E2E8F0"];  // 매출 목표 색상
 const EXPENSE_COLORS = ["#FB7185", "#E2E8F0"];   // 지출 목표 색상
 
 export default function Objective() {
+    const [year, setYear] = useState(new Date().getFullYear());
+    const [currentIndex, setCurrentIndex] = useState(new Date().getMonth() + 1);
 
-    const {data:expense} = useExpenseGoal(paramMonth); 
-    const {data:revenue} = useRevenueGoal(paramMonth); 
+    const date = paramMonth2(year, currentIndex);
 
-    const expenseRate = calculateRemainingBudgetPercentage(expense?.monthlyExpense0Ago, expense?.expenseGoal0Ago);
+    const {data: revenue} = useRevenueGoal(date);
+    console.log(revenue);
 
-    const dataExpense = [
-        {name: "Completed", value: expenseRate},
-        {name: "Remaining", value: 100-expenseRate},
+    const {data: expense} = useExpenseGoal(date);
+    console.log(expense);
 
+    const revenuePercentage = Math.round((revenue?.monthlyRevenue0Ago / revenue?.revenueGoal0Ago) * 100);
+    const revenueData = revenuePercentage >= 100 
+    ? [{ name: "Completed", value: 100 }]  // 100% 이상일 때 전체를 Completed 색상으로 채우기
+    : [
+        { name: "Completed", value: revenuePercentage },
+        { name: "Remaining", value: 100 - revenuePercentage }
+      ];
+
+    const expensePercentage = Math.round((expense?.monthlyExpense0Ago / expense?.expenseGoal0Ago) * 100);
+    const expenseData = expensePercentage >= 100
+    ? [{name: "Completed", value: 100}]
+    : [
+        { name: "Completed", value: expensePercentage },
+        { name: "Remaining", value: 100 - expensePercentage }
     ];
 
     return (
@@ -50,7 +58,7 @@ export default function Objective() {
                 <h1 className="text-xl font-semibold">목표를 관리해보세요!</h1>
             </div>
 
-            {/* 매출 목표 */}
+                {/* 매출 목표 */}
             <Link href="/goals/detail?page=revenue">
                 <div className="bg-white rounded-lg shadow p-4 mb-4 cursor-pointer">
                     <p className="text-base font-medium mb-2">매출 목표</p>
@@ -58,7 +66,7 @@ export default function Objective() {
                         <div className="w-1/2 flex justify-center items-center">
                             <PieChart width={95} height={100}>
                                 <Pie
-                                    data={data}
+                                    data={revenueData}
                                     cx="50%"
                                     cy="50%"
                                     innerRadius={30}
@@ -67,11 +75,11 @@ export default function Objective() {
                                     startAngle={90}
                                     endAngle={-270}
                                 >
-                                    {data.map((entry, index) => (
+                                    {revenueData.map((entry, index) => (
                                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                     ))}
                                     <Label
-                                        value={`${data[0].value}%`}  
+                                        value={`${revenuePercentage}%`}
                                         position="center"
                                         style={labelStyle}
                                     />
@@ -80,11 +88,13 @@ export default function Objective() {
                         </div>
                         <div className="w-1/2 text-center">
                             <span className="text-gray-500 text-lg">목표</span>
-                            <p className="text-emerald-500 text-xl font-semibold">200만원</p>
+                            <p className="text-emerald-500 text-xl font-semibold">{convertToKoreanWon(revenue?.revenueGoal0Ago)} </p>
                         </div>
                     </div>
                 </div>
-                </Link>                        
+                </Link>
+
+
                 {/* 지출 목표 */}
                 <Link href="/goals/detail?page=expense">
                 <div className="bg-white rounded-lg shadow p-4 mt-10 cursor-pointer">
@@ -93,7 +103,7 @@ export default function Objective() {
                         <div className="w-1/2 flex justify-center items-center">
                             <PieChart width={95} height={100}>
                                 <Pie
-                                    data={dataExpense}
+                                    data={expenseData}
                                     cx="50%"
                                     cy="50%"
                                     innerRadius={30}
@@ -102,11 +112,11 @@ export default function Objective() {
                                     startAngle={90}
                                     endAngle={-270}
                                 >
-                                    {dataExpense.map((entry, index) => (
+                                    {expenseData.map((entry, index) => (
                                         <Cell key={`cell-${index}`} fill={EXPENSE_COLORS[index % EXPENSE_COLORS.length]} />
                                     ))}
                                     <Label
-                                value={`${dataExpense[0].value}%`}  
+                                value={`${expensePercentage}%`}  
                                 position="center"
                                 style={{ ...labelStyle, fill: "#FB7185"}}
                             />
@@ -114,8 +124,8 @@ export default function Objective() {
                             </PieChart>
                         </div>
                         <div className="w-1/2 text-center">
-                        <span className="text-gray-500 text-lg">예산</span>
-                            <p className="text-rose-400 text-xl font-semibold">50만원</p>
+                            <span className="text-gray-500 text-lg">예산</span>
+                            <p className="text-rose-400 text-xl font-semibold">{convertToKoreanWon(expense?.monthlyExpense0Ago)} </p>
                         </div>
                     </div>
                 </div>

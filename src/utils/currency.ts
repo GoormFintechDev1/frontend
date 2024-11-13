@@ -4,7 +4,7 @@ export function convertToKoreanWon(value: number): string {
   const isNegative = value < 0;
   let currentValue = Math.abs(value); // 음수일 경우 절대값으로 변환
 
-  if (currentValue < 1000) return `${isNegative ? '-' : ''}${currentValue}원`; // 천 원 미만일 때는 원으로 표시
+  if (currentValue < 1000) return `${isNegative ? '-' : ''}${currentValue} 원`; // 천 원 미만일 때는 원으로 표시
 
   const units: string[] = ["", "만", "천", "백"]; // 단위 배열
   let result: string = "";
@@ -32,10 +32,10 @@ export function convertToKoreanWon(value: number): string {
 
   // 원 단위 (1원~99원)
   if (currentValue > 0) {
-    result += ` ${currentValue}원`;
+    result += ` ${currentValue} 원`;
   }
 
-  return (isNegative ? '-' : '') + result.trim() + "원"; // 음수일 경우 '-' 추가 후 반환
+  return (isNegative ? '-' : '') + result.trim() + " 원"; // 음수일 경우 '-' 추가 후 반환
 }
 
 export const formatNumberWithComma = (value: number): string => {

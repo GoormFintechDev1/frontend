@@ -81,7 +81,7 @@ export default function setGoals(){
           </div>
         </div>
         <div className="flex-grow"></div> {/* This will push the button to the bottom */}
-        <Button type="submit" href="/goals" className="!mb-[83px]">저장하기</Button> {/* Added larger bottom margin */}
+        <Button type="submit" href="/goals" className="!mb-[40px]">저장하기</Button> {/* Added larger bottom margin */}
       </form>
       <Navbar />
     </div>

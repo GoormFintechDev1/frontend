@@ -5,6 +5,7 @@ import React from 'react'
 
 import dayjs from "dayjs";
 import { paramMonth } from '@/utils/calculateDay';
+import { GoalLoading } from '../Loading';
 dayjs().format();
 
 interface RevenueProps {
@@ -13,9 +14,12 @@ interface RevenueProps {
 
 const Goals: React.FC<RevenueProps> = ({height}) =>  {
 
-  const {data: revenue} = useRevenueGoal(paramMonth);
+  const {data: revenue, isLoading} = useRevenueGoal(paramMonth);
+  const {data: expense,} = useExpenseGoal(paramMonth);
 
-  const {data: expense} = useExpenseGoal(paramMonth);
+  if(isLoading){
+    return <GoalLoading/>
+  }
 
   return (
     <div className="box col-span-2 justify-between" style={{height}}>
@@ -41,13 +45,13 @@ const Goals: React.FC<RevenueProps> = ({height}) =>  {
         </span>
       </div>
       <div className="flex justify-around w-full h-full">
-        <div className="flex flex-col justify-center">
-          <p className="text-pink-500 font-bold">매출</p>
-          <p>{Math.round(revenue?.monthlyRevenue0Ago / revenue?.revenueGoal0Ago)}%</p>
+        <div className="flex flex-col justify-center space-y-3">
+          <p className= "text-center">매출</p>
+          <p className='text-pink-700 font-bold'>{Math.round((revenue?.monthlyRevenue0Ago / revenue?.revenueGoal0Ago)*100)}% 달성했어요</p>
         </div>
-        <div className="flex flex-col justify-center">
-          <p className="text-center text-pink-500 font-bold">지출</p>
-          <p>{convertToKoreanWon(expense?.monthlyExpense0Ago)} 남았어요</p>
+        <div className="flex flex-col justify-center space-y-3">
+          <p className="text-center">지출</p>
+          <p className='text-pink-700 font-bold'>{convertToKoreanWon(expense?.expenseGoal0Ago - expense?.monthlyExpense0Ago)} 남았어요</p>
         </div>
       </div>
     </div>

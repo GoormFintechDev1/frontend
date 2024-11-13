@@ -2,6 +2,7 @@
 import { useLastProfit } from "@/hooks/useProfitQuery";
 import { convertToKoreanWon } from "@/utils/currency"
 import Link from "next/link"
+import { ProfitLoading } from "../Loading";
 
 interface RevenueProps {
   height: string;
@@ -11,8 +12,12 @@ const Profit: React.FC<RevenueProps> = ({height}) => {
   const year = new Date().getFullYear();
   const month = new Date().getMonth() + 1;
 
-  const {data} = useLastProfit(year, month);
+  const {data, isLoading} = useLastProfit(year, month);
   // console.log(data);
+
+  if (isLoading) {
+    return <ProfitLoading />
+  }
 
   return (
     <div className="box" style={{height}}>

@@ -25,7 +25,7 @@ const Revenue: React.FC<RevenueProps> = ({height}) => {
 
   
   if (isLoading) {
-    return <RevenueLoading />
+    return <RevenueLoading/>
   }
 
   if (error) {
