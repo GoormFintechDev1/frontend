@@ -79,7 +79,7 @@ export default function Objective() {
                                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                     ))}
                                     <Label
-                                        value={`${revenuePercentage}%`}
+                                        value={`${Math.min(revenuePercentage, 100)}%`} 
                                         position="center"
                                         style={labelStyle}
                                     />
@@ -116,10 +116,10 @@ export default function Objective() {
                                         <Cell key={`cell-${index}`} fill={EXPENSE_COLORS[index % EXPENSE_COLORS.length]} />
                                     ))}
                                     <Label
-                                value={`${expensePercentage}%`}  
-                                position="center"
-                                style={{ ...labelStyle, fill: "#FB7185"}}
-                            />
+                                        value={`${Math.min(expensePercentage, 100)}%`} 
+                                        position="center"
+                                        style={{ ...labelStyle, fill: "#FB7185"}}
+                                    />
                                 </Pie>
                             </PieChart>
                         </div>
