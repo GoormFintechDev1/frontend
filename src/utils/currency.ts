@@ -1,5 +1,5 @@
 export function convertToKoreanWon(value: number): string {
-  if (value === 0) return "0원"; // 0일 때는 0원으로 표시
+  if (value === 0) return "0 원"; // 0일 때는 0원으로 표시
 
   const isNegative = value < 0;
   let currentValue = Math.abs(value); // 음수일 경우 절대값으로 변환
@@ -32,7 +32,7 @@ export function convertToKoreanWon(value: number): string {
 
   // 원 단위 (1원~99원)
   if (currentValue > 0) {
-    result += ` ${currentValue} 원`;
+    result += ` ${currentValue}`;
   }
 
   return (isNegative ? '-' : '') + result.trim() + " 원"; // 음수일 경우 '-' 추가 후 반환
