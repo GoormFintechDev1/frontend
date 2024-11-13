@@ -1,24 +1,31 @@
 "use client"
 
+import { useLogoutMutation } from "@/hooks/useAuthQuery";
 import { useUserInfo } from "@/hooks/useUserQuery";
+import { log } from "console";
 import dayjs from "dayjs";
+import { userInfo } from "os";
 dayjs().format();
 
 
 export default function MyPage() {
-    const {data, isLoading, error} = useUserInfo();
 
     const {data: useInfo} = useUserInfo();
-    console.log(useInfo);
+
+    const logout = useLogoutMutation();
+
+    const hanldeLogout = () => {
+        logout.mutate(useInfo?.loginId);
+    }
 
     return (
         <div className="flex flex-col h-screen">
             <div className="flex items-center justify-between ">
-                <h1 className="text-xl ml-4 mt-4 p-2 font-extralight"> 📌{data?.companyName} </h1>
+                <h1 className="text-xl ml-4 mt-4 p-2 font-extralight"> 📌{useInfo?.companyName} </h1>
             </div>
 
             <div className="text-right mr-4">
-                <p className="text-gray-500 border-b"> 로그아웃 </p>
+                <p className="text-gray-500 border-b" onClick={hanldeLogout}> 로그아웃 </p>
             </div>
 
             <div className="flex flex-col p-6 m-6 bg-gray-50 rounded-lg shadow-md">

@@ -44,12 +44,13 @@ export const joinUser = async (formData:FormDataType) => {
   return response;
 };
 
-export const logoutUser = async () => {
+export const logoutUser = async (loginId:string) => {
   const response = await fetch(`${url}/logout`, {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',
     },
+    body: JSON.stringify({loginId}),
     credentials: "include",
   })
 
