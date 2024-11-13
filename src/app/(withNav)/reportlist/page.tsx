@@ -10,17 +10,17 @@ export default function ReportList() {
             </div>
 
             <div className="p-4">
-                <Link href="/reportdetail?month=11월">
+                <Link href="/reportlist/detail?month=2024-11">
                     <div className="mb-7 p-4 bg-gray-200 text-black rounded-lg cursor-pointer">
                         11월 월간 리포트
                     </div>
                 </Link>
-                <Link href="/reportdetail?month=10월">
+                <Link href="/reportlist/detail?month=2024-10">
                     <div className="mb-7 p-4 bg-gray-200 text-black rounded-lg cursor-pointer">
                         10월 월간 리포트
                     </div>
                 </Link>
-                <Link href="/reportdetail?month=9월">
+                <Link href="/reportlist/detail?month=2024-09">
                     <div className="mb-7 p-4 bg-gray-200 text-black rounded-lg cursor-pointer">
                         9월 월간 리포트
                     </div>

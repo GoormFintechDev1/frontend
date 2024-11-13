@@ -7,11 +7,14 @@ if (enviroment === "production") {
 
 console.log(url);
 
-export const getRevenueData = async () => {
+export const getReportData = async (paramMonth: string) => {
+  // fetch(`${url}/${paramMonth}`, {
+  //   method: "GET",
+  //   credentials: "include"
+  // });
+
   const data = [
-    { name: "9월", value: 5000, fill: "#E5E7EB" },
-    { name: "10월", value: 20000, fill: "#E5E7EB" },
-    { name: "11월", value: 15000, fill: "#6EE7B7" },
+    { paramMonth },
   ]
 
   return data;

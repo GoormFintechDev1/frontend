@@ -1,5 +1,6 @@
 import { ExpenseDetail } from "@/interface/expenses";
 import { groupByWeek } from "@/utils/calculateDay";
+import { formatNumberWithComma } from "@/utils/currency";
 import dayjs from "dayjs";
 import Link from "next/link";
 
@@ -32,7 +33,7 @@ const ExpensesWeekData = ({ chartData, month, COLORS, categoryColorMap }: Weekly
                   <div className="flex items-center">
                     <span className="w-3 h-3 inline-block mr-2"  style={{ backgroundColor: categoryColorMap[expense.category] || COLORS[index % COLORS.length] }}></span>
                     {expense.category}</div>
-                  <div>{expense.amount}</div>
+                  <div>{formatNumberWithComma(expense.amount)}</div>
                 </Link>
                 {/* <div>
                   {dayjs(expense.transactionDate).format("YYYY-MM-DD HH:mm")}

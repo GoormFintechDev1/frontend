@@ -12,6 +12,8 @@ const ExpensesPieChart = (props: chartDataProps) => {
     amount: value,
   }));
 
+  console.log(totalExpenses);
+
   return (
     <div className="flex mb-4">
       <ResponsiveContainer width="100%" height={200}>

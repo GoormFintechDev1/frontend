@@ -1,4 +1,5 @@
 import { chartDataProps } from "@/interface/expenses";
+import { formatNumberWithComma } from "@/utils/currency";
 import Link from "next/link";
 import React from "react";
 
@@ -9,7 +10,7 @@ const ExpensesData = (props: chartDataProps) => {
   
   const totalExpenses = Object.entries(props.chartData.categoryTotalExpenses).map(([key, value]) => ({
     category: key,
-    amount: value,
+    amount: formatNumberWithComma(value),
   }));
   
   return (
