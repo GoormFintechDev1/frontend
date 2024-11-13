@@ -18,7 +18,7 @@ export interface InputType2 {
 }
 
 export interface FormDataType {
-    account: string;
+    loginId: string;
     password: string;
     name: string;
     phoneNumber: string;
