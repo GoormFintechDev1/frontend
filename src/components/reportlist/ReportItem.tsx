@@ -1,25 +1,35 @@
-type ReportItemProps = {
-  month: string;
-  selectedMonth: string | null | undefined;
-  handleToggle: (month: string) => void;
-  content: string; // 리포트 내용을 전달할 수 있도록 props 추가
-};
+import { useState } from 'react';
 
-const ReportItem = ({ month, selectedMonth, handleToggle, content }: ReportItemProps) => {
+interface ReportItemProps {
+  item: {
+    title: string;
+    contents: string[];
+  }
+}
+
+const ReportItem = ({ item }: ReportItemProps) => {
+  const [isOpen, setIsOpen] = useState(true);
+
+  const toggleOpen = () => setIsOpen(!isOpen);
+
   return (
-    <div>
+    <div className="border rounded-lg shadow-md mb-4">
       <div
-        className="mb-7 p-4 bg-gray-200 text-black rounded-lg cursor-pointer"
-        onClick={() => handleToggle(month)}
+        className="p-4 bg-gray-100 cursor-pointer"
+        onClick={toggleOpen}
       >
-        {month} 월간 리포트
+        <h2 className="text-lg font-semibold">{item.title}</h2>
       </div>
-      {selectedMonth === month && (
-        <div className="p-4 bg-blue-100 rounded-lg">
-          <h2>{month} 리포트 내용</h2>
-          <p>{content}</p>
+      <div
+        className={`transition-max-height duration-500 ease-in-out overflow-hidden ${isOpen ? 'max-h-screen' : 'max-h-0'}`}
+        style={{ transitionProperty: 'max-height' }}
+      >
+          {item.contents.map((content, index) => (
+            <p key={index} className="mb-2">
+              {content}
+            </p>
+          ))}
         </div>
-      )}
     </div>
   );
 };

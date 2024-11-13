@@ -1,5 +1,6 @@
 "use client"
 
+import ReportItem from '@/components/reportlist/ReportItem';
 import { useReportQuery } from '@/hooks/useReportQuery';
 import useReportsStore from '@/stores/useReportsStore';
 import { handleNextMonth, handlePrevMonth } from '@/utils/calculateDay';
@@ -14,7 +15,7 @@ export default function ReportDetail() {
 
     useReportQuery(month);
 
-    const reportData = useReportsStore((state) => state.content);
+    const reportData = useReportsStore((state) => state.data);
 
     console.log(reportData);
 
@@ -39,7 +40,9 @@ export default function ReportDetail() {
             </div>
 
             <div className="p-4">
-                <p>qweqweqweqweqweqweqweqweqweqw <br/> qweasdfasdfsadfasdf</p>
+                {reportData.map((item, index) => (
+                    <ReportItem key={index} item={item} />
+                ))}
             </div>
         </div>
     );
