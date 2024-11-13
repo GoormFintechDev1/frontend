@@ -6,6 +6,7 @@ import { useState } from 'react';
 import Button from './Button';
 import { useRouter } from 'next/navigation';
 import { LoginType } from '@/interface/login';
+import { useUserInfo } from '@/hooks/useUserQuery';
 
 export default function Login() {
     const router = useRouter();
@@ -24,8 +25,7 @@ export default function Login() {
         // 로그인 로직을 추가하거나, API 호출 등을 여기에 구현
         mutation.mutate(formData, {
             onSuccess: () => {
-                const firstLogin = JSON.parse(localStorage.getItem("firstLogin") || "false");
-
+                const firstLogin = JSON.parse(localStorage.getItem(`firstLogin:${formData.loginId}`) || "false");
                 if(firstLogin){
                     router.push('/validate');
                 } else {
