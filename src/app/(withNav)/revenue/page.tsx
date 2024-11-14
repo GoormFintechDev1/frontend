@@ -28,9 +28,7 @@ export default function Revenue() {
 
   const { data, isLoading, error } = useMonthlyRevenue(paramMonth2(year,month));
 
-  if(isLoading) return <></>
-
-  const saleData = data?.dailyIncomeList;
+  const saleData = data?.dailyIncomeList ?? [];
   const monthlyTotalIncome = data?.monthlyTotalncome;
   const monthlyCardIncome = data?.monthlyCardIncome;
   const monthlyCashIncome = data?.monthlyCashIncome;
@@ -95,16 +93,16 @@ export default function Revenue() {
             <div className="flex flex-row space-x-3 font-semibold">
               <p>총 매출</p>
               <span className="text-blue-500">
-                {monthlyTotalIncome?.toLocaleString()} 원
+                {isLoading ? "0" : monthlyTotalIncome?.toLocaleString()} 원
               </span>
             </div>
             <div className="text-xs text-gray-600 flex flex-row space-x-3">
               <p>카드 매출</p>
-              <span>{monthlyCardIncome?.toLocaleString()} 원</span>
+              <span>{isLoading ? "0" : monthlyCardIncome?.toLocaleString()} 원</span>
             </div>
             <div className="text-xs text-gray-600 flex flex-row space-x-3">
               <p>현금 매출</p>
-              <span>{monthlyCashIncome?.toLocaleString()} 원</span>
+              <span>{isLoading ? "0" : monthlyCashIncome?.toLocaleString()} 원</span>
             </div>
           </div>
         </section>
