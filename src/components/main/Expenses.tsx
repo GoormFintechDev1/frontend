@@ -3,37 +3,53 @@
 import { useExpensesData } from '@/hooks/useExpensesQuery';
 import { convertToKoreanWon } from '@/utils/currency';
 import Link from 'next/link';
-import React from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import {ExpensesLoading} from '../Loading';
 import Error from '../Error';
 import { paramMonth } from '@/utils/calculateDay';
-import useExpensesStore from '@/stores/useExpensesStore';
+import { useExpensesStore, useCategoryColorStore } from '@/stores/useExpensesStore';
 
 interface RevenueProps {
   height: string;
 }
 
+const COLORS = ["#A80000", "#FB1111", "#FF7575", "#FFC4C4", "#F8F8F8"];
+
 const Expenses: React.FC<RevenueProps> = ({height}) => {
   const { isLoading, error } = useExpensesData(paramMonth);
+  const setCategoryColorMap = useCategoryColorStore((state) => state.setCategoryColorMap);
 
   // Access Zustand store states
   const expensesData = useExpensesStore((state) => state.expensesData);
 
-  let chartData = [{
-    name: "",
-    value: 0,
-  }];
+  // chartData를 메모이제이션하여 불필요한 재생성을 방지
+  const chartData = useMemo(() => {
+    if (!expensesData) return [{ category: "", amount: 0 }];
 
-  if (expensesData) {
-    chartData = Object.entries(expensesData?.categoryExpenses).map(
-      ([key, value]) => {
-        return { name: key, value: value };
+    return Object.entries(expensesData?.categoryExpenses)
+      .map(([key, value]) => ({ category: key, amount: value }))
+      .sort((a, b) => b.amount - a.amount);
+  }, [expensesData]);
+
+  // categoryColorMap을 chartData 기반으로 메모이제이션
+  const categoryColorMap = useMemo(() => {
+    const map: Record<string, string> = {};
+    let colorIndex = 0;
+    chartData.forEach((expense) => {
+      if (!map[expense.category]) {
+        map[expense.category] = COLORS[colorIndex % COLORS.length];
+        colorIndex += 1;
       }
-    ).sort((a,b)=> b.value - a.value);
-  }
+    });
+    return map;
+  }, [chartData]);
 
-  const COLORS = ["#A80000", "#FB1111", "#FF7575", "#FFC4C4", "#F8F8F8"];
+  useEffect(() => {
+    if (chartData.length > 0) {
+      setCategoryColorMap(categoryColorMap);
+    }
+  }, [categoryColorMap, chartData, setCategoryColorMap]);
 
   if (isLoading) {
     return <ExpensesLoading />
@@ -43,8 +59,8 @@ const Expenses: React.FC<RevenueProps> = ({height}) => {
     return <Error />
   }
 
-  const maxValue = Math.max(...chartData.map((entry) => entry.value));
-  const maxCategory = chartData.find((e)=> e.value === maxValue)?.name;
+  const maxValue = Math.max(...chartData.map((entry) => entry.amount));
+  const maxCategory = chartData.find((e)=> e.amount === maxValue)?.category;
 
   return (
     <div className="box col-span-2 justify-between" style={{ height }}>
@@ -70,11 +86,11 @@ const Expenses: React.FC<RevenueProps> = ({height}) => {
         </span>
       </div>
       <div className="flex justify-center items-center gap-8 h-full">
-        <ResponsiveContainer width={'50%'} height="100%">
+        <ResponsiveContainer width={'60%'} height="80%">
           <PieChart>
             <Pie
               data={chartData}
-              dataKey="value"
+              dataKey="amount"
               outerRadius={40}
               innerRadius={20}
               startAngle={90}
@@ -91,15 +107,6 @@ const Expenses: React.FC<RevenueProps> = ({height}) => {
               }
             </Pie>
           </PieChart>
-          {/* <ul className='flex flex-row space-x-3 mt-4 '>
-            {expensesData?.map((data, index) => (
-              <li key={index} className="flex justify-center items-center text-[10px] ">
-                <div className={`inline-block w-3 h-3 mr-2`}
-                  style={{backgroundColor: COLORS[index % COLORS.length]}}></div>
-                {data.name}
-              </li>
-            ))}
-          </ul> */}
         </ResponsiveContainer>
         <div className="flex flex-col justify-center space-y-4 w-[70%]">
           <p className="text-base text-center text-red-500 font-bold">
@@ -110,8 +117,18 @@ const Expenses: React.FC<RevenueProps> = ({height}) => {
           <p className="text-[10px] text-center text-gray-500">
             오늘은 <span className='text-red-400 font-bold'>{convertToKoreanWon(expensesData?.totalTodayExpense as number)}</span> 지출했어요!
           </p>
-          
         </div>
+      </div>
+      <div className='flex justify-center items-center'>
+        <ul className='flex gap-x-2'>
+          {chartData?.map((data, index) => (
+            <li key={index} className="flex items-center text-[10px] ">
+              <div className={`inline-block w-2 h-2 mr-1`}
+                style={{backgroundColor: COLORS[index % COLORS.length]}}></div>
+              <p>{data.category}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   )

@@ -1,9 +1,12 @@
 import { chartDataProps } from "@/interface/expenses";
+import { useCategoryColorStore } from "@/stores/useExpensesStore";
 import { formatNumberWithComma } from "@/utils/currency";
 import Link from "next/link";
 import React from "react";
 
 const ExpensesData = (props: chartDataProps) => {
+  const categoryColor = useCategoryColorStore((state) => state.categoryColorMap);
+
   if (!props.chartData || !props.chartData.categoryTotalExpenses) {
     return [];
   }
@@ -23,7 +26,7 @@ const ExpensesData = (props: chartDataProps) => {
                 <span
                   className={`inline-block w-3 h-3 mr-2`}
                   style={{
-                    backgroundColor: props.categoryColorMap[data.category] || props.COLORS[index % props.COLORS.length],
+                    backgroundColor: categoryColor[data.category],
                   }}
                 ></span>
                 {data.category}
