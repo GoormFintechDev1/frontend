@@ -25,7 +25,7 @@ export default function ReportDetail() {
     const {data: useInfo} = useUserInfo();
 
     return (
-        <div className="container">
+        <div className="container h-full">
             <div className="flex items-center mb-4">
                 <button onClick={() => window.history.back()} className="mr-2 text-gray-600 text-xl font-bold">
                     <Image src={"/icons/arrow.png"} alt="PrevPage" width={28} height={28} />
@@ -44,7 +44,7 @@ export default function ReportDetail() {
                 </div>
             </div>
 
-            <div className="p-4">
+            <div className="p-4 overflow-scroll h-3/4"> {/* 높이 변경 필요... */}
                 {reportData.map((item, index) => (
                     <ReportItem key={index} item={item} />
                 ))}

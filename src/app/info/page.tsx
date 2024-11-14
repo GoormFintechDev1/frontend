@@ -24,7 +24,7 @@ import { useSearchParams } from "next/navigation";
     const href = prams.get("href") || "";
 
     return (
-        <div className="flex flex-col items-center h-screen container">
+        <div className="flex flex-col items-center h-full container2">
           <div className="flex-1 flex flex-col items-center justify-center">
             <div className="text-xl font-bold my-2 text-center">{first}</div>
             <div className="text-4xl my-2 mt-5">{second}</div>
