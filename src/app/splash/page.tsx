@@ -19,7 +19,6 @@ export default function Splash() {
           router.push("/login");
 
         } else if (error) {
-          console.error("인증 확인 중 오류 발생:", error);
           router.push("/login");
         }
       }, 2000);

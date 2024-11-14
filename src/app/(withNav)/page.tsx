@@ -14,7 +14,7 @@ export default function Home() {
 
   useEffect(() => {
     const calculateHeight = () => {
-      const calculatedHeight = Math.max(180, Math.floor((window.innerHeight - 135 - 40 - 20) / 3));
+      const calculatedHeight = Math.max(190, Math.floor((window.innerHeight - 135 - 40 - 20) / 3));
       setHeight(`${calculatedHeight}px`);
     };
 
@@ -48,7 +48,7 @@ export default function Home() {
         
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-4 overflow-y-scroll h-[calc(100vh-160px)]">
         {/* 이번 달 매출 */}
         <Revenue height={height}/>
 

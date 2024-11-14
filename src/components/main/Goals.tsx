@@ -24,7 +24,7 @@ const Goals: React.FC<RevenueProps> = ({height}) =>  {
   let revenuePercentage = Math.round((revenue?.monthlyRevenue0Ago / revenue?.revenueGoal0Ago)*100);
   if (Number.isNaN(revenuePercentage) || !isFinite(revenuePercentage)) revenuePercentage = 0;
   let expenseMoney = expense?.expenseGoal0Ago - expense?.monthlyExpense0Ago;
-  if(!expenseMoney) expenseMoney = 0;
+  if(!expenseMoney || expenseMoney < 0) expenseMoney = 0;
 
   return (
     <div className="box col-span-2 justify-between" style={{height}}>
@@ -51,12 +51,19 @@ const Goals: React.FC<RevenueProps> = ({height}) =>  {
       </div>
       <div className="flex justify-around w-full h-full">
         <div className="flex flex-col justify-center space-y-3">
-          <p className= "text-center">매출</p>
-          <p className='text-pink-700 font-bold'>{revenuePercentage}% 달성했어요</p>
+          <p className= "text-center text-sm">매출 목표를</p>
+          <div className='flex flex-row space-x-2'>
+            <p className='text-rose-800 font-bold'>{revenuePercentage}% </p>
+            <p>달성했어요.</p>
+          </div>
         </div>
+        <div className='h-1/2 self-center border' style={{borderColor: "#f9f9f9"}}></div>
         <div className="flex flex-col justify-center space-y-3">
-          <p className="text-center">지출</p>
-          <p className='text-pink-700 font-bold'>{convertToKoreanWon(expenseMoney)} 남았어요</p>
+          <p className="text-center text-sm">지출 예산이</p>
+          <div className='flex flex-row space-x-2'>
+            <p className='text-rose-800 font-bold'>{convertToKoreanWon(expenseMoney)}</p>
+            <p>남았어요.</p>
+          </div>
         </div>
       </div>
     </div>
