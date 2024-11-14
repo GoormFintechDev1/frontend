@@ -94,15 +94,15 @@ export default function Objective() {
                                 {expense?.monthlyExpense0Ago && expense?.monthlyExpense1Ago ? (
                                     expense.expenseGoal0Ago < expense.monthlyExpense1Ago ? (
                                         <p className="text-red-600 text-lg font-semibold">
-                                            {convertToKoreanWon(Math.abs(expense?.expenseGoal0Ago - expense?.monthlyExpense0Ago))} 더 썼어요
+                                            {convertToKoreanWon(Math.abs(expense?.expenseGoal0Ago - expense?.monthlyExpense0Ago))} 더 썼어요.
                                         </p>
                                     ) : (
                                         <p className="text-blue-600 text-lg font-semibold">
-                                            {convertToKoreanWon(Math.abs(expense?.monthlyExpense1Ago - expense?.expenseGoal0Ago))} 덜 썼어요
+                                            {convertToKoreanWon(Math.abs(expense?.monthlyExpense1Ago - expense?.expenseGoal0Ago))} 덜 썼어요.
                                         </p>
                                     )
                                 ) : (
-                                    <p>데이터가 없습니다</p>
+                                    <p>데이터가 없습니다.</p>
                                 )}
                             </div>
                             <div className="w-1/2 text-center">
