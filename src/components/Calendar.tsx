@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState } from 'react';
 
 function generateCalendarDates(year, month) {
@@ -25,6 +27,7 @@ function generateCalendarDates(year, month) {
 function CustomCalendar() {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const today = new Date();
 
   const dates = generateCalendarDates(currentYear, currentMonth);
 
@@ -65,18 +68,27 @@ function CustomCalendar() {
             {day}
           </div>
         ))}
-        {dates.map((date, index) => (
-          <div
-            key={index}
-            className={`h-10 w-10 flex items-center justify-center rounded-full 
-              ${date ? 'hover:bg-gray-300 cursor-pointer' : ''} 
-              ${date && index % 7 === 0 ? 'text-red-500' : ''} /* 일요일 빨간색 */
-              ${date && index % 7 === 6 ? 'text-blue-500' : ''} /* 토요일 파란색 */
-            `}
-          >
-            {date || ''}
-          </div>
-        ))}
+        {dates.map((date, index) => {
+          const isToday =
+            date &&
+            currentYear === today.getFullYear() &&
+            currentMonth === today.getMonth() &&
+            date === today.getDate();
+
+          return (
+            <div
+              key={index}
+              className={`h-10 w-10 flex items-center justify-center rounded-full 
+                ${date ? 'hover:bg-gray-200 cursor-pointer' : ''} 
+                ${date && index % 7 === 0 ? 'text-red-500' : ''} /* 일요일 빨간색 */
+                ${date && index % 7 === 6 ? 'text-blue-500' : ''} /* 토요일 파란색 */
+                ${isToday ? 'bg-emerald-400 text-white font-bold' : ''} /* 오늘 날짜 강조 */
+              `}
+            >
+              {date || ''}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

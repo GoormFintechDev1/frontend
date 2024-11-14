@@ -127,17 +127,20 @@ export default function Revenue() {
 
         {/* Sales Summary */}
         <section className="p-4">
-          <div className="space-y-1 text-base font-bold">
-            <div className="">
-              총 매출
-              <span className="text-blue-500 ml-4">
+          <div className="space-y-1 text-sm font-medium">
+            <div className="flex flex-row space-x-3">
+              <p>총 매출</p>
+              <span className="text-blue-500">
                 {monthlyTotalIncome?.toLocaleString()} 원
               </span>
             </div>
-            <div className="text-sm text-gray-600 font-thin">
-              <span>카드 매출 {monthlyCardIncome?.toLocaleString()} 원</span>
-              <br />
-              <span>현금 매출 {monthlyCashIncome?.toLocaleString()} 원</span>
+            <div className="text-xs text-gray-600 font-medium flex flex-row space-x-3">
+              <p>카드 매출</p>
+              <span>{monthlyCardIncome?.toLocaleString()} 원</span>
+            </div>
+            <div className="text-xs text-gray-600 font-medium flex flex-row space-x-3">
+              <p>현금 매출</p>
+              <span>{monthlyCashIncome?.toLocaleString()} 원</span>
             </div>
           </div>
         </section>
