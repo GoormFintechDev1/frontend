@@ -14,7 +14,7 @@ interface RevenueProps {
   height: string;
 }
 
-const COLORS = ["#A80000", "#FB1111", "#FF7575", "#FFC4C4", "#F8F8F8"];
+const COLORS = ["#BE185D", "#F472B6", "#F9A8D4", "#FFD2EB", "#F8F8F8"];
 
 const Expenses: React.FC<RevenueProps> = ({height}) => {
   const { isLoading, error } = useExpensesData(paramMonth);
@@ -100,7 +100,7 @@ const Expenses: React.FC<RevenueProps> = ({height}) => {
                 chartData?.map((entry, index) => (
                   <Cell key={`cell-${index}`}
                     fill={COLORS[index % COLORS.length]}
-                    stroke="#ffffff" // White stroke to separate segments
+                    // White stroke to separate segments
                     // strokeWidth={index === 0 ? 0 : 10}
                   />
                 ))
@@ -109,13 +109,13 @@ const Expenses: React.FC<RevenueProps> = ({height}) => {
           </PieChart>
         </ResponsiveContainer>
         <div className="flex flex-col justify-center space-y-4 w-[70%]">
-          <p className="text-base text-center text-red-500 font-bold">
+          <p className="text-base text-center text-pink-600 font-bold">
             {convertToKoreanWon(expensesData?.totalMonthExpenses as number)}
           </p>
-          {maxCategory? <p className='text-xs text-center'>가장 큰 지출은 <span className='text-red-500 font-bold'>{maxCategory}</span>예요.</p> : 
+          {maxCategory? <p className='text-xs text-center'>가장 큰 지출은 <span className='text-pink-600 font-bold'>{maxCategory}</span>예요.</p> : 
           ""}
           <p className="text-[10px] text-center text-gray-500">
-            오늘은 <span className='text-red-400 font-bold'>{convertToKoreanWon(expensesData?.totalTodayExpense as number)}</span> 지출했어요!
+            오늘은 <span className='text-pink-600 font-bold'>{convertToKoreanWon(expensesData?.totalTodayExpense as number)}</span> 지출했어요!
           </p>
         </div>
       </div>

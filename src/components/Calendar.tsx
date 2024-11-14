@@ -102,7 +102,7 @@ function Calendar({ year, month, data, onDateClick }:CalendarProps) {
               >
                 {date || ''}
               </div>
-              <div className="text-[10px] text-blue-500 font-medium my-auto">
+              <div className="text-[10px] text-blue-600 font-medium my-auto">
               {totalIncome !== null ? totalIncome.toLocaleString() : ''}
               </div>
             </div>
