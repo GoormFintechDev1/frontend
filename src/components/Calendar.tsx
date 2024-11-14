@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+"use client"
 
-function generateCalendarDates(year, month) {
+import { DayIncome } from '@/interface/revenue';
+import React, { useEffect, useState } from 'react';
+
+function generateCalendarDates(year:number, month:number) {
   const dates = [];
   const firstDayOfMonth = new Date(year, month, 1);
   const lastDayOfMonth = new Date(year, month + 1, 0);
@@ -22,64 +25,92 @@ function generateCalendarDates(year, month) {
   return dates;
 }
 
-function CustomCalendar() {
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+interface CalendarProps {
+  year: number;
+  month: number;
+  data: DayIncome[];
+  onDateClick: (date: number) => void;
+}
 
-  const dates = generateCalendarDates(currentYear, currentMonth);
+function Calendar({ year, month, data, onDateClick }:CalendarProps) {
+  const dates = generateCalendarDates(year, month-1);
 
-  const goToPrevMonth = () => {
-    if (currentMonth === 0) {
-      setCurrentYear(currentYear - 1);
-      setCurrentMonth(11);
-    } else {
-      setCurrentMonth(currentMonth - 1);
-    }
+  const today = new Date();
+  const [selectedDate, setSelectedDate] = useState<number | null>(null);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  const getTotalIncomeForDate = (day: number) => {
+    const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    const totalIncome = data
+      .filter(income => income.date === dateStr)
+      .reduce((acc, curr) => acc + curr.totalIncome, 0);
+    
+    return totalIncome > 0 ? totalIncome : null;
   };
 
-  const goToNextMonth = () => {
-    if (currentMonth === 11) {
-      setCurrentYear(currentYear + 1);
-      setCurrentMonth(0);
-    } else {
-      setCurrentMonth(currentMonth + 1);
-    }
+  const handleDateClick = (date: number) => {
+    setSelectedDate(date);
+    onDateClick(date);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerHeight < 670);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize); 
+    return () => window.removeEventListener('resize', handleResize); 
+  }, []);
 
   return (
-    <div className="flex flex-col items-center w-full max-w-xs mx-auto font-sans">
-      <header className="flex justify-between items-center w-full px-4 py-2">
-        <button onClick={goToPrevMonth}>&lt;</button>
-        <h2 className="text-lg font-semibold">{`${currentYear}년 ${currentMonth + 1}월`}</h2>
-        <button onClick={goToNextMonth}>&gt;</button>
-      </header>
-
-      <div className="grid grid-cols-7 gap-2 text-center w-full">
+    <div className="flex flex-col items-center w-full mx-auto font-sans">
+      <div className="grid grid-cols-7 gap-x-2 gap-y-4 text-center w-full">
         {['일', '월', '화', '수', '목', '금', '토'].map((day, index) => (
           <div
             key={day}
-            className={`text-gray-500 font-semibold ${
-              index === 0 ? 'text-red-500' : index === 6 ? 'text-blue-500' : ''
-            }`}
+            className={`text-gray-500 font-semibold text-xs ${
+              index === 0 ? 'text-red-500' : ''} ${index === 6 ? '!text-sky-500' : ''}`
+            }
           >
             {day}
           </div>
         ))}
-        {dates.map((date, index) => (
-          <div
-            key={index}
-            className={`h-10 w-10 flex items-center justify-center rounded-full 
-              ${date ? 'hover:bg-gray-300 cursor-pointer' : ''} 
-              ${date && index % 7 === 0 ? 'text-red-500' : ''} /* 일요일 빨간색 */
-              ${date && index % 7 === 6 ? 'text-blue-500' : ''} /* 토요일 파란색 */
-            `}
-          >
-            {date || ''}
-          </div>
-        ))}
+        {dates.map((date, index) => {
+          const isToday =
+            date &&
+            year === today.getFullYear() &&
+            month === today.getMonth() +1 &&
+            date === today.getDate();
+          const isSelected = date === selectedDate;
+          const totalIncome = date ? getTotalIncomeForDate(date) : null;
+
+          return (
+            <div
+              key={index}
+              onClick={() => date && handleDateClick(date)}
+              className={`${isSmallScreen ? 'h-10' : 'h-20'} w-full flex flex-col items-center rounded-lg p-1 cursor-pointer text-gray-400
+                ${date ? 'hover:bg-slate-100' : ''} 
+                ${date && index % 7 === 0 ? '!text-red-400' : ''} /* 일요일 빨간색 */
+                ${date && index % 7 === 6 ? '!text-sky-400' : ''} /* 토요일 파란색 */
+              `}
+            >
+              <div
+                className={`text-xs ${
+                  isToday ? 'text-gray-600 font-bold' : ''
+                }`}
+              >
+                {date || ''}
+              </div>
+              <div className="text-[10px] text-blue-500 font-medium my-auto">
+              {totalIncome !== null ? totalIncome.toLocaleString() : ''}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 }
 
-export default CustomCalendar;
+export default Calendar;
