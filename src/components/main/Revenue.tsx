@@ -76,7 +76,7 @@ const Revenue: React.FC<RevenueProps> = ({height}) => {
           </Bar>
         </BarChart>
       </ResponsiveContainer>
-      <p className="text-center text-theme font-bold">
+      <p className="text-center text-emerald-500 font-bold">
         {revenueData?.map((entry) => (
           entry.name === month+'월' ? convertToKoreanWon(entry.value) : ""
         ))}

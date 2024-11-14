@@ -46,7 +46,7 @@ export default function Validate(){
     const isButtonEnabled = isValid && address !== "";
 
     return (
-        <div className="container" onKeyDown={handleKeyDown}>
+        <div className="container2" onKeyDown={handleKeyDown}>
         <form className="flex flex-col space-y-8 h-full p-3" onSubmit={handleSubmit(onSubmit)}>
                 <p className="text-xl font-bold">사업자 인증</p>
                 <div className="label-input-set">

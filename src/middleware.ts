@@ -11,7 +11,7 @@ export function middleware(request: NextRequest) {
 
   if (url.pathname === "/splash") {
     const response = NextResponse.next();
-    response.cookies.set("visited", "true");
+    response.cookies.set("visited", "true",{ maxAge: undefined });
     return response;
   }
 

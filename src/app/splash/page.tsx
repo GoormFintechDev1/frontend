@@ -3,7 +3,6 @@ import { useUserInfo } from "@/hooks/useUserQuery";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-
 export default function Splash() {
     const router = useRouter();
     const { data, error, isLoading } = useUserInfo();
