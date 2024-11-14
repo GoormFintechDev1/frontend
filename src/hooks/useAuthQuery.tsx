@@ -1,7 +1,7 @@
 
 import { LoginType } from "@/interface/login"
 import { FormDataType } from "@/interface/register"
-import { checkloginId, checkEmail, checkNickname, checkPhoneNumber, joinUser, loginUser } from "@/lib/authApi"
+import { checkloginId, checkEmail, checkNickname, checkPhoneNumber, joinUser, loginUser, logoutUser } from "@/lib/authApi"
 import { useMutation } from "@tanstack/react-query"
 
 export const useRegisterMutation = () => {
@@ -25,6 +25,12 @@ export const useLoginMutation = () => {
     onError: (error) => {
       console.log("로그인 실패", error);
     }
+  })
+}
+
+export const useLogoutMutation = () => {
+  return useMutation({
+    mutationFn: (loginId:string) => logoutUser(loginId)
   })
 }
 

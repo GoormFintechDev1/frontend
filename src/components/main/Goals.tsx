@@ -22,7 +22,7 @@ const Goals: React.FC<RevenueProps> = ({height}) =>  {
   }
 
   let revenuePercentage = Math.round((revenue?.monthlyRevenue0Ago / revenue?.revenueGoal0Ago)*100);
-  if(isNaN(revenuePercentage)) revenuePercentage = 0;
+  if (Number.isNaN(revenuePercentage) || !isFinite(revenuePercentage)) revenuePercentage = 0;
   let expenseMoney = expense?.expenseGoal0Ago - expense?.monthlyExpense0Ago;
   if(!expenseMoney) expenseMoney = 0;
 

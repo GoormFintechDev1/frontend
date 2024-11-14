@@ -72,20 +72,19 @@ export default function ObjDetail() {
 
     // 현재 페이지 타입에 따른 달성률 값 설정
     let currentAchievement = pageType === "revenue" 
-        ? Math.round((revenue?.monthlyRevenue0Ago / revenue?.revenueGoal0Ago) * 100) 
-        : Math.round((expense?.monthlyExpense0Ago / expense?.expenseGoal0Ago) * 100);
-    if(Number.isNaN(currentAchievement)) currentAchievement = 0;
+    ? (revenue?.revenueGoal0Ago === 0 ? 0 : Math.round((revenue?.monthlyRevenue0Ago / revenue?.revenueGoal0Ago) * 100)) 
+    : (expense?.expenseGoal0Ago === 0 ? 0 : Math.round((expense?.monthlyExpense0Ago / expense?.expenseGoal0Ago) * 100));
+    if (Number.isNaN(currentAchievement) || !isFinite(currentAchievement)) currentAchievement = 0;
 
     let previousAchievement = pageType === "revenue"
-        ? Math.round((revenue?.monthlyRevenue1Ago / revenue?.revenueGoal1Ago) * 100)
-        : Math.round((expense?.monthlyExpense1Ago / expense?.expenseGoal1Ago) * 100);
-    if(Number.isNaN(previousAchievement)) previousAchievement = 0;
-        
+        ? (revenue?.revenueGoal1Ago === 0 ? 0 : Math.round((revenue?.monthlyRevenue1Ago / revenue?.revenueGoal1Ago) * 100))
+        : (expense?.expenseGoal1Ago === 0 ? 0 : Math.round((expense?.monthlyExpense1Ago / expense?.expenseGoal1Ago) * 100));
+    if (Number.isNaN(previousAchievement) || !isFinite(previousAchievement)) previousAchievement = 0;
 
     let nextAchievement = pageType === "revenue"
-        ? Math.round((revenue?.monthlyRevenue2Ago / revenue?.revenueGoal2Ago) * 100)
-        : Math.round((expense?.monthlyExpense2Ago / expense?.expenseGoal2Ago) * 100);
-    if(Number.isNaN(nextAchievement)) nextAchievement = 0;
+        ? (revenue?.revenueGoal2Ago === 0 ? 0 : Math.round((revenue?.monthlyRevenue2Ago / revenue?.revenueGoal2Ago) * 100))
+        : (expense?.expenseGoal2Ago === 0 ? 0 : Math.round((expense?.monthlyExpense2Ago / expense?.expenseGoal2Ago) * 100));
+    if (Number.isNaN(nextAchievement) || !isFinite(nextAchievement)) nextAchievement = 0;
 
 
     const currentTotal = pageType === "revenue" ? revenue?.monthlyRevenue0Ago : expense?.monthlyExpense0Ago;
@@ -119,12 +118,12 @@ export default function ObjDetail() {
             {/*자세한 목표 설정*/}
             <div className="text-center my-16 text-xl">
                 {pageType === "revenue" ? (
-                    <p className="text-gray-600"><span className="text-emerald-500 font-bold">{convertToKoreanWon(revenue?.revenueGoal0Ago)}</span> 중 &nbsp;
-                    <span className="text-black font-bold">{convertToKoreanWon(revenue?.monthlyRevenue0Ago)}</span> 달성
+                    <p className="text-gray-600"><span className="text-emerald-500 font-medium">{convertToKoreanWon(revenue?.revenueGoal0Ago)}</span> 중 <br/>
+                    <span className="text-black font-medium">{convertToKoreanWon(revenue?.monthlyRevenue0Ago)}</span> 달성
                     </p>
                 ) : (
-                    <p className="text-gray-600"><span className="text-red-500 font-bold">{convertToKoreanWon(expense?.expenseGoal0Ago)}</span> 중 &nbsp;
-                    <span className="text-black font-bold">{convertToKoreanWon(expense?.monthlyExpense0Ago)}</span> 지출
+                    <p className="text-gray-600"><span className="text-red-500 font-medium">{convertToKoreanWon(expense?.expenseGoal0Ago)}</span> 중 <br/>
+                    <span className="text-black font-medium">{convertToKoreanWon(expense?.monthlyExpense0Ago)}</span> 지출
                     </p>
                 )}
             </div>
@@ -133,7 +132,7 @@ export default function ObjDetail() {
             {/* 현재 달 정보 */}
             <div className="text-base font-sans mb-2">
                 <p className="mb-2">
-                    <strong>{currentData}월 </strong> <span className="font-midium"> - {currentTotal?.toLocaleString() || "0"}원 </span>
+                    {currentData}월 <span className=""> - {currentTotal?.toLocaleString() || "0"}원 </span>
                 </p>
                 <div className="relative w-full h-7 bg-gray-200 rounded-md overflow-hidden mb-8">
                     <div
@@ -148,7 +147,7 @@ export default function ObjDetail() {
             {/* 지난 달 정보 */}
             <div className="text-base font-sans mb-2">
                 <p className="mb-2">
-                    <strong>{previousData}월 </strong> <span className="font-midium"> - {previousTotal?.toLocaleString() || "0"}원 </span>
+                    {previousData}월<span className=""> - {previousTotal?.toLocaleString() || "0"}원 </span>
                 </p>
                 <div className="relative w-full h-7 bg-gray-200 rounded-md overflow-hidden mb-8">
                     <div
@@ -163,7 +162,7 @@ export default function ObjDetail() {
             {/* 지지난 달 정보 */}
             <div className="text-base font-sans mb-2">
                 <p className="mb-2">
-                    <strong>{prepreviousData}월 </strong> <span className="font-midium"> - 총 {nextTotal?.toLocaleString() || "0"}원 </span>
+                    {prepreviousData}월 <span className=""> - 총 {nextTotal?.toLocaleString() || "0"}원 </span>
                 </p>
                 <div className="relative w-full h-7 bg-gray-200 rounded-md overflow-hidden mb-8">
                     <div
