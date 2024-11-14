@@ -58,7 +58,7 @@ export default function Register() {
     },[formData, isReady, mutation])
  
     return (
-        <div className="h-full container">
+        <div className="h-full container2">
             {step === 1 && <Register1 onNext={handleNextStep}/>}
             {step === 2 && <Register2 onReadySubmit={handleSubmit} onPrev={handlePrevStep}/>}
         </div>

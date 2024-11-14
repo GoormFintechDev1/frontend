@@ -31,9 +31,24 @@ body {
   margin-left: auto; 
   margin-right: auto; 
   max-width: 800px;
-  height: calc(100v - 83px - 40px);
+  /* height: calc(100vh + 83px); */
+  height: 100vh; 
   padding: 25px; 
   padding-bottom: 83px; /* navbar 만큼 padding-bottom 값 추가 */
+}
+
+/* nav없는 버전 */
+.container2 {
+  margin-left: auto; 
+  margin-right: auto; 
+  max-width: 800px;
+  height: 100vh;
+  padding: 25px; 
+  padding-bottom: 83px; /* navbar 만큼 padding-bottom 값 추가 */
+}
+
+.navbar{
+  background: var(--background);
 }
 
 #main {
