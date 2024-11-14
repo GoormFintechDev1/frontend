@@ -7,6 +7,9 @@ import { handleNextMonth, handlePrevMonth } from '@/utils/calculateDay';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
+import dayjs from "dayjs";
+import { useUserInfo } from '@/hooks/useUserQuery';
+dayjs().format();
 
 export default function ReportDetail() {
     const searchParams = useSearchParams();
@@ -18,6 +21,8 @@ export default function ReportDetail() {
     const reportData = useReportsStore((state) => state.data);
 
     console.log(reportData);
+
+    const {data: useInfo} = useUserInfo();
 
     return (
         <div className="container">
@@ -32,7 +37,7 @@ export default function ReportDetail() {
                     <button onClick={() => setMonth(handlePrevMonth(month))} className="text-xl font-semibold px-2">
                         <Image src={"/icons/Back.png"} alt="PrevMonth" width={24} height={24} />
                     </button>
-                    <h1 className="text-2xl font-extralight">000의 <br/>{month} 월간 리포트</h1>
+                    <h1 className="text-2xl font-extralight"><span>{useInfo?.companyName}</span> <br/>{month} 월간 리포트</h1>
                     <button onClick={() => setMonth(handleNextMonth(month))} className="text-xl font-semibold px-2">
                         <Image src={"/icons/Forward.png"} alt="NextMonth" width={24} height={24} />
                     </button>
