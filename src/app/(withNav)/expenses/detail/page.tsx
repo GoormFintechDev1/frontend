@@ -8,7 +8,7 @@ import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import ExpensesDetailPageLoading from "./loading";
 import dayjs from "dayjs";
 import { formatNumberWithComma } from "@/utils/currency";
-import { useExpensesStore, useCategoryColorStore } from "@/stores/useExpensesStore";
+import { useExpensesStore } from "@/stores/useExpensesStore";
 import Image from "next/image";
 dayjs().format();
 
@@ -19,7 +19,7 @@ const ExpensesDetailPage = () => {
   const {isLoading, error} = useExpensesDetailData(params.get("month")!);
 
   const expensesDetailsData = useExpensesStore((state) => state.expensesDetailsData);
-  const categoryColor = useCategoryColorStore((state) => state.categoryColorMap);
+  const COLORS = ["#A80000", "#FB1111", "#FF7575", "#FFC4C4", "#F8F8F8"];
 
   const filteredData =
     expensesDetailsData?.expenseDetails.filter((detail) => {
@@ -67,7 +67,7 @@ const ExpensesDetailPage = () => {
                 {filteredData.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
-                    fill={categoryColor[entry.category]}
+                    fill={COLORS[index % COLORS.length]}
                   />
                 ))}
               </Pie>
@@ -91,7 +91,7 @@ const ExpensesDetailPage = () => {
                       <div
                         className="inline-block w-3 h-3 mr-2"
                         style={{
-                          backgroundColor: categoryColor[data.category],
+                          backgroundColor: COLORS[index % COLORS.length],
                         }}
                       ></div>
                       <div className="w-full">
@@ -106,7 +106,7 @@ const ExpensesDetailPage = () => {
                             {data.category}
                           </p>
                           <p className="text-sm font-semibold text-right">
-                            {data.transactionMeans}{" "}
+                            {data.transactionMeans === "CASH" ? "현금": "카드"}{" "}
                             {formatNumberWithComma(data.amount)}
                           </p>
                         </div>
