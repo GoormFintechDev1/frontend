@@ -28,6 +28,14 @@ export default function Home() {
 
   const {data, isLoading, error} = useUserInfo();
 
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <div>error...</div>
+  }
+
   return (
     <div id="main" className="container">
       <div className="flex justify-between items-center mb-4">

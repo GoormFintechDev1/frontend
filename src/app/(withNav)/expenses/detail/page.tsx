@@ -8,7 +8,7 @@ import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import ExpensesDetailPageLoading from "./loading";
 import dayjs from "dayjs";
 import { formatNumberWithComma } from "@/utils/currency";
-import useExpensesStore from "@/stores/useExpensesStore";
+import { useExpensesStore, useCategoryColorStore } from "@/stores/useExpensesStore";
 import Image from "next/image";
 dayjs().format();
 
@@ -19,8 +19,7 @@ const ExpensesDetailPage = () => {
   const {isLoading, error} = useExpensesDetailData(params.get("month")!);
 
   const expensesDetailsData = useExpensesStore((state) => state.expensesDetailsData);
-
-  const expensesDetails = expensesDetailsData?.expenseDetails;
+  const categoryColor = useCategoryColorStore((state) => state.categoryColorMap);
 
   const filteredData =
     expensesDetailsData?.expenseDetails.filter((detail) => {
@@ -34,18 +33,6 @@ const ExpensesDetailPage = () => {
     }) || []
 
   const amountSum = filteredData?.reduce((acc, cur) => acc + cur.amount, 0);
-
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
-
-  // Create a category-color mapping
-  const categoryColorMap: Record<string, string> = {};
-  let colorIndex = 0;
-  expensesDetails?.forEach((expense) => {
-    if (!categoryColorMap[expense.category]) {
-      categoryColorMap[expense.category] = COLORS[colorIndex % COLORS.length];
-      colorIndex += 1;
-    }
-  });
 
   if (isLoading) {
     return <ExpensesDetailPageLoading />;
@@ -74,13 +61,13 @@ const ExpensesDetailPage = () => {
                 dataKey="amount"
                 outerRadius={70}
                 innerRadius={50}
-                startAngle={270}
-                endAngle={630}
+                startAngle={90}
+                endAngle={-270}
               >
                 {filteredData.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
+                    fill={categoryColor[entry.category]}
                   />
                 ))}
               </Pie>
@@ -104,7 +91,7 @@ const ExpensesDetailPage = () => {
                       <div
                         className="inline-block w-3 h-3 mr-2"
                         style={{
-                          backgroundColor: COLORS[index % COLORS.length],
+                          backgroundColor: categoryColor[data.category],
                         }}
                       ></div>
                       <div className="w-full">

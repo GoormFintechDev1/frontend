@@ -2,7 +2,7 @@
 
 import { expenseDetailDTOType, expenseDTOType } from "@/interface/expenses";
 import { getExpensesData, getExpensesDetailData } from "@/lib/expensesApi";
-import useExpensesStore from "@/stores/useExpensesStore";
+import { useExpensesStore } from "@/stores/useExpensesStore";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 

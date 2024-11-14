@@ -1,4 +1,5 @@
 import { ExpenseDetail } from "@/interface/expenses";
+import { useCategoryColorStore } from "@/stores/useExpensesStore";
 import { groupByWeek } from "@/utils/calculateDay";
 import { formatNumberWithComma } from "@/utils/currency";
 import dayjs from "dayjs";
@@ -6,13 +7,12 @@ import Link from "next/link";
 
 interface WeeklyExpensesProps {
   month: string,
-  COLORS: string[],
-  categoryColorMap: Record<string, string>,
   chartData: ExpenseDetail[]
 }
 
-const ExpensesWeekData = ({ chartData, month, COLORS, categoryColorMap }: WeeklyExpensesProps) => {
+const ExpensesWeekData = ({ chartData, month }: WeeklyExpensesProps) => {
   const weekData = groupByWeek(chartData);
+  const categoryColor = useCategoryColorStore((state) => state.categoryColorMap);
 
   return (
     <div className="flex flex-col gap-8 mb-4">
@@ -31,7 +31,7 @@ const ExpensesWeekData = ({ chartData, month, COLORS, categoryColorMap }: Weekly
                   }
                 }}>
                   <div className="flex items-center">
-                    <span className="w-3 h-3 inline-block mr-2"  style={{ backgroundColor: categoryColorMap[expense.category] || COLORS[index % COLORS.length] }}></span>
+                    <span className="w-3 h-3 inline-block mr-2"  style={{ backgroundColor: categoryColor[expense.category] }}></span>
                     {expense.category}</div>
                   <div>{formatNumberWithComma(expense.amount)}</div>
                 </Link>

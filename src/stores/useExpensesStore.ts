@@ -1,29 +1,40 @@
 import { expenseDetailDTOType, expenseDTOType } from "@/interface/expenses";
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 interface ExpensesState {
-  isLoading: boolean;
-  error: string | null;
   expensesData: expenseDTOType | null;
   expensesDetailsData: expenseDetailDTOType | null;
-  setLoading: (loading: boolean) => void;
-  setError: (error: string | null) => void;
   setExpensesData: (data: expenseDTOType) => void
   setExpensesDetailsData: (data: expenseDetailDTOType) => void
 }
 
+interface CategoryColorState {
+  categoryColorMap: Record<string, string>
+  setCategoryColorMap: (data: Record<string, string>) => void
+}
+
 const useExpensesStore = create<ExpensesState>((set) => ({
   // State
-  isLoading: false,
-  error: null,
   expensesData: null,
   expensesDetailsData: null,
 
   //Actions
-  setLoading: (loading) => set({ isLoading: loading }),
-  setError: (error) => set({ error }),
   setExpensesData: (data) => set({ expensesData: data }),
   setExpensesDetailsData: (data) => set({ expensesDetailsData: data }),
 }));
 
-export default useExpensesStore;
+const useCategoryColorStore = create(
+  persist<CategoryColorState>(
+    (set) => ({
+      categoryColorMap: {},
+      setCategoryColorMap: (data) => set({ categoryColorMap: data }),
+    }),
+    {
+      name: 'category-color-storage', // name of the item in the storage (must be unique)
+      storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
+    }
+  )
+)
+
+export { useExpensesStore, useCategoryColorStore };

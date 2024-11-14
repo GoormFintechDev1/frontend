@@ -12,7 +12,7 @@ import {
   handlePrevMonth,
 } from "@/utils/calculateDay";
 import { useState } from "react";
-import useExpensesStore from "@/stores/useExpensesStore";
+import { useExpensesStore } from "@/stores/useExpensesStore";
 import ExpensesPieChart from "@/components/expenses/ExpensesPieChart";
 import ExpensesData from "@/components/expenses/ExpensesData";
 import dayjs from "dayjs";
@@ -34,18 +34,6 @@ const ExpensesPage = () => {
   const toggleWeekData = () => {
     setActiveToggle((activeToggle) => !activeToggle);
   }
-
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
-
-  // Create a category-color mapping
-  const categoryColorMap: Record<string, string> = {};
-  let colorIndex = 0;
-  expensesDetails?.forEach((expense) => {
-    if (!categoryColorMap[expense.category]) {
-      categoryColorMap[expense.category] = COLORS[colorIndex % COLORS.length];
-      colorIndex += 1;
-    }
-  });
 
   if (isLoading) {
     return <ExpensesPageLoading />;
@@ -74,13 +62,13 @@ const ExpensesPage = () => {
           </button>
         </div>
         <>
-          <ExpensesPieChart chartData={expensesDetailsData!} COLORS={COLORS} categoryColorMap={categoryColorMap} />
-          <ExpensesData chartData={expensesDetailsData!} month={month} COLORS={COLORS}  categoryColorMap={categoryColorMap} />
+          <ExpensesPieChart chartData={expensesDetailsData!} />
+          <ExpensesData chartData={expensesDetailsData!} month={month} />
         </>
         <button onClick={toggleWeekData}>주간별 상세보기</button>
         {activeToggle && (
           <>
-            <ExpensesWeekData chartData={expensesDetails!} month={month} COLORS={COLORS} categoryColorMap={categoryColorMap} />
+            <ExpensesWeekData chartData={expensesDetails!} month={month} />
           </>
         )}
       </div>

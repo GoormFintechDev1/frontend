@@ -1,7 +1,10 @@
 import { chartDataProps } from "@/interface/expenses";
+import { useCategoryColorStore } from "@/stores/useExpensesStore";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 const ExpensesPieChart = (props: chartDataProps) => {
+  const categoryColor = useCategoryColorStore((state) => state.categoryColorMap);
+
   // chartData가 null 또는 undefined인지 확인
   if (!props.chartData || !props.chartData.categoryTotalExpenses) {
     return [];
@@ -23,13 +26,13 @@ const ExpensesPieChart = (props: chartDataProps) => {
             dataKey="amount"
             outerRadius={70}
             innerRadius={50}
-            startAngle={270}
-            endAngle={630}
+            startAngle={90}
+            endAngle={-270}
           >
             {totalExpenses.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
-                fill={props.categoryColorMap[entry.category] || props.COLORS[index % props.COLORS.length]}
+                fill={categoryColor[entry.category]}
               />
             ))}
           </Pie>
