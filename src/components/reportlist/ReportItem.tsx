@@ -18,14 +18,14 @@ const ReportItem = ({ item }: ReportItemProps) => {
         className="p-4 bg-gray-100 cursor-pointer"
         onClick={toggleOpen}
       >
-        <h2 className="text-lg font-semibold">{item.title}</h2>
+        <h2 className="text-xl font-semibold">{item.title}</h2>
       </div>
       <div
-        className={`transition-max-height duration-500 ease-in-out overflow-hidden ${isOpen ? 'max-h-screen' : 'max-h-0'}`}
+        className={`transition-max-height duration-500 ease-in-out overflow-hidden ${isOpen ? 'max-h-screen' : 'max-h-0'} px-5 py-2`}
         style={{ transitionProperty: 'max-height' }}
       >
           {item.contents.map((content, index) => (
-            <p key={index} className="mb-2">
+            <p key={index} className="py-2">
               {content}
             </p>
           ))}
