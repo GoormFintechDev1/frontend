@@ -61,16 +61,28 @@ const ExpensesPage = () => {
             <Image src={"/icons/Forward.png"} alt="Forward" width={18} height={18} />
           </button>
         </div>
-        <>
+        <div className="h-[calc(100vh-163px)] overflow-y-scroll">
           <ExpensesPieChart chartData={expensesDetailsData!} />
           <ExpensesData chartData={expensesDetailsData!} month={month} />
-        </>
-        <button onClick={toggleWeekData}>주간별 상세보기</button>
-        {activeToggle && (
-          <>
-            <ExpensesWeekData chartData={expensesDetails!} month={month} />
-          </>
-        )}
+          <div className="flex justify-center">
+            <button
+              onClick={toggleWeekData}
+              className="flex items-center justify-between bg-blue-500 text-white px-4 py-2 rounded focus:outline-none transition"
+            >
+              주간별 지출금액
+              <span
+                className={`ml-2 transform transition-transform duration-300 ${activeToggle ? 'rotate-180' : 'rotate-0'}`}
+              >
+                ▼
+              </span>
+            </button>
+          </div>
+          {activeToggle && (
+            <>
+              <ExpensesWeekData chartData={expensesDetails!} month={month} />
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

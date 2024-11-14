@@ -17,7 +17,6 @@ const labelStyle = {
 };
 
 const COLORS = ["#0FA573", "#E2E8F0"];  // 매출 목표 색상
-const EXPENSE_COLORS = ["#FB7185", "#E2E8F0"];   // 지출 목표 색상
 
 export default function Objective() {
     const [year, setYear] = useState(new Date().getFullYear());
@@ -36,16 +35,6 @@ export default function Objective() {
         { name: "Completed", value: revenuePercentage },
         { name: "Remaining", value: 100 - revenuePercentage }
       ];
-
-    const expensePercentage = Math.round((expense?.monthlyExpense0Ago / expense?.expenseGoal0Ago) * 100);
-    const expenseData = expensePercentage >= 100
-    ? [{name: "Completed", value: 100}]
-    : [
-        { name: "Completed", value: expensePercentage },
-        { name: "Remaining", value: 100 - expensePercentage }
-    ];
-
-    const expenseRate = calculateRemainingBudgetPercentage(expense?.monthlyExpense0Ago, expense?.expenseGoal0Ago);
 
     return (
         <div className="container mx-auto p-4">
@@ -97,39 +86,34 @@ export default function Objective() {
 
                 {/* 지출 목표 */}
                 <Link href="/goals/detail?page=expense">
-                <div className="bg-white rounded-lg shadow p-4 mt-10 cursor-pointer">
-                    <p className="text-base font-medium mb-2">지출 예산</p>
-                    <div className="flex items-center">
-                        <div className="w-1/2 flex justify-center items-center">
-                            <PieChart width={95} height={100}>
-                                <Pie
-                                    data={expenseData}
-                                    cx="50%"
-                                    cy="50%"
-                                    innerRadius={30}
-                                    outerRadius={40}
-                                    dataKey="value"
-                                    startAngle={90}
-                                    endAngle={-270}
-                                >
-                                    {expenseData.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={EXPENSE_COLORS[index % EXPENSE_COLORS.length]} />
-                                    ))}
-                                    <Label
-                                        value={`${Math.min(expensePercentage, 100)}%`} 
-                                        position="center"
-                                        style={{ ...labelStyle, fill: "#FB7185"}}
-                                    />
-                                </Pie>
-                            </PieChart>
-                        </div>
-                        <div className="w-1/2 text-center">
-                            <span className="text-gray-500 text-lg">소비 금액</span>
-                            <p className="text-rose-400 text-xl font-semibold">{convertToKoreanWon(expense?.monthlyExpense0Ago)} </p>
+                    <div className="bg-white rounded-lg shadow p-4 mt-10 cursor-pointer">
+                        <p className="text-base font-medium mb-10">지출 예산</p>
+                        <div className="flex items-center mb-4">
+                            <div className="w-1/2 flex flex-col justify-center items-center">
+                                <p className="text-gray-600">지출 예산보다</p>
+                                {expense?.monthlyExpense0Ago && expense?.monthlyExpense1Ago ? (
+                                    expense.expenseGoal0Ago < expense.monthlyExpense1Ago ? (
+                                        <p className="text-red-600 text-lg font-semibold">
+                                            {convertToKoreanWon(Math.abs(expense?.expenseGoal0Ago - expense?.monthlyExpense0Ago))} 더 썼어요
+                                        </p>
+                                    ) : (
+                                        <p className="text-blue-600 text-lg font-semibold">
+                                            {convertToKoreanWon(Math.abs(expense?.monthlyExpense1Ago - expense?.expenseGoal0Ago))} 덜 썼어요
+                                        </p>
+                                    )
+                                ) : (
+                                    <p>데이터가 없습니다</p>
+                                )}
+                            </div>
+                            <div className="w-1/2 text-center">
+                                <span className="text-gray-500 text-lg">소비 금액</span>
+                                <p className="text-gray-600 text-xl font-semibold">
+                                    {convertToKoreanWon(expense?.monthlyExpense0Ago)}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </Link>
+                </Link>
         </div>
     );
 }
