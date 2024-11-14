@@ -1,7 +1,7 @@
 "use client"
 
 import { DayIncome } from '@/interface/revenue';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function generateCalendarDates(year:number, month:number) {
   const dates = [];
@@ -25,7 +25,6 @@ function generateCalendarDates(year:number, month:number) {
   return dates;
 }
 
-
 interface CalendarProps {
   year: number;
   month: number;
@@ -38,6 +37,7 @@ function Calendar({ year, month, data, onDateClick }:CalendarProps) {
 
   const today = new Date();
   const [selectedDate, setSelectedDate] = useState<number | null>(null);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   const getTotalIncomeForDate = (day: number) => {
     const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
@@ -53,6 +53,16 @@ function Calendar({ year, month, data, onDateClick }:CalendarProps) {
     onDateClick(date);
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerHeight < 670);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize); 
+    return () => window.removeEventListener('resize', handleResize); 
+  }, []);
+
   return (
     <div className="flex flex-col items-center w-full mx-auto font-sans">
       <div className="grid grid-cols-7 gap-x-2 gap-y-4 text-center w-full">
@@ -60,7 +70,7 @@ function Calendar({ year, month, data, onDateClick }:CalendarProps) {
           <div
             key={day}
             className={`text-gray-500 font-semibold text-xs ${
-              index === 0 ? 'text-red-500' : ''} ${index === 6 ? '!text-blue-500' : ''}`
+              index === 0 ? 'text-red-500' : ''} ${index === 6 ? '!text-sky-500' : ''}`
             }
           >
             {day}
@@ -79,10 +89,10 @@ function Calendar({ year, month, data, onDateClick }:CalendarProps) {
             <div
               key={index}
               onClick={() => date && handleDateClick(date)}
-              className={`h-20 w-full flex flex-col items-center rounded-lg p-1 cursor-pointer text-gray-400
+              className={`${isSmallScreen ? 'h-10' : 'h-20'} w-full flex flex-col items-center rounded-lg p-1 cursor-pointer text-gray-400
                 ${date ? 'hover:bg-slate-100' : ''} 
                 ${date && index % 7 === 0 ? '!text-red-400' : ''} /* 일요일 빨간색 */
-                ${date && index % 7 === 6 ? '!text-blue-400' : ''} /* 토요일 파란색 */
+                ${date && index % 7 === 6 ? '!text-sky-400' : ''} /* 토요일 파란색 */
               `}
             >
               <div
