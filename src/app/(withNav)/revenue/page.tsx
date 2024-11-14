@@ -88,7 +88,7 @@ export default function Revenue() {
       </div>
 
         {/* Sales Summary */}
-        <section className="p-4">
+        <section className="px-2 py-9">
           <div className="space-y-2 text-sm font-medium">
             <div className="flex flex-row space-x-3 font-semibold">
               <p>총 매출</p>
@@ -109,7 +109,7 @@ export default function Revenue() {
 
         {/* Calendar */}
         {date && (
-          <div className="border-t-2 mt-5 pt-6" style={{borderColor: "#F5F5F5"}} >
+          <div className="border-t-2 pt-6" style={{borderColor: "#F5F5F5"}} >
             <Calendar year={year} month={month} data={saleData} onDateClick={handleDateClick}/>
           </div>
         )}
