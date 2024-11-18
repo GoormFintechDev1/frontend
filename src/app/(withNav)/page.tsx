@@ -11,6 +11,7 @@ import { useUserInfo } from "@/hooks/useUserQuery";
 export default function Home() {
 
   const [height, setHeight] = useState("0px");
+  
 
   useEffect(() => {
     const calculateHeight = () => {

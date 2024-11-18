@@ -32,15 +32,15 @@ export default function ReportDetail() {
                 </button>
             </div>
             
-            <div className="p-4 text-center">
-                <div className="flex items-center justify-center space-x-4">
-                    <button onClick={() => setMonth(handlePrevMonth(month))} className="text-xl font-semibold px-2">
+            <div className="p-4">
+                <div className="flex items-left space-x-4">
+                    {/* <button onClick={() => setMonth(handlePrevMonth(month))} className="text-xl font-semibold px-2">
                         <Image src={"/icons/Back.png"} alt="PrevMonth" width={24} height={24} />
-                    </button>
-                    <h1 className="text-2xl font-extralight"><span>{useInfo?.companyName}</span> <br/>{month} 월간 리포트</h1>
-                    <button onClick={() => setMonth(handleNextMonth(month))} className="text-xl font-semibold px-2">
+                    </button> */}
+                    <h1 className="text-xl font-bold"><span>{useInfo?.companyName}</span> <br/>{month} 리포트</h1>
+                    {/* <button onClick={() => setMonth(handleNextMonth(month))} className="text-xl font-semibold px-2">
                         <Image src={"/icons/Forward.png"} alt="NextMonth" width={24} height={24} />
-                    </button>
+                    </button> */}
                 </div>
             </div>
 

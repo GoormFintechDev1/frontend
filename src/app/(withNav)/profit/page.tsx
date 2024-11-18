@@ -93,7 +93,7 @@ export default function Income() {
                     <Image alt="back" onClick={handleNextMonth} src={'/icons/smallRight.png'} width={18} height={18}></Image>
                 </div>
                 <div className="mt-16">
-                    <div className="text-lg font-medium mb-4">총 순수익은?</div>
+                    <div className="text-lg font-medium mb-4">총 순이익은?</div>
                     <div className="text-2xl font-bold text-blue-600 mb-6">{profit? profit.netProfit.toLocaleString(): 0}원</div>
                 </div>
 

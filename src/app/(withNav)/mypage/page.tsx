@@ -2,9 +2,7 @@
 
 import { useLogoutMutation } from "@/hooks/useAuthQuery";
 import { useUserInfo } from "@/hooks/useUserQuery";
-import { log } from "console";
 import dayjs from "dayjs";
-import { userInfo } from "os";
 dayjs().format();
 
 
@@ -19,7 +17,7 @@ export default function MyPage() {
     }
 
     return (
-        <div className="flex flex-col h-screen">
+        <div className="container flex flex-col h-screen">
             <div className="flex items-center justify-between ">
                 <h1 className="text-xl ml-4 mt-4 p-2 font-extralight"> 📌{useInfo?.companyName} </h1>
             </div>
