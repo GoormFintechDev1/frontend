@@ -48,7 +48,7 @@ export function convertToKoreanWon(value: number): string {
   if (value === 0) return "0 원"; // 0일 때는 0원으로 표시
 
   const isNegative = value < 0;
-  let currentValue = Math.abs(value); // 음수일 경우 절대값으로 변환
+  const currentValue = Math.abs(value); // 음수일 경우 절대값으로 변환
 
   // 만원 이상일 경우 단위를 순서대로 추가
   if (currentValue >= 10000) {

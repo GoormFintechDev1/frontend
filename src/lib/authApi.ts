@@ -7,7 +7,7 @@ const enviroment = process.env.NODE_ENV;
 
 let url = "http://localhost:8080/api/auth";
 if (enviroment === "production") {
-  url = "https://domain/api/auth";
+  url = process.env.DOMAIN ? `https://${process.env.DOMAIN}/api/auth` : `http://localhost:8080/api/auth`;
 }
 
 export const loginUser = async (data:LoginType) => {

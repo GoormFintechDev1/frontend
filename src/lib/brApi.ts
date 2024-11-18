@@ -4,7 +4,7 @@ const enviroment = process.env.NODE_ENV;
 
 let url = "http://localhost:8080/api/business";
 if (enviroment === "production") {
-  url = "https://domain/api/business";
+  url = process.env.DOMAIN ? `https://${process.env.DOMAIN}/api/business` : `http://localhost:8080/api/business`;
 }
 
 

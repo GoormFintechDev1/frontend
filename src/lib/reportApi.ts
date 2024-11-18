@@ -2,7 +2,7 @@ const enviroment = process.env.NODE_ENV;
 
 let url = "http://localhost:8080/api/report";
 if (enviroment === "production") {
-  url = "https://domain/api/report";
+  url = process.env.DOMAIN ? `https://${process.env.DOMAIN}/api/report` : `http://localhost:8080/api/report`;
 }
 
 export const getReportData = async (paramMonth: string) => {

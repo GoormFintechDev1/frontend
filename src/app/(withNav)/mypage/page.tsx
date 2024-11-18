@@ -2,9 +2,7 @@
 
 import { useLogoutMutation } from "@/hooks/useAuthQuery";
 import { useUserInfo } from "@/hooks/useUserQuery";
-import { log } from "console";
 import dayjs from "dayjs";
-import { userInfo } from "os";
 dayjs().format();
 
 
