@@ -3,10 +3,10 @@
 import ReportItem from '@/components/reportlist/ReportItem';
 import { useReportQuery } from '@/hooks/useReportQuery';
 import useReportsStore from '@/stores/useReportsStore';
-import { handleNextMonth, handlePrevMonth } from '@/utils/calculateDay';
+// import { handleNextMonth, handlePrevMonth } from '@/utils/calculateDay';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+// import { useState } from 'react';
 import dayjs from "dayjs";
 import { useUserInfo } from '@/hooks/useUserQuery';
 dayjs().format();
@@ -14,7 +14,8 @@ dayjs().format();
 export default function ReportDetail() {
     const searchParams = useSearchParams();
     const initialMonth = searchParams.get('month') || '2024-11'; // 기본값을 11월로 설정
-    const [month, setMonth] = useState(initialMonth);
+    // const [month, setMonth] = useState(initialMonth);
+    const month = initialMonth;
 
     useReportQuery(month);
 
@@ -32,15 +33,15 @@ export default function ReportDetail() {
                 </button>
             </div>
             
-            <div className="p-4 text-center">
-                <div className="flex items-center justify-center space-x-4">
-                    <button onClick={() => setMonth(handlePrevMonth(month))} className="text-xl font-semibold px-2">
+            <div className="mt-4">
+                <div className="flex items-left space-x-4">
+                    {/* <button onClick={() => setMonth(handlePrevMonth(month))} className="text-xl font-semibold px-2">
                         <Image src={"/icons/Back.png"} alt="PrevMonth" width={24} height={24} />
-                    </button>
-                    <h1 className="text-2xl font-extralight"><span>{useInfo?.companyName}</span> <br/>{month} 월간 리포트</h1>
-                    <button onClick={() => setMonth(handleNextMonth(month))} className="text-xl font-semibold px-2">
+                    </button> */}
+                    <h1 className="text-xl font-bold"><span>{useInfo?.companyName}</span> <br/>{month} 리포트</h1>
+                    {/* <button onClick={() => setMonth(handleNextMonth(month))} className="text-xl font-semibold px-2">
                         <Image src={"/icons/Forward.png"} alt="NextMonth" width={24} height={24} />
-                    </button>
+                    </button> */}
                 </div>
             </div>
 

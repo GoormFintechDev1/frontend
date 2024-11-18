@@ -19,8 +19,6 @@ export default function Login() {
 
     const mutation = useLoginMutation();
 
-    console.log(formData.loginId);
-
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         // 로그인 로직을 추가하거나, API 호출 등을 여기에 구현

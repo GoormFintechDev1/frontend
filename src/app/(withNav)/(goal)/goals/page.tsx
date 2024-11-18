@@ -3,9 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { PieChart, Pie, Cell, Label } from "recharts";
 import dayjs from "dayjs";
-import { useExpenseGoal, useRevenueGoal } from "@/hooks/useGoalQuery";
+import { useExpenseGoal, useGetBadge, useRevenueGoal } from "@/hooks/useGoalQuery";
 import { paramMonth2 } from "@/utils/calculateDay";
 import { convertToKoreanWon } from "@/utils/currency";
+import { useEffect, useState } from "react";
 dayjs().format();
 
 
@@ -17,6 +18,14 @@ const labelStyle = {
 
 const COLORS = ["#0FA573", "#E2E8F0"];  // 매출 목표 색상
 
+interface yearGoal {
+    goalMonth: number,
+    expenseGoal: number,
+    realExpense: number,
+    realRevenue: number,
+    revenueGoal: number,
+}
+
 export default function Objective() {
     const year = new Date().getFullYear();
     const currentIndex = new Date().getMonth() + 1;
@@ -25,6 +34,9 @@ export default function Objective() {
 
     const {data: revenue} = useRevenueGoal(date);
     const {data: expense} = useExpenseGoal(date);
+    const {data: yearGoal} = useGetBadge(year);
+
+    const [height, setHeight] = useState('170px');
 
     const revenuePercentage = Math.round((revenue?.monthlyRevenue0Ago / revenue?.revenueGoal0Ago) * 100);
     const revenueData = revenuePercentage >= 100 
@@ -33,6 +45,30 @@ export default function Objective() {
         { name: "Completed", value: revenuePercentage },
         { name: "Remaining", value: 100 - revenuePercentage }
       ];
+    
+
+    useEffect(() => {
+        const debounce = (func: () => void, delay:number) => {
+            let timer:  ReturnType<typeof setTimeout>;
+            return () => {
+                clearTimeout(timer);
+                timer = setTimeout(() => func(), delay);
+            };
+        };
+    
+        const calculateHeight = debounce(() => {
+            const calculatedHeight = Math.max(170, Math.floor((window.innerHeight - 135 - 250) / 3));
+            setHeight(`${calculatedHeight}px`);
+        }, 200);
+    
+        calculateHeight();
+        window.addEventListener("resize", calculateHeight);
+    
+        return () => {
+            window.removeEventListener("resize", calculateHeight);
+        };
+    }, []);
+
 
     return (
         <div className="container mx-auto p-4">
@@ -44,26 +80,30 @@ export default function Objective() {
 
             <div className="mb-6">
             <h1 className="text-xl font-semibold ">목표를 관리해보세요 !</h1>
-            <h2 className="text-lg font-semibold mt-3"> ⭐ 목표를 달성하고 배지를 모아보세요 ⭐</h2>
-                <div className="bg-white rounded-lg shadow-xl p-6 mt-3">
-                    <div className="grid grid-cols-6 gap-4">
-                        {[...Array(12)].map((_, index) => (
+            <h2 className="text-base font-semibold mt-3"> 목표를 달성하고 배지를 모아보세요.</h2>
+                <div className="bg-white rounded-lg border p-4 mt-3 flex items-center" style={{height}}>
+                    <div className="grid grid-cols-6 gap-3">
+                        {yearGoal?.map((goal:yearGoal, index:number) => {
+                            const revenueGoal = goal.realRevenue !== 0 && goal.realRevenue - goal.revenueGoal >= 0;
+                            const expenseGoal = goal.realExpense !== 0 && goal.expenseGoal - goal.realExpense >= 0;
+
+                            return (
                             <div
                                 key={index}
-                                className={`w-16 h-16 flex items-center justify-center rounded-full border-2 ${
-                                    index === 10 ? "border-amber-300 bg-amber-50 " : "border-gray-100"}`}>
-                                {index === 10 && 
+                                className={`w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 flex items-center justify-center rounded-full border-2 ${
+                                    revenueGoal && expenseGoal && index +1 < currentIndex ? "border-amber-300 bg-amber-50 " : index + 1 < currentIndex ? "bg-gray-100 border-gray-100" : index +1 === currentIndex ? "border-emerald-100": "border-gray-100"}`} >
+                                {revenueGoal && expenseGoal && index +1 < currentIndex &&
                                 <Image alt="badge" src={`/icons/medal.png`} width={50} height={50} className="text-4xl"></Image>}
                             </div>
-                        ))}
+                        )})}
                     </div>
                 </div>
             </div>
 
-            <div className="mt-14">
+            <div className="mt-6">
                 {/* 매출 목표 */}
                 <Link href="/goals/detail?page=revenue">
-                    <div className="bg-white rounded-lg shadow-lg p-4 cursor-pointer">
+                    <div className="bg-white rounded-lg shadow-lg p-4 cursor-pointer" style={{height}}>
                         <p className="text-lg mb-2">매출 목표</p>
                         <div className="flex items-center">
                             <div className="w-1/2 flex justify-center items-center">
@@ -91,7 +131,7 @@ export default function Objective() {
                             </div>
                             <div className="w-1/2 text-center">
                                 <span className="text-gray-500 text-lg">목표 금액</span>
-                                <p className="text-emerald-500 text-xl font-semibold">{convertToKoreanWon(revenue?.revenueGoal0Ago)} </p>
+                                <p className="text-emerald-500 text-xl font-semibold">{convertToKoreanWon(revenue?.revenueGoal0Ago ?? 0)} </p>
                             </div>
                         </div>
                     </div>
@@ -100,7 +140,7 @@ export default function Objective() {
 
                     {/* 지출 목표 */}
                     <Link href="/goals/detail?page=expense">
-                        <div className="bg-white rounded-lg shadow-lg p-4 mt-10 cursor-pointer">
+                        <div className="bg-white rounded-lg shadow-lg p-4 mt-10 cursor-pointer" style={{height}}>
                             <p className="text-lg font-medium mb-10">지출 예산</p>
                             <div className="flex items-center mb-4">
                                 <div className="w-1/2 flex flex-col justify-center items-center">
@@ -108,11 +148,11 @@ export default function Objective() {
                                     {expense?.monthlyExpense0Ago && expense?.monthlyExpense1Ago ? (
                                         expense.expenseGoal0Ago < expense.monthlyExpense1Ago ? (
                                             <p className="text-red-600 text-lg font-semibold">
-                                                {convertToKoreanWon(Math.abs(expense?.expenseGoal0Ago - expense?.monthlyExpense0Ago))} 더 썼어요.
+                                                {convertToKoreanWon(Math.abs(expense?.expenseGoal0Ago - expense?.monthlyExpense0Ago) ?? 0)} 더 썼어요.
                                             </p>
                                         ) : (
                                             <p className="text-blue-600 text-lg font-semibold">
-                                                {convertToKoreanWon(Math.abs(expense?.monthlyExpense0Ago - expense?.expenseGoal0Ago))} 덜 썼어요.
+                                                {convertToKoreanWon(Math.abs(expense?.monthlyExpense0Ago - expense?.expenseGoal0Ago) ?? 0)} 덜 썼어요.
                                             </p>
                                         )
                                     ) : (

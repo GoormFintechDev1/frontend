@@ -63,3 +63,14 @@ export const getRevenueGoal = async(date: string) => {
 
     return response;
   }
+
+  export const getBadges = async(year:number) => {
+    const response = await fetch(`${url}/total?goalYear=${year}`,{
+      method:"GET",
+      credentials: "include",
+    })
+
+    if(!response.ok) new Error("배지 조회 실패");
+
+    return response.json();
+  }
