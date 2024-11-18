@@ -5,7 +5,6 @@ import { PieChart, Pie, Cell, Label } from "recharts";
 import dayjs from "dayjs";
 import { useExpenseGoal, useRevenueGoal } from "@/hooks/useGoalQuery";
 import { paramMonth2 } from "@/utils/calculateDay";
-import { useState } from "react";
 import { convertToKoreanWon } from "@/utils/currency";
 dayjs().format();
 
@@ -19,8 +18,8 @@ const labelStyle = {
 const COLORS = ["#0FA573", "#E2E8F0"];  // 매출 목표 색상
 
 export default function Objective() {
-    const [year, setYear] = useState(new Date().getFullYear());
-    const [currentIndex, setCurrentIndex] = useState(new Date().getMonth() + 1);
+    const year = new Date().getFullYear();
+    const currentIndex = new Date().getMonth() + 1;
 
     const date = paramMonth2(year, currentIndex);
 
