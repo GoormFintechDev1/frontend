@@ -3,10 +3,10 @@
 import ReportItem from '@/components/reportlist/ReportItem';
 import { useReportQuery } from '@/hooks/useReportQuery';
 import useReportsStore from '@/stores/useReportsStore';
-import { handleNextMonth, handlePrevMonth } from '@/utils/calculateDay';
+// import { handleNextMonth, handlePrevMonth } from '@/utils/calculateDay';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+// import { useState } from 'react';
 import dayjs from "dayjs";
 import { useUserInfo } from '@/hooks/useUserQuery';
 dayjs().format();
@@ -14,7 +14,8 @@ dayjs().format();
 export default function ReportDetail() {
     const searchParams = useSearchParams();
     const initialMonth = searchParams.get('month') || '2024-11'; // 기본값을 11월로 설정
-    const [month, setMonth] = useState(initialMonth);
+    // const [month, setMonth] = useState(initialMonth);
+    const month = initialMonth;
 
     useReportQuery(month);
 

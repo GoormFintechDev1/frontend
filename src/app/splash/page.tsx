@@ -5,6 +5,12 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Image from "next/image";
 
+
+interface CustomError extends Error {
+  status: number,
+  data: string,
+}
+
 export default function Splash() {
     const router = useRouter();
     const { data, error, isLoading } = useUserInfo();
@@ -17,7 +23,7 @@ export default function Splash() {
               console.log(data)
                 router.push("/");
             } else if (error) {
-                const status = (error as any)?.status || null;
+                const status = (error as CustomError)?.status || null;
 
                 if (status === 403) {
                     router.push("/login");

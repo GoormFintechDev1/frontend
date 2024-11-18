@@ -1,5 +1,5 @@
 import { SetGoal } from "@/interface/goal"
-import { getExpenseGoal, getRevenueGoal, setGoals, updateGoals } from "@/lib/goalApi"
+import { getBadges, getExpenseGoal, getRevenueGoal, setGoals, updateGoals } from "@/lib/goalApi"
 import { useMutation, useQuery } from "@tanstack/react-query"
 
 
@@ -34,5 +34,12 @@ export const useUpdateGoal = () => {
     onError: (error) => {
         console.error("목표 수정 실패 ", error);
     }
+  })
+}
+
+export const useGetBadge = (year:number) => {
+  return useQuery({
+    queryKey: ["badge"],
+    queryFn: () => getBadges(year),
   })
 }
