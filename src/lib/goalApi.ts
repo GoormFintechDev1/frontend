@@ -4,7 +4,7 @@ const enviroment = process.env.NODE_ENV;
 
 let url = "http://localhost:8080/api/goal";
 if (enviroment === "production") {
-  url = "https://domain/api/goal";
+  url = process.env.DOMAIN ? `https://${process.env.DOMAIN}/api/goal` : `http://localhost:8080/api/goal`;
 }
 
 export const getRevenueGoal = async(date: string) => {

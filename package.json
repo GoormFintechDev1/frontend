@@ -20,6 +20,7 @@
     "zustand": "^5.0.0"
   },
   "devDependencies": {
+    "@types/daum-postcode": "^2.0.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

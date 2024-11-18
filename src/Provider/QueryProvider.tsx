@@ -4,13 +4,17 @@ import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-qu
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation';
 
+interface CustomError extends Error {
+  status: number,
+}
+
 const QueryProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const [queryClient] = useState(() => (
     new QueryClient({
       queryCache: new QueryCache({
-        onError: (error: any) => {
-          if (error.status === 403) {
+        onError: (error) => {
+          if ((error as CustomError).status === 403) {
             router.push('/login');
           }
         }

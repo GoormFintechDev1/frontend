@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 import QueryProvider from "@/Provider/QueryProvider";
-import Navbar from "@/components/Navbar";
 
 // goorm-sans 폰트 설정
 const goormSansBold = localFont({
