@@ -21,7 +21,7 @@ const ReportItem = ({ item }: ReportItemProps) => {
         <h2 className="text-xl font-semibold">{item.title}</h2>
       </div>
       <div
-        className={`transition-max-height duration-500 ease-in-out overflow-hidden ${isOpen ? 'max-h-screen' : 'max-h-0'} px-5 py-2`}
+        className={`transition-max-height duration-500 ease-in-out overflow-hidden ${isOpen ? 'max-h-screen py-2' : 'max-h-0'} px-5`}
         style={{ transitionProperty: 'max-height' }}
       >
           {item.contents.map((content, index) => (

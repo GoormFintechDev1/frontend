@@ -78,9 +78,13 @@ const ExpensesPage = () => {
             </button>
           </div>
           {activeToggle && (
-            <>
+            <div
+              className={`transition-all duration-500 ease-in-out overflow-hidden ${
+                activeToggle ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+              }`}
+            >
               <ExpensesWeekData chartData={expensesDetails!} month={month} />
-            </>
+            </div>
           )}
         </div>
       </div>
