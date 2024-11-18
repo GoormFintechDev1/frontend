@@ -36,7 +36,6 @@ function Calendar({ year, month, data, onDateClick }:CalendarProps) {
   const dates = generateCalendarDates(year, month-1);
 
   const today = new Date();
-  const [selectedDate, setSelectedDate] = useState<number | null>(0);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   const getTotalIncomeForDate = (day: number) => {
@@ -49,7 +48,6 @@ function Calendar({ year, month, data, onDateClick }:CalendarProps) {
   };
 
   const handleDateClick = (date: number) => {
-    setSelectedDate(date);
     onDateClick(date);
   };
 
@@ -82,7 +80,6 @@ function Calendar({ year, month, data, onDateClick }:CalendarProps) {
             year === today.getFullYear() &&
             month === today.getMonth() +1 &&
             date === today.getDate();
-          const isSelected = date === selectedDate;
           const totalIncome = date ? getTotalIncomeForDate(date) : null;
 
           return (

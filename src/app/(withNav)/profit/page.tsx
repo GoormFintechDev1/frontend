@@ -71,8 +71,8 @@ export default function Income() {
                                     className="coin"
                                     style={{
                                         animationDelay: `${i * 0.02}s`,
-                                        "--x": `${x}px`,
-                                        "--y": `${y}px`,
+                                        ["--x" as string]: `${x}px`,
+                                        ["--y" as string]: `${y}px`,
                                     }}
                                 />
                             );

@@ -1,5 +1,5 @@
 "use client";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { useExpenseGoal, useRevenueGoal } from "@/hooks/useGoalQuery";

@@ -42,7 +42,7 @@ export default function Register1({ onNext }: Props) {
         setIsloginIdChecked(false);
         setIsloginIdAvailable("");
         clearErrors("loginId");
-    }, [loginId]);
+    }, [clearErrors, loginId]);
 
     // 중복 확인 버튼 클릭 핸들러
     const handleCheckloginId = () => {
