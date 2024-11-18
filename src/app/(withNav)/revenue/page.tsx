@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { useMonthlyRevenue } from "@/hooks/useRevenueQuery";
 import Link from "next/link";
@@ -26,7 +26,7 @@ export default function Revenue() {
     cashIncome: 0,
   });
 
-  const { data, isLoading, error } = useMonthlyRevenue(paramMonth2(year,month));
+  const { data, isLoading } = useMonthlyRevenue(paramMonth2(year,month));
 
   const saleData = data?.dailyIncomeList ?? [];
   const monthlyTotalIncome = data?.monthlyTotalncome;

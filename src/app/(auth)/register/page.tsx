@@ -55,7 +55,7 @@ export default function Register() {
                 }
             });
         }
-    },[formData, isReady, mutation])
+    },[formData, isReady, mutation, router])
  
     return (
         <div className="h-full container2">

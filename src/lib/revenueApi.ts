@@ -2,7 +2,12 @@ const enviroment = process.env.NODE_ENV;
 
 let url = "http://localhost:8080/api/pos";
 if (enviroment === "production") {
-  url = "https://domain/api/pos";
+  url = process.env.DOMAIN ? `https://${process.env.DOMAIN}/api/pos` : `http://localhost:8080/api/pos`;
+}
+
+interface CustomError extends Error {
+  status: number,
+  data: string,
 }
 
 export const getMonthlyIncome = async(date:string) => {
@@ -14,8 +19,8 @@ export const getMonthlyIncome = async(date:string) => {
       if (!response.ok) {
         const errorData = await response.json().catch(() => null); 
         const error = new Error(response.statusText || "API 요청 오류");
-        (error as any).status = response.status;
-        (error as any).data = errorData; 
+        (error as CustomError).status = response.status;
+        (error as CustomError).data = errorData; 
         throw error;
       }
 
@@ -31,8 +36,8 @@ export const getIncomeHistory = async(date:string) => {
       if (!response.ok) {
       const errorData = await response.json().catch(() => null); 
       const error = new Error(response.statusText || "API 요청 오류");
-      (error as any).status = response.status;
-      (error as any).data = errorData; 
+      (error as CustomError).status = response.status;
+      (error as CustomError).data = errorData; 
       throw error;
     }
 

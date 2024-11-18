@@ -6,7 +6,6 @@ import { useState } from 'react';
 import Button from './Button';
 import { useRouter } from 'next/navigation';
 import { LoginType } from '@/interface/login';
-import { useUserInfo } from '@/hooks/useUserQuery';
 
 export default function Login() {
     const router = useRouter();

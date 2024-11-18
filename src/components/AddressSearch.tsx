@@ -20,7 +20,7 @@ function AddressSearch({ onAddressSelect }:Props) {
   const handleOpenPostcode = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); 
     new window.daum.Postcode({
-      oncomplete: function (data) {
+      oncomplete: function (data: { address: string; }) {
         onAddressSelect(data.address);
       },
     }).open();
