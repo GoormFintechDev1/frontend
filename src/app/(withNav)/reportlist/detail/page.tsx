@@ -32,7 +32,7 @@ export default function ReportDetail() {
                 </button>
             </div>
             
-            <div className="p-4">
+            <div className="mt-4">
                 <div className="flex items-left space-x-4">
                     {/* <button onClick={() => setMonth(handlePrevMonth(month))} className="text-xl font-semibold px-2">
                         <Image src={"/icons/Back.png"} alt="PrevMonth" width={24} height={24} />
