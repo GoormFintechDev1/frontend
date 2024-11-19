@@ -24,3 +24,10 @@ export const useReportQuery = (paramMonth: string) => {
 
   return { isLoading, error }
 }
+
+export const useReportQuery2 = (paramMonth: string) => {
+  return useQuery({
+    queryKey: ["report", paramMonth],
+    queryFn: () => getReportData(paramMonth),
+  })
+}
