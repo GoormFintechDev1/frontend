@@ -6,7 +6,7 @@ if (enviroment === "production") {
 }
 
 export const getReportData = async (paramMonth: string) => {
-  const response = await fetch(`${url}/industry-comparison?month=${paramMonth}`, {
+  const response = await fetch(`${url}/all?month=${paramMonth}`, {
     method: "GET",
     credentials: "include"
   });
