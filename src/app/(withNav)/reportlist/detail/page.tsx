@@ -1,7 +1,7 @@
 "use client"
 
 // import ReportItem from '@/components/reportlist/ReportItem';
-import { useReportQuery, useReportQuery2 } from '@/hooks/useReportQuery';
+import { useReportQuery2 } from '@/hooks/useReportQuery';
 import useReportsStore from '@/stores/useReportsStore';
 // import { handleNextMonth, handlePrevMonth } from '@/utils/calculateDay';
 import Image from 'next/image';
@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 import { useUserInfo } from '@/hooks/useUserQuery';
 import ReportIndusty from '@/components/reportlist/ReportIndusty';
 import ReportMarket from '@/components/reportlist/ReportMarket';
+import { useEffect, useState } from 'react';
 dayjs().format();
 
 export default function ReportDetail() {
@@ -26,6 +27,22 @@ export default function ReportDetail() {
     
     const {data: useInfo} = useUserInfo();
     const {data: reportData} = useReportQuery2(month);
+
+    const [height, setHeight] = useState("500px");
+
+    useEffect(() => {
+        const calculateHeight = () => {
+          const calculatedHeight = Math.max(190, Math.floor((window.innerHeight - 135 - 40 - 30)));
+          setHeight(`${calculatedHeight}px`);
+        };
+    
+        calculateHeight();
+        window.addEventListener("resize", calculateHeight);
+    
+        return () => {
+          window.removeEventListener("resize", calculateHeight);
+        };
+      }, []);
 
     return (
         <div className="container h-full">
@@ -47,7 +64,7 @@ export default function ReportDetail() {
                 </div>
             </div>
 
-            <div className="pt-4 overflow-scroll h-4/5 flex flex-col space-y-10 "> {/* 높이 변경 필요... */}
+            <div className="pt-4 overflow-scroll flex flex-col space-y-10 " style={{height}}> {/* 높이 변경 필요... */}
                 {/* {reportData.map((item, index) => (
                     <ReportItem key={index} item={item} />
                 ))} */}
