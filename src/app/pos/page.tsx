@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 
 type Product = {
@@ -66,6 +67,13 @@ export default function Pos() {
 
   const handleCheckout = () => {
     if (cart.length > 0) {
+      // 기존 저장된 결제 내역 가져오기
+      const previousTransactions = JSON.parse(localStorage.getItem("transactions") || "[]");
+
+      // 새로운 결제 내역 추가
+      const newTransaction = [...previousTransactions, { cart, total, date:new Date().toISOString()}];
+      localStorage.setItem("transactions", JSON.stringify(newTransaction));
+
       setCart([]); 
       setTotal(0); 
       setCheckoutMessage("결제가 완료되었습니다."); 
@@ -79,15 +87,22 @@ export default function Pos() {
 
 
   return (
-    <div className="container min-h-screen overflow-y-auto flex flex-col">
-      <div className="flex-grow mb-5">
-        <h1 className="text-2xl font-bold mb-4">POS 시스템🖥️</h1>
-        <div className="grid grid-cols-2 gap-4 bg-gray-50 p-4">
+    <div className="container flex flex-col overflow-y-auto ">
+      <div className="flex justify-between items-center mb-5">
+        <h1 className="text-2xl font-bold">POS 시스템</h1>
+        <Link
+          href ={"/poslist"} className="p-2 rounded-md bg-slate-200">
+            결제내역
+        </Link>
+      </div>
+
+      <div className="flex mb-5 justify-center">
+        <div className="grid grid-cols-2 gap-5 bg-gray-50 p-4 w-full">
           {products.map((product) => (
             <button
               key={product.id}
               onClick={() => addToCart(product)}
-              className="p-4 bg-white rounded-lg shadow text-center"
+              className=" p-5 bg-white rounded-lg shadow text-center "
             >
               <h2 className="text-lg font-bold">{product.name}</h2>
               <p className="text-gray-500">{product.price.toLocaleString()}원</p>
@@ -97,7 +112,7 @@ export default function Pos() {
       </div>
 
       
-      <div className="bg-gray-100 p-4">
+      <div className="bg-gray-100 p-4 ">
         <h2 className="text-lg font-bold mb-2">주문내역</h2>
           <ul className="space-y-2">
             {cart.map((item) => (
