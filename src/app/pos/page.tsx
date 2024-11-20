@@ -1,12 +1,15 @@
 "use client";
+import { useProduct } from "@/hooks/useProductQuery";
+// import { Product } from "@/interface/product";
 import Link from "next/link";
 import { useState } from "react";
 
-type Product = {
-  id: number;
-  name: string;
-  price: number;
-};
+// type Product = {
+//   id: number;
+//   name: string;
+//   price: number;
+//   stockQuantity: number;
+// };
 
 type CartItem = {
   id: number;
@@ -16,38 +19,34 @@ type CartItem = {
 };
 
 export default function Pos() {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([
+    {id: 0, name: "", price: 0, quantity: 0}
+  ]);
   const [total, setTotal] = useState(0);
   const [checkoutMessage, setCheckoutMessage] = useState<string | null>(null);
 
-  const products: Product[] = [
-    { id: 1, name: "아메리카노", price: 4500 },
-    { id: 2, name: "카페라떼", price: 5000 },
-    { id: 3, name: "콜드브루", price: 5000 },
-    { id: 4, name: "바닐라라떼", price: 5500 },
-    { id: 5, name: "요거트스무디", price: 6000 },
-    { id: 6, name: "레몬에이드", price: 4000 },
-    { id: 7, name: "샌드위치", price: 6000 },
-    { id: 8, name: "머핀", price: 3000 },
-    { id: 9, name: "마들렌", price: 3000 },
-    { id: 10, name: "마카롱", price: 2000 },
-  ];
+  const {data: product} = useProduct();
+  console.log(product);
 
-  const addToCart = (product: Product) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item.id === product.id);
-      if (existingItem) {
-        return prevCart.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      } else {
-        return [...prevCart, { ...product, quantity: 1 }];
-      }
-    });
-    setTotal((prevTotal) => prevTotal + product.price);
-  };
+
+  // const addToCart = (product: Product) => {
+  //   setCart((prevCart) => {
+  //     const existingItem = prevCart.find((item) => item.id === product.productId);
+  //     if (existingItem) {
+  //       return prevCart.map((item) =>
+  //         item.id === product.productId
+  //           ? { ...item, quantity: item.quantity + 1 }
+  //           : item
+  //       );
+  //     } else {
+  //       return [...prevCart, { id: product.productId,
+  //         name: product.productName,
+  //         price: product.productPrice,
+  //         quantity: 1 }];
+  //     }
+  //   });
+  //   setTotal((prevTotal) => prevTotal + product.productPrice);
+  // };
 
   const removeFromCart = (id: number) => {
     setCart((prevCart) =>
@@ -90,6 +89,7 @@ export default function Pos() {
     <div className="container flex flex-col overflow-y-auto ">
       <div className="flex justify-between items-center mb-5">
         <h1 className="text-2xl font-bold">POS 시스템</h1>
+        {/* {product[0].productId} */}
         <Link
           href ={"/poslist"} className="p-2 rounded-md bg-slate-200">
             결제내역
@@ -97,18 +97,18 @@ export default function Pos() {
       </div>
 
       <div className="flex mb-5 justify-center">
-        <div className="grid grid-cols-2 gap-5 bg-gray-50 p-4 w-full">
-          {products.map((product) => (
+        {/* <div className="grid grid-cols-2 gap-5 bg-gray-50 p-4 w-full">
+          {product.map((product: Product) => (
             <button
-              key={product.id}
+              key={product.productId}
               onClick={() => addToCart(product)}
               className=" p-5 bg-white rounded-lg shadow text-center "
             >
-              <h2 className="text-lg font-bold">{product.name}</h2>
-              <p className="text-gray-500">{product.price.toLocaleString()}원</p>
+              <h2 className="text-lg font-bold">{product.productName}</h2>
+              <p className="text-gray-500">{product.productPrice.toLocaleString()}원</p>
             </button>
           ))}
-        </div>
+        </div> */}
       </div>
 
       
