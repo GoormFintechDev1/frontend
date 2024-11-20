@@ -1,13 +1,3 @@
-import React from 'react'
-
-const page = () => {
-  return (
-    <div>page</div>
-  )
-}
-
-export default page
-
 // "use client"
 
 // import Link from "next/link";
@@ -23,8 +13,8 @@ export default page
 // import { useRouter } from "next/navigation";
 // dayjs().format();
 
-// export default function setGoals(){
-//   const { register, handleSubmit, setValue, formState: { errors } } = useForm<SetGoalInput>({ mode: "onChange" });
+export default function setGoals(){
+//   const { register, handleSubmit, setValue} = useForm<SetGoalInput>({ mode: "onChange" });
 
 //   const {data:revenue} = useRevenueGoal(paramMonth);
 //   const {data:expense} = useExpenseGoal(paramMonth);
@@ -57,7 +47,8 @@ export default page
 
 //   const router = useRouter();
 
-//   return (
+  return (
+    <></>
 //     <div className="container min-h-screen flex flex-col">
 //       <div className="flex items-center justify-between mb-6">
 //         <Link href={"#"} onClick={router.back}>
@@ -95,5 +86,5 @@ export default page
 //       </form>
 //       <Navbar />
 //     </div>
-//   );
-// }
+  );
+}
