@@ -69,7 +69,7 @@ const ExpensesPage = () => {
               onClick={toggleWeekData}
               className="flex items-center justify-between bg-blue-500 text-white px-4 py-2 rounded focus:outline-none transition"
             >
-              주간별 지출금액 testtttt
+              주간별 지출금액 testttttt
               <span
                 className={`ml-2 transform transition-transform duration-300 ${activeToggle ? 'rotate-180' : 'rotate-0'}`}
               >
