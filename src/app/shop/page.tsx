@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 
 export default function Shop() {
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [total, setTotal] = useState(0);
   const [isPurchased, setIsPurchased] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -33,11 +34,10 @@ export default function Shop() {
             productId: item.itemId ?? Date.now(),
             name: item.itemName,
             price: item.itemPrice,
-            quantity: 1,
-          },
-        ];
+            quantity: 1}];
       }
     });
+    setTotal((prevTotal) => prevTotal + item.itemPrice);
   };
 
   const increaseQuantity = (productId: number) => {
@@ -173,6 +173,7 @@ export default function Shop() {
         </div>
 
         <div className="w-1/3">
+        <h3 className="text-lg font-extralight p-2">총합: {total.toLocaleString()}원 </h3>
           <button onClick={handlePurchase} className="block w-full p-3 bg-emerald-500 text-white rounded-md">
             구매하기
           </button>
