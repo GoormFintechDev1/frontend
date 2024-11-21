@@ -1,5 +1,6 @@
-import { getProduct } from "@/lib/productApi";
-import { useQuery } from "@tanstack/react-query"
+import { Product } from "@/interface/product";
+import { createProduct, getProduct } from "@/lib/productApi";
+import { useMutation, useQuery } from "@tanstack/react-query"
 
 export const useProduct = () => {
     return useQuery({
@@ -7,3 +8,10 @@ export const useProduct = () => {
       queryFn: getProduct,
     })
   }
+
+export const useCreateProduct = () => {
+    return useMutation({
+      mutationFn: (data: Product) => createProduct(data),
+    })
+  };
+
