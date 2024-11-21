@@ -5,18 +5,22 @@ import { ANONYMOUS, PaymentWidgetInstance } from "@tosspayments/payment-widget-s
 import { nanoid } from "nanoid";
 import { useEffect, useRef, useState } from "react";
 import "../../(toss)/toss.css";
+import { useSearchParams } from "next/navigation";
 
 const widgetClientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
 const customerKey = ANONYMOUS;
 
 
-export default function testToss() {
+export default function toss() {
+
+    const searchParams = useSearchParams();
 
     const {data: paymentWidget} = usePaymentWidget(widgetClientKey, customerKey);
 
     const paymentMethodsWidgetRef = useRef<ReturnType<PaymentWidgetInstance["renderPaymentMethods"]> | null>(null);
-    const agreementsWidgetRef = useRef<ReturnType<PaymentWidgetInstance["renderAgreement"]> | null>(null);
-    const [price, setPrice] = useState(1);
+    // const agreementsWidgetRef = useRef<ReturnType<PaymentWidgetInstance["renderAgreement"]> | null>(null);
+    // const [price, setPrice] = useState(1);
+    const price = Number(searchParams.get("price"));
     const [paymentMethodsWidgetReady, isPaymentMethodsWidgetReady] = useState(false);
   
     useEffect(() => {

@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type CartItem = {
@@ -11,6 +12,8 @@ export default function Shop() {
   const [isPurchased, setIsPurchased] = useState(false);
 
   const items = ["원두", "플라스틱 컵", "컵홀더", "빨대"];
+
+  const router = useRouter();
 
   // 장바구니
   const addToCart = (item: string) => {
@@ -58,6 +61,7 @@ export default function Shop() {
     if (cart.length > 0) {
       setCart([]);
       setIsPurchased(true);
+      // router.push(`/toss?price=${price}`);
     }
   };
 
