@@ -1,4 +1,5 @@
 "use client";
+import { useOrder } from "@/hooks/useOrderQuery";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -11,6 +12,9 @@ type Transaction = {
 
 export default function PosList() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+
+  const {data } = useOrder();
+  console.log(data);
 
   useEffect(() => {
     // 로컬스토리지에서 결제 내역 불러오기
