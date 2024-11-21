@@ -21,11 +21,11 @@ export default function ReportMarket({report}: Props) {
         <div className="flex w-full space-x-5">
             <div className="min-h-7 w-1/2 rounded-xl p-5 my-2 bg-zinc-50 items-center">
                 <p className="font-bold text-sm pb-3 ">BSI 지수</p>
-                <div className="text-base h-10 justify-self-center" style={{color:"#333333"}}><p className="font-extrabold text-emerald-400">{report?.BSI_index}</p></div>
+                <div className="text-base h-10 justify-self-center" style={{color:"#333333"}}><p className="font-extrabold text-blue-600">{report?.BSI_index}</p></div>
             </div>
             <div className="min-h-7 w-1/2 rounded-xl p-5 my-2 bg-zinc-50">
                 <p className="font-bold text-sm pb-3 ">환율</p>
-                <div className="text-base h-10 justify-self-center items-center" style={{color:"#333333"}}><p className="font-extrabold text-emerald-400">{report?.exchange_rate} 원</p></div>
+                <div className="text-base h-10 justify-self-center items-center" style={{color:"#333333"}}><p className="font-extrabold text-blue-600">{report?.exchange_rate} 원</p></div>
             </div>
         </div>
         <div className="text-base" style={{color:"#333333", lineHeight:"28px"}}>

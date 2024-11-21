@@ -7,6 +7,7 @@ import Goals from "@/components/main/Goals";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useUserInfo } from "@/hooks/useUserQuery";
+import Image from "next/image";
 
 export default function Home() {
 
@@ -27,15 +28,15 @@ export default function Home() {
     };
   }, []);
 
-  const {data, isLoading, error} = useUserInfo();
+  const {data} = useUserInfo();
 
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
-
-  if (error) {
-    return <div>error...</div>
-  }
+  // <div><Image
+  //   src="/Loading.gif"
+  //   alt="Example GIF"
+  //   width={300}
+  //   height={300}
+  //   unoptimized // GIF 최적화를 방지 (필수)
+  // /></div>
 
   return (
     <div id="main" className="container">
