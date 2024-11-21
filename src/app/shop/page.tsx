@@ -60,12 +60,22 @@ export default function Shop() {
         )
         .filter((cartItem) => cartItem.quantity > 0)
     );
+
+    const item = cart.find((cartItem) => cartItem.productId === productId);
+    if (item) {
+      setTotal((prevTotal) => prevTotal - item.price);
+    }
   };
 
   const handlePurchase = () => {
     if (cart.length > 0) {
       setCart([]);
+      setTotal(0);
       setIsPurchased(true);
+
+      setTimeout(() => {
+        setIsPurchased(false);
+      }, 2000);
     }
   };
 
