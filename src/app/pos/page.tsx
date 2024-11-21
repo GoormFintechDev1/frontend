@@ -2,39 +2,12 @@
 import { useCreateOrder } from "@/hooks/useOrderQuery";
 import { useCreateProduct, useProduct } from "@/hooks/useProductQuery";
 import { CartItem, Product } from "@/interface/product";
-// import { Product } from "@/interface/product";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 
-// type Product = {
-//   id: number;
-//   name: string;
-//   price: number;
-// };
-
-// type CartItem = {
-//   productId: number;
-//   // name: string;
-//   // price: number;
-//   quantity: number;
-// };
-
 export default function Pos() {
-
-  // const products: Product[] = [
-  //   { id: 1, name: "아메리카노", price: 4500 },
-  //   { id: 2, name: "카페라떼", price: 5000 },
-  //   { id: 3, name: "콜드브루", price: 5000 },
-  //   { id: 4, name: "바닐라라떼", price: 5500 },
-  //   { id: 5, name: "요거트스무디", price: 6000 },
-  //   { id: 6, name: "레몬에이드", price: 4000 },
-  //   { id: 7, name: "샌드위치", price: 6000 },
-  //   { id: 8, name: "머핀", price: 3000 },
-  //   { id: 9, name: "마들렌", price: 3000 },
-  //   { id: 10, name: "마카롱", price: 2000 },
-  // ];
 
   const [cart, setCart] = useState<CartItem[]>([]);
 
@@ -42,7 +15,7 @@ export default function Pos() {
   const [checkoutMessage, setCheckoutMessage] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { register, handleSubmit, setValue} = useForm<Product>({ mode: "onChange" });
+  const { register, handleSubmit} = useForm<Product>({ mode: "onChange" });
 
   const {data: product} = useProduct();
   console.log(product);
@@ -51,6 +24,7 @@ export default function Pos() {
   const addToCart = (product: Product) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.productId === product.productId);
+      
       if (existingItem) {
         return prevCart.map((item) =>
           item.productId === product.productId
@@ -83,6 +57,7 @@ export default function Pos() {
     }
   };
   const orderMuatation = useCreateOrder();
+  
   const handleCheckout = () => {
     if (cart.length > 0) {
       // 기존 저장된 결제 내역 가져오기
@@ -125,7 +100,7 @@ export default function Pos() {
 
       <div className="flex mb-5 justify-center">
         <div className="grid grid-cols-2 gap-5 bg-gray-50 p-4 w-full">
-          {product?.map((product: Product, i) => (
+          {product?.map((product: Product, i:number) => (
             <button
               key={i}
               onClick={() => addToCart(product)}
@@ -147,7 +122,7 @@ export default function Pos() {
             onClick={closeModal}
           >
             <div
-              className="bg-white rounded-t-3xl w-full max-w-lg p-6 text-center relative slide-up"
+              className="bg-white rounded-t-3xl w-full max-w-lg p-10 text-center relative slide-up"
               onClick={(e) => e.stopPropagation()}
             >
               <button
@@ -156,23 +131,33 @@ export default function Pos() {
               >
                 &times;
               </button>
-              <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
+              <form className="flex flex-col space-y-4" onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col">
-                <label>
-                  상품명
-                </label>
-                <input placeholder="상품명" {...register("productName")}></input>
+                <label className="text-xl font-medium text-gray-700 text-start ">상품명</label>
+                <input
+                  placeholder="상품명"
+                  {...register("productName")}
+                  className="mt-1 p-3 border border-gray-300 rounded"
+                />
               </div>
+              
               <div className="flex flex-col">
-                <label>
-                  가격
-                </label>
-                <input placeholder="가격" {...register("productPrice")}></input>
+                <label className="text-xl font-medium text-gray-700 text-start">가격</label>
+                <input
+                  placeholder="가격"
+                  {...register("productPrice")}
+                  className="mt-1 p-3 border border-gray-300 rounded"
+                />
               </div>
-              <button type="submit">상품등록</button>
+
+              <button
+                type="submit"
+                className="w-full bg-emerald-500 text-xl font-normal rounded-lg h-16"
+              >
+                상품등록
+              </button>
               </form>
             </div>
-            
           </div>
         )}
       </div>
