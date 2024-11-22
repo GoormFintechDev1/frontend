@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 // import Link from "next/link";
 
 import { usePayment } from "@/hooks/usePaymentQuery";
+import { useEffect } from "react";
 
 // interface Payment {
 //     orderName: string;
@@ -144,7 +145,10 @@ export default function Success(){
 
     const paymentConfirm = usePayment();
 
-    // paymentConfirm.mutate({paymentKey, orderId, amount});
+    useEffect(()=>{
+        paymentConfirm.mutate({paymentKey, orderId, amount});
+    },[])
+
 
     console.log({paymentKey, orderId, amount})
 
