@@ -80,7 +80,7 @@ export default function Shop() {
         setIsPurchased(false);
       }, 2000);
     }
-    router.push(`/toss?price=${10000}`);
+    router.push(`/toss?price=${total}`);
   };
 
   const closeModal = () => setIsModalOpen(false);
