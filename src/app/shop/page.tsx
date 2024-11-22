@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useCreateItem, useItem } from "@/hooks/useShopQuery";
 import { CartItem } from "@/interface/product";
 import { Item } from "@/interface/shop";
@@ -15,6 +16,8 @@ export default function Shop() {
 
   const { data: item } = useItem();
   console.log(item);
+
+  const router = useRouter();
 
   const addToCart = (item: Item) => {
     setIsPurchased(false);
@@ -77,6 +80,7 @@ export default function Shop() {
         setIsPurchased(false);
       }, 2000);
     }
+    router.push(`/toss?price=${total}`);
   };
 
   const closeModal = () => setIsModalOpen(false);
