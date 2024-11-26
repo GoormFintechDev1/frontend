@@ -53,12 +53,12 @@ const ExpensesPage = () => {
         </div>
         <div className="flex items-center gap-x-3">
           <button onClick={() => setMonth(handlePrevMonth(month))}>
-            <Image src={"/icons/Back.png"} alt="Back" width={18} height={18} />
+            <Image src={"/icons/smallLeft.png"} alt="Back" width={18} height={18} />
           </button>
           {/* 월 표현 방식 - DB는 YYYY-mm 형식의 param을 받음 */}
-          <h2 className="text-sm font-semibold">{currentMonth(month)}</h2>
+          <h2 className="text-xl font-semibold">{currentMonth(month)} 지출</h2>
           <button onClick={() => setMonth(handleNextMonth(month))}>
-            <Image src={"/icons/Forward.png"} alt="Forward" width={18} height={18} />
+            <Image src={"/icons/smallRight.png"} alt="Forward" width={18} height={18} />
           </button>
         </div>
         <div className="h-[calc(100vh-163px)] overflow-y-scroll">
@@ -67,7 +67,7 @@ const ExpensesPage = () => {
           <div className="flex justify-center">
             <button
               onClick={toggleWeekData}
-              className="flex items-center justify-between bg-blue-500 text-white px-4 py-2 rounded focus:outline-none transition"
+              className="flex items-center justify-between bg-white text-black border px-4 py-2 mb-4 rounded focus:outline-none transition"
             >
               주간별 지출금액
               <span

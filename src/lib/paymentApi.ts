@@ -19,9 +19,14 @@ export const setPayment = async(data:Payment) => {
       body: JSON.stringify(data),
     })
 
-    if(!response.ok) new Error("지출 목표 조회 실패");
-
-    console.log(response.json())
-
-    return response;
+    if (!response.ok) {
+      const errorData = await response.json(); // 오류 응답 JSON 파싱
+      throw new Error(JSON.stringify(errorData)); // 오류 던지기
   }
+
+    const responseData = await response.json();
+    return responseData;
+
+  }
+
+  
