@@ -75,16 +75,19 @@ export default function ObjDetail() {
     ? (revenue?.revenueGoal0Ago === 0 ? 0 : Math.round((revenue?.monthlyRevenue0Ago / revenue?.revenueGoal0Ago) * 100)) 
     : (expense?.expenseGoal0Ago === 0 ? 0 : Math.round((expense?.monthlyExpense0Ago / expense?.expenseGoal0Ago) * 100));
     if (Number.isNaN(currentAchievement) || !isFinite(currentAchievement)) currentAchievement = 0;
+    else if (currentAchievement > 100) currentAchievement = 100;
 
     let previousAchievement = pageType === "revenue"
         ? (revenue?.revenueGoal1Ago === 0 ? 0 : Math.round((revenue?.monthlyRevenue1Ago / revenue?.revenueGoal1Ago) * 100))
         : (expense?.expenseGoal1Ago === 0 ? 0 : Math.round((expense?.monthlyExpense1Ago / expense?.expenseGoal1Ago) * 100));
     if (Number.isNaN(previousAchievement) || !isFinite(previousAchievement)) previousAchievement = 0;
+    else if (previousAchievement > 100) previousAchievement = 100;
 
     let nextAchievement = pageType === "revenue"
         ? (revenue?.revenueGoal2Ago === 0 ? 0 : Math.round((revenue?.monthlyRevenue2Ago / revenue?.revenueGoal2Ago) * 100))
         : (expense?.expenseGoal2Ago === 0 ? 0 : Math.round((expense?.monthlyExpense2Ago / expense?.expenseGoal2Ago) * 100));
     if (Number.isNaN(nextAchievement) || !isFinite(nextAchievement)) nextAchievement = 0;
+    else if (nextAchievement > 100) nextAchievement = 100;
 
 
     const currentTotal = pageType === "revenue" ? revenue?.monthlyRevenue0Ago : expense?.monthlyExpense0Ago;

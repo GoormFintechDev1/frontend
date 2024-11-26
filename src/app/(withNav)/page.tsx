@@ -7,7 +7,6 @@ import Goals from "@/components/main/Goals";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useUserInfo } from "@/hooks/useUserQuery";
-import Image from "next/image";
 
 export default function Home() {
 
@@ -28,20 +27,12 @@ export default function Home() {
     };
   }, []);
 
-  const {data} = useUserInfo();
-
-  // <div><Image
-  //   src="/Loading.gif"
-  //   alt="Example GIF"
-  //   width={300}
-  //   height={300}
-  //   unoptimized // GIF 최적화를 방지 (필수)
-  // /></div>
+  const {data:user} = useUserInfo();
 
   return (
     <div id="main" className="container">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl font-bold">{data?.companyName}</h1>
+        <h1 className="text-xl font-bold">{user?.companyName}</h1>
         <Link href={"/setGoals"}>
           <button className="bg-theme w-[70px] h-[40px] text-sm text-white px-1 py-[5px] rounded">
             목표설정

@@ -21,9 +21,9 @@ export default function Login() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // 로그인 로직을 추가하거나, API 호출 등을 여기에 구현
+
         mutation.mutate(formData, {
-            onSuccess: () => {
+            onSuccess: async() => {
                 const firstLogin = JSON.parse(localStorage.getItem(`firstLogin:${formData.loginId}`) || "false");
                 if(firstLogin){
                     router.push('/validate');
@@ -33,6 +33,7 @@ export default function Login() {
             }
         });
     };
+
 
     return (
         <div className="flex flex-col items-center justify-center h-full p-3">
