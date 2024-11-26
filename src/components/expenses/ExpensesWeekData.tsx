@@ -47,7 +47,7 @@ const ExpensesWeekData = ({ chartData, month }: WeeklyExpensesProps) => {
                     <div className="flex items-center">
                       <span className="w-3 h-3 inline-block mr-2"  style={{ backgroundColor: categoryColor[expense.category] }}></span>
                       {expense.category}</div>
-                    <div>{formatNumberWithComma(expense.amount)}</div>
+                    <div>{formatNumberWithComma(expense.amount)} &#62;</div>
                   </Link>
                   {/* <div>
                     {dayjs(expense.transactionDate).format("YYYY-MM-DD HH:mm")}
