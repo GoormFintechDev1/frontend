@@ -24,8 +24,8 @@ const goormSansRegular = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "지팡이",
-  description: "A Helping Hand For Secondhand",
+  title: "더블리",
+  description: "더블리로 자산을 더 불려보세요!",
 };
 
 export default function RootLayout({

@@ -22,7 +22,8 @@ const QueryProvider = ({ children }: { children: React.ReactNode }) => {
       defaultOptions: {
         queries: {
           retry: 1, // API 요청 실패시 재시도 횟수
-        }
+          staleTime: 1000*60,
+        },
       }
     })
   ))
