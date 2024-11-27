@@ -1,7 +1,8 @@
 "use client"
 
+import { useReportCheck } from '@/hooks/useReportQuery';
 import { useUserInfo } from '@/hooks/useUserQuery';
-import { getYearMonths, paramMonth2 } from '@/utils/calculateDay';
+import { getYearMonths, paramMonth, paramMonth2 } from '@/utils/calculateDay';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
@@ -11,6 +12,8 @@ export default function ReportList() {
     const router = useRouter();
 
     const {data:user} = useUserInfo();
+    const {data:check} = useReportCheck(paramMonth);
+
     const start = dayjs(user?.createAt);
     const today = dayjs().subtract(1, "month"); //이번달 기준 지난달까지만 보여야 하니까!
 
@@ -30,8 +33,9 @@ export default function ReportList() {
                             <div className='font-bold py-5 border-b'>{y}년</div>
                             <ul className='py-5'>
                             {yearMonths[y].map((m,i)=>(
-                                <li key={i} className='list-none flex py-3' style={{color:"#333333"}} onClick={()=> router.push(`/report/detail?month=${paramMonth2(Number(y),m)}`)}>
+                                <li key={i} className='list-none flex py-3 ' style={{color:"#333333"}} onClick={()=> router.push(`/report/detail?month=${paramMonth2(Number(y),m)}`)}>
                                     <p>{m.toString().padStart(2,'0')}월 리포트</p>
+                                    { paramMonth2(Number(y),m+1) == paramMonth && !check &&  <p className='bg-red-500 text-white text-sm px-2 ml-3 rounded justify-self-center'>new</p>}
                                     <span className="ml-auto text-gray-400">&gt;</span>
                                 </li>
                             ))}

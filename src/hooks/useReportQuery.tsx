@@ -1,8 +1,8 @@
 "use client";
 
-import { getReportData } from "@/lib/reportApi";
+import { getReportCheck, getReportData } from "@/lib/reportApi";
 import useReportsStore from "@/stores/useReportsStore";
-import { useQuery } from "@tanstack/react-query";
+import {useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
 export const useReportQuery = (paramMonth: string) => {
@@ -29,5 +29,13 @@ export const useReportQuery2 = (paramMonth: string) => {
   return useQuery({
     queryKey: ["report", paramMonth],
     queryFn: () => getReportData(paramMonth),
+    staleTime: 1000 * 60 * 60 * 24,
+  })
+}
+
+export const useReportCheck = (paramMonth: string) => {
+  return useQuery({
+    queryKey: ["reportCheck", paramMonth],
+    queryFn: () => getReportCheck(paramMonth),
   })
 }
