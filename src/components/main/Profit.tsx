@@ -14,7 +14,6 @@ const Profit: React.FC<RevenueProps> = ({height}) => {
   //0일때수정해주기!
 
   const {data, isLoading} = useLastProfit(year, month);
-  // console.log(data);
 
   if (isLoading) {
     return <ProfitLoading />

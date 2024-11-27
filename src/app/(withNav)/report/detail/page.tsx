@@ -14,6 +14,7 @@ export default function ReportDetail() {
     const searchParams = useSearchParams();
     const initialMonth = searchParams.get('month') || '2024-11'; // 기본값을 11월로 설정
     const month = initialMonth;
+
     
     const {data: useInfo} = useUserInfo();
     const {data: reportData} = useReportQuery2(month);

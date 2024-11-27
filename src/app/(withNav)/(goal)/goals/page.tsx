@@ -103,8 +103,8 @@ export default function Objective() {
             <div className="mt-6">
                 {/* 매출 목표 */}
                 <Link href="/goals/detail?page=revenue">
-                    <div className="bg-white rounded-lg shadow-lg p-4 cursor-pointer" style={{height}}>
-                        <p className="text-lg mb-2">매출 목표</p>
+                    <div className="bg-white rounded-xl shadow-md p-4 cursor-pointer" style={{height}}>
+                        <p className="text-md mb-2">매출 목표</p>
                         <div className="flex items-center">
                             <div className="w-1/2 flex justify-center items-center">
                                 <PieChart width={100} height={100}>
@@ -140,8 +140,8 @@ export default function Objective() {
 
                     {/* 지출 목표 */}
                     <Link href="/goals/detail?page=expense">
-                        <div className="bg-white rounded-lg shadow-lg p-4 mt-10 cursor-pointer" style={{height}}>
-                            <p className="text-lg font-medium mb-10">지출 예산</p>
+                        <div className="bg-white rounded-xl shadow-md p-4 mt-10 cursor-pointer" style={{height}}>
+                            <p className="text-md font-medium mb-10">지출 예산</p>
                             <div className="flex items-center mb-4">
                                 <div className="w-1/2 flex flex-col justify-center items-center">
                                     <p className="text-gray-600">지출 예산보다</p>

@@ -51,7 +51,6 @@ export default function Income() {
       };
 
     const {data: profit} = useProfitDetail(paramMonth2(year,month));
-    // console.log(profit);
 
     return (
 
@@ -105,7 +104,7 @@ export default function Income() {
                 </div>
                 {/* <div className="flex-grow"></div> */}
                 <div className="flex justify-center w-full mb-[100px]">
-                    <Button className="button" href="/report">
+    <Button className="button" href={`/report/detail?month=${paramMonth2(year,month)}`}>
                         월간 리포트 보러 가기
                     </Button>
                 </div>
