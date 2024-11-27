@@ -13,7 +13,7 @@ import Navbar from "@/components/Navbar";
 import { useRouter } from "next/navigation";
 dayjs().format();
 
-export default function setGoals(){
+export default function SetGoals(){
   const { register, handleSubmit, setValue} = useForm<SetGoalInput>({ mode: "onChange" });
 
   const {data:revenue} = useRevenueGoal(paramMonth);

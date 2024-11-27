@@ -61,7 +61,7 @@ const ExpensesPage = () => {
             <Image src={"/icons/smallRight.png"} alt="Forward" width={18} height={18} />
           </button>
         </div>
-        <div className="h-[calc(100vh-163px)] overflow-y-scroll">
+        <div className="h-[calc(100vh-163px)] overflow-y-auto">
           <ExpensesPieChart chartData={expensesDetailsData!} />
           <ExpensesData chartData={expensesDetailsData!} month={month} />
           <div className="flex justify-center">
