@@ -109,7 +109,7 @@ export default function Revenue() {
 
         {/* Calendar */}
         {date && (
-          <div className="border-t-2 pt-6" style={{borderColor: "#F5F5F5"}} >
+          <div className="border-t-2 pt-6 overflow-y-auto max-h-[calc(100vh-330px)]" style={{borderColor: "#F5F5F5"}} >
             <Calendar year={year} month={month} data={saleData} onDateClick={handleDateClick}/>
           </div>
         )}
