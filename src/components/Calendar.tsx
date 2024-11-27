@@ -105,7 +105,7 @@ function Calendar({ year, month, data, onDateClick }:CalendarProps) {
                 <div
                   key={index}
                   onClick={() => date && handleDateClick(date)}
-                  className={`${isSmallScreen ? "h-7" : "h-14"} w-full flex flex-col items-center rounded-lg p-1 cursor-pointer text-gray-400 
+                  className={`${isSmallScreen ? "h-7" : "h-12"} w-full flex flex-col items-center rounded-lg p-1 cursor-pointer text-gray-400 
                 ${date && index % 7 === 0 ? "!text-red-400" : ""} /* 일요일 빨간색 */
                 ${date && index % 7 === 6 ? "!text-sky-400" : ""} /* 토요일 파란색 */
               `}

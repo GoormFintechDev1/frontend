@@ -53,3 +53,21 @@ export const groupByWeek = (expenses: ExpenseDetail[]): Record<number, ExpenseDe
 
   return groupedByWeek;
 };
+
+//시작 - 끝 구간 값 가져오기
+export const getYearMonths = (start: dayjs.Dayjs, end:dayjs.Dayjs) => {
+  const yearMonths: Record<string, number[]> = {}; // 결과 객체 선언
+  let current = start.startOf("month");
+
+  while (current.isBefore(end) || current.isSame(end, "month")) {
+    const year = current.year();
+    const month = current.month() + 1;
+
+    if (!yearMonths[year]) yearMonths[year] = [];
+
+    yearMonths[year].unshift(month);
+    current = current.add(1, "month");
+  }
+
+  return yearMonths;
+};

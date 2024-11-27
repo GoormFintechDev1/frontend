@@ -24,15 +24,15 @@ export default function MyPage() {
 
     return (
         <div className="container ">
-            <div className="items-center border-b">
-                    <h1 className="text-xl ml-4 mt-4 p-2 font-semibold"> 📌{useInfo?.companyName} </h1>
-                    <h1 className="font-extralight ml-6 mt-2 text-lg">📍{useInfo?.phoneNumber}</h1>
-                    <h1 className="font-extralight ml-6 mt-2 text-lg mb-4">📍{useInfo?.address}</h1>
+            <div className="border-b flex flex-col space-y-4 pt-4 pb-7">
+                    <h1 className="text-xl font-semibold"> {useInfo?.companyName} </h1>
+                    <h1 className="font-medium text-base">{useInfo?.phoneNumber}</h1>
+                    <h1 className="font-medium text-base">{useInfo?.address}</h1>
             </div>
 
-            <div className="p-5 border-b flex justify-between items-center">
-            <Link href="/mpedit" className="flex justify-between w-full items-center">
-                <p className="text-lg">내 정보 수정</p>
+            <div className="pt-7 px-2 flex justify-between " >
+            <Link href="/mpedit" className="flex justify-between w-full " style={{color:"#333333"}}>
+                <p >내 정보 수정</p>
                 <span className="ml-auto">&gt;</span>
             </Link>
             </div>
@@ -42,13 +42,13 @@ export default function MyPage() {
                 <span className="ml-auto">&gt;</span>
             </div> */}
 
-            <div className="p-5 border-b flex justify-between items-center">
-                <p className="text-lg">알림 </p>
+            <div className="pt-7 px-2 flex justify-between "  style={{color:"#333333"}}>
+                <p>알림 </p>
                 <span className="text-end">&gt;</span>
             </div>
 
-            <div className="p-5 border-b flex justify-between items-center" onClick={openModal}>
-                <p className="text-lg "> 로그아웃 </p>
+            <div className="pt-7 px-2 flex justify-between "  style={{color:"#333333"}} onClick={openModal}>
+                <p> 로그아웃 </p>
                 <span className="text-end">&gt;</span>
             </div>
 
@@ -77,8 +77,8 @@ export default function MyPage() {
                 </div>
             )}
 
-            <div className="p-5 border-b flex justify-between items-center">
-                <p className="text-lg"> 회원탈퇴 </p>
+            <div className="pt-7 px-2 flex justify-between "  style={{color:"#333333"}}>
+                <p> 회원탈퇴 </p>
                 <span className="text-end">&gt;</span>
             </div>
         </div>

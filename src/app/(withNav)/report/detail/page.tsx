@@ -8,6 +8,7 @@ import { useUserInfo } from '@/hooks/useUserQuery';
 import ReportIndusty from '@/components/reportlist/ReportIndusty';
 import ReportMarket from '@/components/reportlist/ReportMarket';
 import { useEffect, useState } from 'react';
+import Loading from '@/components/Loading';
 dayjs().format();
 
 export default function ReportDetail() {
@@ -17,7 +18,7 @@ export default function ReportDetail() {
 
     
     const {data: useInfo} = useUserInfo();
-    const {data: reportData} = useReportQuery2(month);
+    const {data: reportData, isLoading} = useReportQuery2(month);
 
     const [height, setHeight] = useState("500px");
 
@@ -34,6 +35,11 @@ export default function ReportDetail() {
           window.removeEventListener("resize", calculateHeight);
         };
       }, []);
+
+    
+    if(isLoading){
+        return <Loading/>
+    }
 
     return (
         <div className="container h-full">

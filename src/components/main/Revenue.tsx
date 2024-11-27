@@ -1,7 +1,7 @@
 import { convertToKoreanWon } from "@/utils/currency";
 import Link from "next/link";
 import { Bar, BarChart, Cell, LabelList, ResponsiveContainer } from "recharts";
-import {RevenueLoading} from "../Loading";
+import {RevenueLoading} from "./Loading";
 import { useRevenueHistory } from "@/hooks/useRevenueQuery";
 import dayjs from "dayjs";
 import { paramMonth2 } from "@/utils/calculateDay";
