@@ -1,8 +1,7 @@
 import { convertToKoreanWon } from "@/utils/currency";
 import Link from "next/link";
 import { Bar, BarChart, Cell, LabelList, ResponsiveContainer } from "recharts";
-import {RevenueLoading} from "../Loading";
-import Error from "../Error";
+import {RevenueLoading} from "./Loading";
 import { useRevenueHistory } from "@/hooks/useRevenueQuery";
 import dayjs from "dayjs";
 import { paramMonth2 } from "@/utils/calculateDay";
@@ -17,7 +16,7 @@ const Revenue: React.FC<RevenueProps> = ({height}) => {
   const year = new Date().getFullYear();
   const month = new Date().getMonth() +1;
 
-  const { data, isLoading, error } = useRevenueHistory(paramMonth2(year, month));
+  const { data, isLoading } = useRevenueHistory(paramMonth2(year, month));
 
   const revenueData = [
     { name: month-2+'월', value: data?.totalIncome2Ago, fill: "#E5E7EB" },
@@ -28,10 +27,6 @@ const Revenue: React.FC<RevenueProps> = ({height}) => {
   
   if (isLoading) {
     return <RevenueLoading/>
-  }
-
-  if (error) {
-    return <Error />
   }
 
   return (

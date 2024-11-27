@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 import QueryProvider from "@/Provider/QueryProvider";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 // goorm-sans 폰트 설정
 const goormSansBold = localFont({
@@ -46,6 +47,7 @@ export default function RootLayout({
       >
         <QueryProvider>
           {children}
+          <ReactQueryDevtools initialIsOpen={false}/>
         </QueryProvider>
       </body>
     </html>

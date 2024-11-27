@@ -16,7 +16,7 @@ const labelStyle = {
     fill: "#10B981" 
 };
 
-const COLORS = ["#0FA573", "#E2E8F0"];  // 매출 목표 색상
+const COLORS = ["#0FA573", "#E7F3EF"];  // 매출 목표 색상
 
 interface yearGoal {
     goalMonth: number,
@@ -38,13 +38,17 @@ export default function Objective() {
 
     const [height, setHeight] = useState('170px');
 
-    const revenuePercentage = Math.round((revenue?.monthlyRevenue0Ago / revenue?.revenueGoal0Ago) * 100);
+    const revenuePercentage = revenue?.revenueGoal0Ago == 0 ? 0: Math.round((revenue?.monthlyRevenue0Ago / revenue?.revenueGoal0Ago) * 100);
     const revenueData = revenuePercentage >= 100 
     ? [{ name: "Completed", value: 100 }]  // 100% 이상일 때 전체를 Completed 색상으로 채우기
+    : revenuePercentage == 0 ? [
+        { name: "Completed", value: 0 },
+        { name: "Remaining", value: 100 }
+      ]
     : [
         { name: "Completed", value: revenuePercentage },
-        { name: "Remaining", value: 100 - revenuePercentage }
-      ];
+        { name: "Remaining", value: 100 - revenuePercentage}
+    ];
     
 
     useEffect(() => {
@@ -143,9 +147,9 @@ export default function Objective() {
                         <div className="bg-white rounded-xl shadow-md p-4 mt-10 cursor-pointer" style={{height}}>
                             <p className="text-md font-medium mb-10">지출 예산</p>
                             <div className="flex items-center mb-4">
-                                <div className="w-1/2 flex flex-col justify-center items-center">
-                                    <p className="text-gray-600">지출 예산보다</p>
-                                    {expense?.monthlyExpense0Ago && expense?.monthlyExpense1Ago ? (
+                            <div className="w-1/2 flex flex-col justify-center items-center">
+                                <p className="text-gray-600">지출 예산보다</p>
+                                    {expense?.monthlyExpense0Ago  && expense?.expenseGoal0Ago != 0  ? (
                                         expense.expenseGoal0Ago < expense.monthlyExpense1Ago ? (
                                             <p className="text-red-600 text-lg font-semibold">
                                                 {convertToKoreanWon(Math.abs(expense?.expenseGoal0Ago - expense?.monthlyExpense0Ago) ?? 0)} 더 썼어요.
@@ -156,13 +160,17 @@ export default function Objective() {
                                             </p>
                                         )
                                     ) : (
-                                        <p>데이터가 없습니다.</p>
+                                        <p>-</p>
                                     )}
                                 </div>
                                 <div className="w-1/2 text-center">
-                                    <span className="text-gray-500 text-lg">소비 금액</span>
+                                    {/* <span className="text-gray-500 text-lg">소비 금액</span>
                                     <p className="text-gray-600 text-xl font-semibold">
                                         {convertToKoreanWon(expense?.monthlyExpense0Ago)}
+                                    </p> */}
+                                    <span className="text-gray-500 text-lg">예산</span>
+                                    <p className="text-gray-600 text-xl font-semibold">
+                                        {convertToKoreanWon(expense?.expenseGoal0Ago)}
                                     </p>
                                 </div>
                             </div>

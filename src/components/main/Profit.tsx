@@ -2,7 +2,7 @@
 import { useLastProfit } from "@/hooks/useProfitQuery";
 import { convertToKoreanWon } from "@/utils/currency"
 import Link from "next/link"
-import { ProfitLoading } from "../Loading";
+import { ProfitLoading } from "./Loading";
 
 interface RevenueProps {
   height: string;

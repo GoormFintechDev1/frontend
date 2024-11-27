@@ -5,10 +5,10 @@ import { convertToKoreanWon } from '@/utils/currency';
 import Link from 'next/link';
 import React, { useEffect, useMemo } from 'react'
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
-import {ExpensesLoading} from '../Loading';
 import Error from '../Error';
 import { paramMonth } from '@/utils/calculateDay';
 import { useExpensesStore, useCategoryColorStore } from '@/stores/useExpensesStore';
+import { ExpensesLoading } from './Loading';
 
 interface RevenueProps {
   height: string;
@@ -119,7 +119,7 @@ const Expenses: React.FC<RevenueProps> = ({height}) => {
           </p>
         </div>
       </div>
-      <div className='flex justify-center items-center'>
+      {/* <div className='flex justify-center items-center'>
         <ul className='flex gap-x-2'>
           {chartData?.map((data, index) => (
             <li key={index} className="flex items-center text-[10px] ">
@@ -129,7 +129,7 @@ const Expenses: React.FC<RevenueProps> = ({height}) => {
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
     </div>
   )
 }
