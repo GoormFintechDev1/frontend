@@ -7,6 +7,10 @@ import Goals from "@/components/main/Goals";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useUserInfo } from "@/hooks/useUserQuery";
+<<<<<<< HEAD
+=======
+// import Image from "next/image";
+>>>>>>> dev
 
 export default function Home() {
 

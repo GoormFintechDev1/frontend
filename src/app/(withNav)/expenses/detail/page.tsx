@@ -103,7 +103,7 @@ const ExpensesDetailPage = () => {
                         </div>
                         <div className="flex justify-between mt-1">
                           <p className="text-sm text-gray-700">
-                            {data.category}
+                            {data.note}
                           </p>
                           <p className="text-sm font-semibold text-right">
                             {data.transactionMeans === "CASH" ? "현금": "카드"}{" "}
