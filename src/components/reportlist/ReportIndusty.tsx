@@ -30,8 +30,8 @@ export default function ReportIndusty({report}:Props) {
     console.log(revenueChart, expenseChart)
 
   return (
-    <div>
-        <div className="text-xl font-bold py-3">주변 상권 분석</div>
+    <div className="border-b py-3">
+        <div className="text-xl font-bold pb-3">주변 상권 분석</div>
         <div className="min-h-7 rounded-xl p-5 my-2 bg-zinc-50" >
             <p className="font-bold text-sm pb-3">매출/지출 비교</p>
             <div className="text-xs" style={{ color: "#333333" }}>
@@ -98,13 +98,13 @@ export default function ReportIndusty({report}:Props) {
             </div>
             </div>
         </div>
-        <div className="text-base" style={{color:"#333333", lineHeight:"28px"}}>
+        <div className="text-sm" style={{color:"#333333", lineHeight:"28px"}}>
             <div className="py-3">
-                <p className="font-bold">매출은</p>
+                <p className="font-bold text-base">매출은</p>
                 <div>{report?.sale_description}</div>
             </div>
             <div className="py-3">
-                <p className="font-bold">지출은</p>
+                <p className="font-bold text-base">지출은</p>
                 <div>{report?.expense_description}</div>
             </div>
         </div>

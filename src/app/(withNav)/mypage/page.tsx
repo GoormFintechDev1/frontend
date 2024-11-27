@@ -10,7 +10,7 @@ dayjs().format();
 
 export default function MyPage() {
 
-    const {data: useInfo} = useUserInfo();
+    const {data: userInfo} = useUserInfo();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -19,16 +19,19 @@ export default function MyPage() {
 
     const logout = useLogoutMutation();
     const handleLogout = () => {
-        logout.mutate(useInfo?.loginId);
+        logout.mutate(userInfo?.loginId);
     }
+    
+    console.log(userInfo)
 
     return (
         <div className="container ">
-            <div className="border-b flex flex-col space-y-4 pt-4 pb-7">
-                    <h1 className="text-xl font-semibold"> {useInfo?.companyName} </h1>
-                    <h1 className="font-medium text-base">{useInfo?.phoneNumber}</h1>
-                    <h1 className="font-medium text-base">{useInfo?.address}</h1>
+            <div className="flex flex-col space-y-2 pt-2 pb-7">
+                    <h1 className="text-xl font-semibold"> {userInfo?.companyName} </h1>
+                    <h1 className="font-medium text-sm">{userInfo?.brNum}</h1>
+                    <h1 className="font-medium text-sm">{userInfo?.address}</h1>
             </div>
+            <div className="border-b-2 ml-[-25px] w-[calc(100%+50px)]" style={{borderColor:"#F5F5F5"}}></div>
 
             <div className="pt-7 px-2 flex justify-between " >
             <Link href="/mpedit" className="flex justify-between w-full " style={{color:"#333333"}}>

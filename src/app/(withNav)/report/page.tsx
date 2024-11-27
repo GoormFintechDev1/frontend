@@ -1,7 +1,7 @@
 "use client"
 
 import { useUserInfo } from '@/hooks/useUserQuery';
-import { getYearMonths } from '@/utils/calculateDay';
+import { getYearMonths, paramMonth2 } from '@/utils/calculateDay';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
@@ -12,14 +12,14 @@ export default function ReportList() {
 
     const {data:user} = useUserInfo();
     const start = dayjs(user?.createAt);
-    const today = dayjs().subtract(1, "month");
+    const today = dayjs().subtract(1, "month"); //이번달 기준 지난달까지만 보여야 하니까!
 
     const yearMonths = useMemo(()=>getYearMonths(start, today),[start,today]);
     const year = useMemo(()=>Object.keys(yearMonths).sort((a,b)=> Number(b) - Number(a)), [yearMonths]);
 
     return (
         <div className="container">
-            <div className="pb-3">
+            <div className="pb-3 pt-2">
                 <h1 className="text-xl font-bold">월간 리포트</h1>
             </div>
 
@@ -30,8 +30,8 @@ export default function ReportList() {
                             <div className='font-bold py-5 border-b'>{y}년</div>
                             <ul className='py-5'>
                             {yearMonths[y].map((m,i)=>(
-                                <li key={i} className='list-none flex py-3' style={{color:"#333333"}} onClick={()=> router.push(`/report/detail?${y}-${m}`)}>
-                                    <p>{m}월 리포트</p>
+                                <li key={i} className='list-none flex py-3' style={{color:"#333333"}} onClick={()=> router.push(`/report/detail?month=${paramMonth2(Number(y),m)}`)}>
+                                    <p>{m.toString().padStart(2,'0')}월 리포트</p>
                                     <span className="ml-auto text-gray-400">&gt;</span>
                                 </li>
                             ))}

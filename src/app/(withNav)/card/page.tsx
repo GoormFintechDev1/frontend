@@ -34,7 +34,7 @@ export default function Card() {
                     </Link>
                 </div>
 
-                <div className="p-4 mb-5">
+                <div className="mb-5">
                     <h1 className="font-bold text-xl mb-1"> 카드 추천 </h1>
                     <p className="text-gray-500">지출 내역을 분석해 적절한 카드를 추천드려요.</p>
                 </div>
