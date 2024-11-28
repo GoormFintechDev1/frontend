@@ -16,6 +16,11 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
     
+    - name: "디버깅"
+      run: |
+        echo "Docker Username: ${{ secrets.DOCKER_USERNAME }}"
+        echo "Repository Name: ${{ github.event.repository.name }}"
+    
     - name: "빌드 및 푸시"
       uses: docker/build-push-action@v5
       with:
