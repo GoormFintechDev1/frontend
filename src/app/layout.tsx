@@ -45,7 +45,7 @@ export default function RootLayout({
         {/* 상단 상태바 색상 설정 */}
         <meta name="theme-color" content="#ffffff" /> 
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" /> <!-- iOS 상태바 스타일 -->
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" /> 
         <meta name="apple-mobile-web-app-title" content="더블리" />
 
         {/* Viewport 설정 */}

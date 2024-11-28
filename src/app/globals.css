@@ -25,6 +25,11 @@ body {
   color: var(--foreground); /* 텍스트 색상 */
   background: var(--background); /* 배경 색상 */
   font-family: var(--font-goorm-sans-regular); /* 로컬 폰트를 기본 폰트로 적용 */
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  overflow-x: hidden;
 }
 
 .container {
