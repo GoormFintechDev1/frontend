@@ -34,9 +34,9 @@ export const useReportQuery2 = (paramMonth: string) => {
   })
 }
 
-export const useReportCheck = (paramMonth: string) => {
+export const useReportCheck = () => {
   return useQuery({
-    queryKey: ["reportCheck", paramMonth],
-    queryFn: () => getReportCheck(paramMonth),
+    queryKey: ["reportCheck"],
+    queryFn: () => getReportCheck(),
   })
 }

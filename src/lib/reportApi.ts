@@ -26,8 +26,8 @@ export const getReportData = async (paramMonth: string): Promise<ReportData> => 
 }
 
 //새로운 리포트 생성했는지 체크
-export const getReportCheck = async (paramMonth: string) => {
-  const response = await fetch(`${url}/previous-month/check?month=${paramMonth}`, {
+export const getReportCheck = async () => {
+  const response = await fetch(`${url}/previous-month/check`, {
     method: "GET",
     credentials: "include"
   });
