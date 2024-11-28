@@ -7,7 +7,7 @@ import { useMutation } from "@tanstack/react-query"
 export const useRegisterMutation = () => {
   return useMutation({
     mutationFn: (formData: FormDataType) => joinUser(formData),
-    onError: (error) => {
+    onError: (error:string) => {
         console.error("회원가입 실패 ", error);
     }
   })
@@ -22,7 +22,7 @@ export const useLoginMutation = () => {
     onSuccess: () => {
       console.log("로그인 성공");
     },
-    onError: (error) => {
+    onError: (error:string) => {
       console.log("로그인 실패", error);
     }
   })

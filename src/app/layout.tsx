@@ -37,6 +37,15 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        {/* PWA 관련 설정 */}
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icon-192x192.png" />
+        <meta name="theme-color" content="#317EFB" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="더블리" />
+      </head>
       <body
         className={`
           ${goormSansBold.variable} 

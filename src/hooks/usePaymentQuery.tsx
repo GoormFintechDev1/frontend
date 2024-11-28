@@ -5,6 +5,6 @@ import { useMutation } from "@tanstack/react-query"
 export const usePayment = () => {
     return useMutation({
         mutationFn: (data:Payment) => setPayment(data),
-        onError: (error) => console.error("결제 오류:", error),
+        onError: (error:string) => console.error("결제 오류:", error),
     });
 };

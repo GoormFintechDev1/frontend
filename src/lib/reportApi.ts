@@ -1,3 +1,5 @@
+import { IndustryReport, MarketReport } from "@/interface/report";
+
 const enviroment = process.env.NODE_ENV;
 
 let url = "http://localhost:8080/api/report";
@@ -5,7 +7,14 @@ if (enviroment === "production") {
   url = process.env.NEXT_PUBLIC_DOMAIN ? `http://${process.env.NEXT_PUBLIC_DOMAIN}/api/report` : `http://localhost:8080/api/report`;
 }
 
-export const getReportData = async (paramMonth: string) => {
+interface ReportData {
+  reports: {
+    INDUSTRY_REPORT: IndustryReport,
+    MARKET_REPORT: MarketReport,
+  }
+}
+
+export const getReportData = async (paramMonth: string): Promise<ReportData> => {
   const response = await fetch(`${url}/all?month=${paramMonth}`, {
     method: "GET",
     credentials: "include"

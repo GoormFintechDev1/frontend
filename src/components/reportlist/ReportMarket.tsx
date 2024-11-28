@@ -1,12 +1,4 @@
-interface MarketReport {
-    month: number,
-    BSI_index: number,
-    BSI_description: string,
-    exchange_rate: string,
-    price_index: string,
-    food_trend: string,
-    recommendations: string[],
-}
+import { MarketReport } from "@/interface/report"
 
 interface Props {
     report: MarketReport

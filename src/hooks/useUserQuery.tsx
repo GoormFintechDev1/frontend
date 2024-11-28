@@ -7,7 +7,8 @@ export const useUserInfo = () => {
   return useQuery({
       queryKey: ['user'],
       queryFn: () => getUserInfo(),
-      staleTime: 1000 * 60 * 60 * 24,
+      staleTime: 1000 * 60 * 60,
+      gcTime: 1000 * 60 * 60,
   });
 
   // setUser(data);

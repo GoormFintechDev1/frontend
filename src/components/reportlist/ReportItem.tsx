@@ -1,11 +1,5 @@
+import { ReportItemProps } from '@/interface/report';
 import { useState } from 'react';
-
-interface ReportItemProps {
-  item: {
-    title: string;
-    contents: string[];
-  }
-}
 
 const ReportItem = ({ item }: ReportItemProps) => {
   const [isOpen, setIsOpen] = useState(true);

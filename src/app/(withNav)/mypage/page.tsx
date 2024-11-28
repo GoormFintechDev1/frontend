@@ -22,8 +22,6 @@ export default function MyPage() {
         logout.mutate(userInfo?.loginId);
     }
     
-    console.log(userInfo)
-
     return (
         <div className="container ">
             <div className="flex flex-col space-y-2 pt-2 pb-7">

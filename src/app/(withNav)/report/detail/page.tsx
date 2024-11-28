@@ -19,6 +19,7 @@ export default function ReportDetail() {
     
     const {data: useInfo} = useUserInfo();
     const {data: reportData, isLoading} = useReportQuery2(month);
+    console.log(reportData);
 
     const [height, setHeight] = useState("500px");
 
@@ -56,8 +57,8 @@ export default function ReportDetail() {
             </div>
 
             <div className="pt-4 overflow-scroll flex flex-col space-y-10 " style={{height}}> {/* 높이 변경 필요... */}
-                <ReportIndusty report={reportData?.reports.INDUSTRY_REPORT}/>
-                <ReportMarket report={reportData?.reports.MARKET_REPORT}/>
+                { reportData && (<><ReportIndusty report={reportData?.reports.INDUSTRY_REPORT}/>
+                <ReportMarket report={reportData?.reports.MARKET_REPORT}/></>)}
             </div>
         </div>
     );

@@ -43,7 +43,7 @@ export default function SetGoals(){
       setValue("revenueGoal", revenueValue);
       setValue("expenseGoal", expenseValue);
     }
-  }, [revenue, expense]);
+  }, [revenue, expense, setValue]);
 
   const router = useRouter();
 
