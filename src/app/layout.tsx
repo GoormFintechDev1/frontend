@@ -40,11 +40,16 @@ export default function RootLayout({
       <head>
         {/* PWA 관련 설정 */}
         <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/icon-192x192.png" />
-        <meta name="theme-color" content="#317EFB" />
+        <link rel="apple-touch-icon" href="/logo.png" />
+        
+        {/* 상단 상태바 색상 설정 */}
+        <meta name="theme-color" content="#ffffff" /> 
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" /> <!-- iOS 상태바 스타일 -->
         <meta name="apple-mobile-web-app-title" content="더블리" />
+
+        {/* Viewport 설정 */}
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
       </head>
       <body
         className={`
