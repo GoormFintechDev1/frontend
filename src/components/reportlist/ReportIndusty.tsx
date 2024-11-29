@@ -1,15 +1,7 @@
+import { IndustryReport } from "@/interface/report";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
-interface IndustryReport {
-    average_sale: string,
-    average_expense: string,
-    my_expense: string,
-    my_income: string,
-    expense_description: string,
-    sale_description: string,
-}
-
-interface Props {
+export interface Props {
     report: IndustryReport;
   }
 
@@ -26,8 +18,6 @@ export default function ReportIndusty({report}:Props) {
     const expenseChart = [
         {  name: "지출", "나": myExpense, "평균": averageExpense },
     ]
-
-    console.log(revenueChart, expenseChart)
 
   return (
     <div className="border-b py-3">

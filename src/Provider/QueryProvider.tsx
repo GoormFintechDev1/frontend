@@ -4,8 +4,13 @@ import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-qu
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation';
 
-interface CustomError extends Error {
-  status: number,
+class CustomError extends Error {
+  status: number;
+
+  constructor(message: string, status: number) {
+    super(message);
+    this.status = status;
+  }
 }
 
 const QueryProvider = ({ children }: { children: React.ReactNode }) => {
@@ -13,8 +18,8 @@ const QueryProvider = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = useState(() => (
     new QueryClient({
       queryCache: new QueryCache({
-        onError: (error) => {
-          if ((error as CustomError).status === 403) {
+        onError: (error: Error) => {
+          if (error instanceof CustomError && error.status === 403) {
             router.push('/login');
           }
         }
@@ -22,7 +27,6 @@ const QueryProvider = ({ children }: { children: React.ReactNode }) => {
       defaultOptions: {
         queries: {
           retry: 1, // API 요청 실패시 재시도 횟수
-          staleTime: 1000*60,
         },
       }
     })

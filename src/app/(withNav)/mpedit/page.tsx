@@ -7,12 +7,12 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-interface Props {
-    onReadySubmit: (data: InputType2) => void;
-    onPrev: () => void;
-  }
+// interface Props {
+//     onReadySubmit: (data: InputType2) => void;
+//     onPrev: () => void;
+//   }
   
-  export default function Mpedit({} : Props) {
+export default function Mpedit() {
     const {
       register,
       watch,
@@ -41,7 +41,7 @@ interface Props {
   
       clearErrors("phoneNumber");
       checkPhoneNumberMutation.mutate(phoneNumber, {
-        onSuccess: (data) => {
+        onSuccess: (data:string) => {
           if (data) {
             setError("phoneNumber", {
               type: "manual",

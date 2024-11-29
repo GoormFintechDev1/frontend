@@ -35,7 +35,7 @@ export default function ReportList() {
                             {yearMonths[y].map((m,i)=>(
                                 <li key={i} className='list-none flex py-3 ' style={{color:"#333333"}} onClick={()=> router.push(`/report/detail?month=${paramMonth2(Number(y),m)}`)}>
                                     <p>{m.toString().padStart(2,'0')}월 리포트</p>
-                                    { paramMonth2(Number(y),m+1) == paramMonth && !check &&  <p className='bg-red-500 text-white text-sm px-2 ml-3 rounded justify-self-center'>new</p>}
+                                    { !check && paramMonth2(Number(y),m+1) == paramMonth &&  <p className='bg-red-500 text-white text-sm px-2 ml-3 rounded justify-self-center'>new</p>}
                                     <span className="ml-auto text-gray-400">&gt;</span>
                                 </li>
                             ))}

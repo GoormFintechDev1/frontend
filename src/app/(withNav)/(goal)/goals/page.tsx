@@ -83,9 +83,9 @@ export default function Objective() {
             </div>
 
             <div className="mb-6">
-            <h1 className="text-xl font-semibold ">목표를 관리해보세요 !</h1>
-            <h2 className="text-base font-semibold mt-3"> 목표를 달성하고 배지를 모아보세요.</h2>
-                <div className="bg-white rounded-lg border p-4 mt-3 flex items-center" style={{height}}>
+            <h1 className="text-xl font-semibold mb-6">목표를 관리해보세요 !</h1>
+            <h2 className="text-base font-semibold"> 목표를 달성하고 배지를 모아보세요.</h2>
+                <div className="bg-white rounded-2xl border p-4 mt-3 flex items-center" style={{height}}>
                     <div className="grid grid-cols-6 gap-3">
                         {yearGoal?.map((goal:yearGoal, index:number) => {
                             const revenueGoal = goal.realRevenue !== 0 && goal.realRevenue - goal.revenueGoal >= 0;
@@ -107,7 +107,7 @@ export default function Objective() {
             <div className="mt-6">
                 {/* 매출 목표 */}
                 <Link href="/goals/detail?page=revenue">
-                    <div className="bg-white rounded-xl shadow-md p-4 cursor-pointer" style={{height}}>
+                    <div className="bg-white rounded-2xl border p-4 cursor-pointer mt-10" style={{height}}>
                         <p className="text-md mb-2">매출 목표</p>
                         <div className="flex items-center">
                             <div className="w-1/2 flex justify-center items-center">
@@ -144,7 +144,7 @@ export default function Objective() {
 
                     {/* 지출 목표 */}
                     <Link href="/goals/detail?page=expense">
-                        <div className="bg-white rounded-xl shadow-md p-4 mt-10 cursor-pointer" style={{height}}>
+                        <div className="bg-white rounded-2xl border p-4 mt-10 cursor-pointer" style={{height}}>
                             <p className="text-md font-medium mb-10">지출 예산</p>
                             <div className="flex items-center mb-4">
                             <div className="w-1/2 flex flex-col justify-center items-center">
