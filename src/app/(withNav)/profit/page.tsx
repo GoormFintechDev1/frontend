@@ -55,7 +55,7 @@ export default function Income() {
     return (
 
         // 애니메이션
-        <div className="container h-full items-center relative overflow-hidden">
+        <div className="container flex flex-col h-full items-center relative overflow-hidden">
             {showFireworks && (
                 <div className="fixed inset-0 z-50 flex justify-center items-center pointer-events-none">
                     <div className="fireworks-container">
@@ -79,7 +79,7 @@ export default function Income() {
                     </div>
                 </div>
             )}
-            <div className="mb-3">
+            <div className="mb-3 w-full">
                 <Link href={"/"}>
                     <Image alt="back" src={'/icons/arrow.png'} width={25} height={25}></Image>
                 </Link>
@@ -96,10 +96,10 @@ export default function Income() {
                     <div className="text-2xl font-bold text-blue-600 mb-6">{profit? profit.netProfit.toLocaleString(): 0}원</div>
                 </div>
 
-                <div className="text-left flex-grow text-gray-600 space-y-2 ml-20 mt-20">
+                <div className="text-left flex-grow text-gray-600 space-y-2 m-auto mt-32">
                     <div>➕ 총 매출: {profit?.incomeTotal?.toLocaleString() ?? 0}원</div>
                     <div>➖ 원자재비: {profit?.saleCost?.toLocaleString() ??  0}원</div>
-                    <div>➖ 운영비용: {profit?.operatingExpense?.toLocaleString() ?? 0}원 </div>
+                    <div>➖ 운영비용: {profit?.operatingExpense?.toLocaleString() ?? 0}원</div>
                     <div>➖ 세금: {profit?.taxes.toLocaleString() ?? 0}원 </div>
                 </div>
                 {/* <div className="flex-grow"></div> */}
