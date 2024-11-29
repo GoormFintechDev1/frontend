@@ -12,7 +12,7 @@ export default function ReportList() {
     const router = useRouter();
 
     const {data:user} = useUserInfo();
-    const {data:check} = useReportCheck(paramMonth);
+    const {data:check} = useReportCheck();
 
     const start = dayjs(user?.createAt);
     const today = dayjs().subtract(1, "month"); //이번달 기준 지난달까지만 보여야 하니까!
@@ -21,15 +21,15 @@ export default function ReportList() {
     const year = useMemo(()=>Object.keys(yearMonths).sort((a,b)=> Number(b) - Number(a)), [yearMonths]);
 
     return (
-        <div className="container">
+        <div className="container flex flex-col">
             <div className="pb-3 pt-2">
                 <h1 className="text-xl font-bold">월간 리포트</h1>
             </div>
 
-            <div className="overflow-y-scroll h-[calc(100vh-160px)]">
+            <div className="overflow-y-scroll h-[calc(100vh-160px)] flex flex-col justify-center">
                 {
-                    year.map((y,i)=> (
-                        <div key={i}>
+                    year.length > 0 ? year.map((y,i)=> (
+                        <div key={i} className='h-full'>
                             <div className='font-bold py-5 border-b'>{y}년</div>
                             <ul className='py-5'>
                             {yearMonths[y].map((m,i)=>(
@@ -41,7 +41,11 @@ export default function ReportList() {
                             ))}
                             </ul>
                         </div>
-                    ))
+                    )) : (
+                        <div className='text-center text-sm text-gray-500'>
+                            <p>아직 리포트를 생성할 데이터가 없어요!</p>
+                        </div>
+                    )
                 }
                 
                 {/* <Link href="/reportlist/detail?month=2024-11">
