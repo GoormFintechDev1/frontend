@@ -36,8 +36,14 @@ export const useSetGoal = () => {
 }
 
 export const useUpdateGoal = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: (data:SetGoal) => updateGoals(data),
+    onSuccess: ()=>{
+      queryClient.invalidateQueries({ queryKey: ["expenseGoal"], exact: true });
+      queryClient.invalidateQueries({ queryKey: ["revenueGoal"], exact: true });
+    },
     onError: (error:string) => {
         console.error("목표 수정 실패 ", error);
     }

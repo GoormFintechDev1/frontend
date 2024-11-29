@@ -6,7 +6,6 @@ import { useState } from "react";
 import { BusinessInfo } from "@/interface/business";
 import { useRouter } from "next/navigation";
 import { useValidateBR } from "@/hooks/useBRQuery";
-import { useUserInfo } from "@/hooks/useUserQuery";
 
 export default function Validate(){
 
@@ -14,8 +13,6 @@ export default function Validate(){
 
     const [address, setAddress] = useState("");
     const { register, handleSubmit, setValue, formState: { errors, isValid } } = useForm<BusinessInfo>({mode:'onChange'});
-
-    const {data:userInfo} = useUserInfo();
 
     const handleAddressSelect = (selectedAddress: string) => {
         setAddress(selectedAddress);
@@ -31,11 +28,10 @@ export default function Validate(){
     const validateBRMutation = useValidateBR();
 
     const onSubmit: SubmitHandler<BusinessInfo> = (data) => {
-        console.log(data);
         validateBRMutation.mutate(data,{
             onSuccess: () => { 
-                router.push('/');
-                localStorage.setItem(`firstLogin:${userInfo.loginId}`, "false");
+                router.push('/info?first=사업자 등록 성공!&gif=/check.gif&buttonmessage=더블리 이용하기&href=/');
+                localStorage.setItem(`firstLogin:${data.brNum}`, "false");
             },
             onError: () => {
                 alert('사업자등록번호가 유효하지 않습니다.');
