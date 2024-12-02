@@ -29,7 +29,7 @@ export default function ProgressBar({time}:Props) {
       clearTimeout(timerId);
     }
 
-  },[])
+  },[router, second, time])
 
 
   return (

@@ -7,10 +7,10 @@ import Image from "next/image";
 interface Props {
   time: number
 }
+const list = ["포스 정보를 가져오고 있어요.", "계좌 정보를 가져오고 있어요.",];
 
-export default function progress({time}:Props) {
+export default function Progress({time}:Props) {
 
-  const list = ["포스 정보를 가져오고 있어요.", "계좌 정보를 가져오고 있어요.",]
   const [info, setInfo] = useState(list[0]);
   const second = time/2;
 
@@ -30,7 +30,7 @@ export default function progress({time}:Props) {
       clearInterval(intervalId);
       clearTimeout(timerId);
     };
-  }, [list, time]);
+  }, [list, time, second]);
 
 
   return (

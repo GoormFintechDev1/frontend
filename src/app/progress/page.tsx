@@ -1,4 +1,4 @@
-import Progress from "@/components/progress";
+import Progress from "@/components/Progress";
 
 export default function page() {
   return (
