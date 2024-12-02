@@ -30,7 +30,7 @@ export default function Progress({time}:Props) {
       clearInterval(intervalId);
       clearTimeout(timerId);
     };
-  }, [list, time, second]);
+  }, [time, second]);
 
 
   return (
