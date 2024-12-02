@@ -56,6 +56,13 @@ export default function MyPage() {
                 <span className="text-end">&gt;</span>
             </div>
 
+            <div className="pt-7 px-2 flex justify-between ">
+                <Link href="/card" className="flex justify-between w-full " style={{ color: "#333333" }}>
+                <p>카드 추천</p>
+                <span className="text-end">&gt;</span>
+                </Link>
+            </div>
+
             <div className="pt-7 px-2 flex justify-between " style={{ color: "#333333" }} onClick={openModal}>
                 <p> 로그아웃 </p>
                 <span className="text-end">&gt;</span>

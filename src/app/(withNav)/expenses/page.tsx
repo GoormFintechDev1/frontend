@@ -18,6 +18,8 @@ import ExpensesData from "@/components/expenses/ExpensesData";
 import dayjs from "dayjs";
 import ExpensesWeekData from "@/components/expenses/ExpensesWeekData";
 import Image from "next/image";
+import { useRecCard } from "@/hooks/useCardQuery";
+import CardRecommend from "@/components/CardRecommend";
 dayjs().format();
 
 const ExpensesPage = () => {
@@ -25,7 +27,8 @@ const ExpensesPage = () => {
   const [activeToggle, setActiveToggle] = useState(false);
 
   const router = useRouter();
-  const { isLoading, error } = useExpensesDetailData(month);
+  const { isLoading: isExpensesLoading, error: expensesError } = useExpensesDetailData(month); // 지출 데이터
+  const { isLoading: isCardsLoading, error: cardsError, data: cards } = useRecCard(month); // 카드 추천 데이터
 
   const expensesDetailsData = useExpensesStore((state) => state.expensesDetailsData);
 
@@ -35,11 +38,13 @@ const ExpensesPage = () => {
     setActiveToggle((activeToggle) => !activeToggle);
   }
 
-  if (isLoading) {
+  // 로딩 상태 처리
+  if (isExpensesLoading || isCardsLoading) {
     return <ExpensesPageLoading />;
   }
 
-  if (error) {
+  // 에러 처리
+  if (expensesError || cardsError) {
     return <Error />;
   }
 
@@ -76,6 +81,16 @@ const ExpensesPage = () => {
                 ▼
               </span>
             </button>
+          </div>
+          {/* 카드 추천  */}
+          <div className="">
+            {cards && (
+              <Link href="/card">
+                <div className="cursor-pointer">
+                  <CardRecommend cards={cards} />
+                </div>
+              </Link>
+            )}
           </div>
           {activeToggle && (
             <div
