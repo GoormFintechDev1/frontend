@@ -19,12 +19,6 @@ export const useLoginMutation = () => {
     mutationFn: (loginData: LoginType) => loginUser(
       loginData
     ),
-    onSuccess: () => {
-      console.log("로그인 성공");
-    },
-    onError: (error:string) => {
-      console.log("로그인 실패", error);
-    }
   })
 }
 

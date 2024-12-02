@@ -11,6 +11,7 @@ export default function Login() {
     const router = useRouter();
 
     const [formData, setFormData] = useState<LoginType>({ loginId: '', password: '' });
+    const [error, setError] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -30,6 +31,9 @@ export default function Login() {
                 } else {
                     router.push('/');
                 }
+            },
+            onError:()=>{
+                setError(true);
             }
         });
     };
@@ -64,6 +68,9 @@ export default function Login() {
                         className="input-base"
                     />
                 </div>
+                { error && 
+                    <p className='text-xs text-red-500'>아이디 또는 비밀번호가 잘못되었습니다. </p>
+                }
                 
 
                 <Button type="submit">로그인</Button>
