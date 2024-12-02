@@ -30,7 +30,7 @@ export default function Validate(){
     const onSubmit: SubmitHandler<BusinessInfo> = (data) => {
         validateBRMutation.mutate(data,{
             onSuccess: () => { 
-                router.push('/info?first=사업자 등록 성공!&gif=/check.gif&buttonmessage=더블리 이용하기&href=/');
+                router.push('/progress');
                 localStorage.setItem(`firstLogin:${data.brNum}`, "false");
             },
             onError: () => {
