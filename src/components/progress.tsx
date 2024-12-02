@@ -9,22 +9,38 @@ interface Props {
 }
 
 export default function progress({time}:Props) {
-  
-  const [info, setInfo] = useState("");
-  let count = 0;
-  const list = ["사업자 등록 인증 완료!", "포스 정보 가져오는 중...", "사업자 계좌 가져오는 중..."]
 
-  useEffect(()=>{
-    setInterval(()=>{count++; setInfo(list[count])},1000)
-  },[])
+  const list = ["포스 정보를 가져오고 있어요.", "계좌 정보를 가져오고 있어요.",]
+  const [info, setInfo] = useState(list[0]);
+  const second = time/2;
+
+  useEffect(() => {
+    let count = 1;
+
+    const intervalId = setInterval(() => {
+      setInfo(list[count]);
+      count++;
+    }, second);
+
+    const timerId = setTimeout(() => {
+      clearInterval(intervalId);
+    }, time);
+
+    return () => {
+      clearInterval(intervalId);
+      clearTimeout(timerId);
+    };
+  }, [list, time]);
+
 
   return (
-    <div className="container flex flex-col items-center justify-center space-y-8">
-
-      <div className="text-lg font-bold">{info} 정보 가져오는 중...</div>
-      {/* <div>
-        <Image src={"/progress.gif"} width={140} height={140} alt="progress" unoptimized></Image>
-      </div> */}
+    <div className="container flex flex-col items-center justify-between">
+      <div></div>
+      <div className="text-lg font-bold flex flex-col items-center space-y-4">
+        <p>{info}</p>
+        <Image src={"/dots.gif"} width={140} height={140} alt="progress" unoptimized></Image>
+      </div>
+      
       <ProgressBar time={time}/>
     </div>
   )

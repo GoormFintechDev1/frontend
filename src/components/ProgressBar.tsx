@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface Props {
     time: number;
@@ -11,13 +12,17 @@ export default function ProgressBar({time}:Props) {
   
   const [progress, setTimer] = useState(0);
   const second = useMemo(()=> time / 100, [time]);
+  const router = useRouter();
 
   useEffect(()=>{
     const progressId = setInterval(()=>{
       setTimer((prev)=> prev + 1);
     }, second);
 
-    const timerId = setTimeout(()=>{clearInterval(progressId)}, time);
+    const timerId = setTimeout(()=>{
+      clearInterval(progressId)
+      router.push("/info?first=사업자 등록 성공!&gif=/check.gif&buttonmessage=더블리 이용하기&href=/")
+    }, time);
     
     return ()=>{
       clearInterval(progressId);
