@@ -7,7 +7,7 @@ import Goals from "@/components/main/Goals";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useUserInfo } from "@/hooks/useUserQuery";
-import Alarm from "@/components/Alarm";
+// import Alarm from "@/components/Alarm";
 
 export default function Home() {
 

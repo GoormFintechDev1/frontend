@@ -32,7 +32,7 @@ export default function MyPage() {
         await navigator.clipboard.writeText(userInfo?.brNum);
         //message component 띄우기
       } catch (error) {
-        alert("복사 실패")
+        alert(error)
       }
   }
 

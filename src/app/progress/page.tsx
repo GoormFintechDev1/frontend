@@ -1,9 +1,9 @@
-import Progress from "@/components/Progress";
+import ProgressComponent from "@/components/ProgressComponent";
 
 export default function page() {
   return (
     <div>
-        <Progress time={10000}/>
+        <ProgressComponent time={10000}/>
     </div>
   )
 }
