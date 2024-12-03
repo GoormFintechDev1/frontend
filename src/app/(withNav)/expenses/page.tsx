@@ -69,6 +69,16 @@ const ExpensesPage = () => {
         <div className="h-[calc(100vh-163px)] overflow-y-auto">
           <ExpensesPieChart chartData={expensesDetailsData!} />
           <ExpensesData chartData={expensesDetailsData!} month={month} />
+          {/* 카드 추천  */}
+          <div className="mb-5">
+            {cards && (
+              <Link href="/card">
+                <div className="cursor-pointer">
+                  <CardRecommend cards={cards} />
+                </div>
+              </Link>
+            )}
+          </div>
           <div className="flex justify-center">
             <button
               onClick={toggleWeekData}
@@ -82,8 +92,8 @@ const ExpensesPage = () => {
               </span>
             </button>
           </div>
-          {/* 카드 추천  */}
-          <div className="">
+          {/* 카드 추천 
+          <div className="mb-5">
             {cards && (
               <Link href="/card">
                 <div className="cursor-pointer">
@@ -91,7 +101,7 @@ const ExpensesPage = () => {
                 </div>
               </Link>
             )}
-          </div>
+          </div> */}
           {activeToggle && (
             <div
               className={`transition-all duration-500 ease-in-out overflow-hidden ${

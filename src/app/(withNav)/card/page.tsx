@@ -70,29 +70,30 @@ export default function Card() {
                     <p className="text-center font-semibold">{currentCard.benefits[0]}</p>
                 </div>
 
-                {/* 포함하려는 단어 목록만 뽑아내기  */}
+                {/* 키워드 중 하나라도 포함되어 있지 않으면 표시하지 않음 */}
                 <div className="text-center">
-                <p className="text-lg mb-1 text-gray-700"> 혜택 사항</p>
-                <form className="bg-gray-50 p-4 rounded-lg shadow-md">
-                    <ul className="text-md text-gray-600 space-y-2">
-                    {currentCard.benefits &&
-                        Array.isArray(currentCard.benefits) &&
-                        currentCard.benefits
-                        .filter((benefit: string) => benefit.trim() !== "") // 비어 있지 않은 혜택 필터링
-                        .filter((benefit: string) => {
-                            // 포함하려는 단어 목록
-                            const keywords = ["공과금", "쇼핑", "통신", "마트", "식음료"];
-                            // 하나라도 포함되어 있는지 확인
-                            return keywords.some((keyword) => benefit.includes(keyword));
-                        })
-                        .map((benefit: string, index: number) => (
-                            <li key={index}>
-                            <label>{benefit}</label>
-                            </li>
-                        ))}
-                    </ul>
-                </form>
+                    <p className="text-lg mb-1 text-gray-700"> 혜택 사항</p>
+                    <form className="bg-gray-50 p-4 rounded-lg shadow-md">
+                        <ul className="text-md text-gray-600 space-y-2">
+                        {currentCard.benefits &&
+                            Array.isArray(currentCard.benefits) &&
+                            currentCard.benefits
+                            .filter((benefit: string) => benefit.trim() !== "") // 비어 있지 않은 혜택 필터링
+                            .filter((benefit: string) => {
+                                // 포함하려는 단어 목록
+                                const keywords = ["공과금", "쇼핑", "통신", "마트", "식음료", "주유"];
+                                // 하나라도 포함되어 있는지 확인
+                                return keywords.some((keyword) => benefit.includes(keyword));
+                            })
+                            .map((benefit: string, index: number) => (
+                                <li key={index}>
+                                <label>{benefit}</label>
+                                </li>
+                            ))}
+                        </ul>
+                    </form>
                 </div>
+
 
                 <div className="text-center mt-10">
                     <div className="flex justify-center font-bold"> 
