@@ -4,6 +4,7 @@ import { useLogoutMutation } from "@/hooks/useAuthQuery";
 import { useUserInfo } from "@/hooks/useUserQuery";
 import dayjs from "dayjs";
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 dayjs().format();
@@ -26,11 +27,23 @@ export default function MyPage() {
     }
   };
 
+  const handleClipboard = async() => {
+    try {
+        await navigator.clipboard.writeText(userInfo?.brNum);
+        //message component 띄우기
+      } catch (error) {
+        alert("복사 실패")
+      }
+  }
+
     return (
         <div className="container ">
             <div className="flex flex-col space-y-2 pt-2 pb-7">
                 <h1 className="text-xl font-semibold">{userInfo?.companyName}</h1>
-                <h1 className="font-medium text-sm">{userInfo?.brNum}</h1>
+                <div className="flex space-x-2 items-center">
+                    <h1 className="font-medium text-sm">{userInfo?.brNum.slice(0,3)}-{userInfo?.brNum.slice(3,5)}-{userInfo?.brNum.slice(5,)}</h1>
+                    <Image alt="clipboard" src={"/icons/Copy.png"} width={10} height={10} style={{height:"10px"}} onClick={handleClipboard}/>
+                </div>
                 <h1 className="font-medium text-sm">{userInfo?.address}</h1>
             </div>
 
@@ -67,7 +80,6 @@ export default function MyPage() {
                 <p> 로그아웃 </p>
                 <span className="text-end">&gt;</span>
             </div>
-
             {isModalOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
                 <div className="bg-white p-6 rounded-lg shadow-lg w-80">

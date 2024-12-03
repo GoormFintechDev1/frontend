@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/components/Loading";
 import { useRecCard } from "@/hooks/useCardQuery";
 import { paramMonth } from "@/utils/calculateDay";
 import Image from "next/image";
@@ -14,7 +15,7 @@ export default function Card() {
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
     if (!cards || cards.length === 0) {
-        return <p>추천 카드를 불러오는 중입니다...</p>;
+        return <Loading/>;
     }
 
     const currentCard = cards[currentCardIndex];
@@ -38,12 +39,12 @@ export default function Card() {
 
                 <div className="mb-8">
                     <h1 className="font-bold text-xl mb-1"> 카드 추천 </h1>
-                    <p className="text-gray-500">지출 내역을 분석해 적절한 카드를 추천드려요.</p>
+                    <p className="text-gray-500 text-sm">지출 내역을 분석해 적절한 카드를 추천드려요.</p>
                 </div>
 
-                <div className="text-center mb-5">
+                {/* <div className="text-center mb-5">
                     <p className="font-bold">{currentCard.corporateName}</p>
-                </div>
+                </div> */}
 
                 <div className="flex justify-center items-center mb-6">
                     <button onClick={handlePrev} className="text-gray-500 text-2xl font-bold px-4">
