@@ -124,3 +124,18 @@ export const checkEmail = async (email:string) => {
   return data
 
 }
+
+export const deleteUser = async (loginId:string) => {
+  const response = await fetch(`${url}/inactive`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({loginId}),
+    credentials: "include",
+  })
+
+  if (!response.ok) {
+    console.error("Failed to delete");
+  }
+}
