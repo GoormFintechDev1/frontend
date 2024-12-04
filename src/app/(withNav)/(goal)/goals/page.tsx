@@ -85,8 +85,8 @@ export default function Objective() {
             <div className="mb-6">
             <h1 className="text-xl font-semibold mb-6">목표를 관리해보세요 !</h1>
             <h2 className="text-base font-semibold"> 목표를 달성하고 배지를 모아보세요.</h2>
-                <div className="bg-white rounded-2xl border p-4 mt-3 flex items-center" style={{height}}>
-                    <div className="grid grid-cols-6 gap-3">
+                <div className="bg-white rounded-2xl border p-2 mt-3 flex items-center justify-center" style={{height}}>
+                    <div className="grid grid-cols-6 gap-5 justify-items-center content-center w-full">
                         {yearGoal?.map((goal:yearGoal, index:number) => {
                             const revenueGoal = goal.realRevenue !== 0 && goal.realRevenue - goal.revenueGoal >= 0;
                             const expenseGoal = goal.realExpense !== 0 && goal.expenseGoal - goal.realExpense >= 0;
@@ -94,7 +94,7 @@ export default function Objective() {
                             return (
                             <div
                                 key={index}
-                                className={`w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 flex items-center justify-center rounded-full border-2 ${
+                                className={`w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 flex items-center justify-center rounded-full border-2 ${
                                     revenueGoal && expenseGoal && index +1 < currentIndex ? "border-amber-300 bg-amber-50 " : index + 1 < currentIndex ? "bg-gray-100 border-gray-100" : index +1 === currentIndex ? "border-emerald-100": "border-gray-100"}`} >
                                 {revenueGoal && expenseGoal && index +1 < currentIndex &&
                                 <Image alt="badge" src={`/icons/medal.png`} width={50} height={50} className="text-4xl"></Image>}
