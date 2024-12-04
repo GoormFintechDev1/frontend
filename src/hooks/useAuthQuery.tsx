@@ -1,7 +1,7 @@
 
 import { LoginType } from "@/interface/login"
 import { FormDataType } from "@/interface/register"
-import { checkloginId, checkEmail, checkNickname, checkPhoneNumber, joinUser, loginUser, logoutUser } from "@/lib/authApi"
+import { checkloginId, checkEmail, checkNickname, checkPhoneNumber, joinUser, loginUser, logoutUser, deleteUser } from "@/lib/authApi"
 import { useMutation } from "@tanstack/react-query"
 
 export const useRegisterMutation = () => {
@@ -53,3 +53,8 @@ export const useCheckEmail = () => {
   })
 }
 
+export const useDeleteMutation = () => {
+  return useMutation({
+    mutationFn: (loginId:string) => deleteUser(loginId)
+  })
+}

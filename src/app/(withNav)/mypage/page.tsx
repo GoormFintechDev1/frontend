@@ -1,31 +1,46 @@
 "use client";
 
-import { useLogoutMutation } from "@/hooks/useAuthQuery";
+import { useDeleteMutation, useLogoutMutation } from "@/hooks/useAuthQuery";
 import { useUserInfo } from "@/hooks/useUserQuery";
 import dayjs from "dayjs";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Select from "@/components/Select";
 dayjs().format();
 
 export default function MyPage() {
   const { data: userInfo } = useUserInfo();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const router = useRouter();
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-
   const logout = useLogoutMutation();
+  const deleteAccount = useDeleteMutation();
+
+  // 로그아웃
   const handleLogout = async () => {
-    try {
-      await logout.mutateAsync(userInfo?.loginId); 
-      router.push("/login"); 
-    } catch (error) {
-      console.error("로그아웃 실패:", error); 
-    }
-  };
+        try {
+            await logout.mutateAsync(userInfo?.loginId || "");
+            router.push("/login"); 
+        } catch (error) {
+            console.error("로그아웃 실패:", error); 
+            alert("로그아웃에 실패했습니다. 다시 시도해주세요."); 
+        }
+    };
+
+    // 회원탈퇴
+    const handleDeleteAccount = async () => {
+        try {
+            await deleteAccount.mutateAsync(userInfo?.loginId || "");
+            router.push("/login");
+        } catch (error) {
+            console.log("회원탈퇴 실패:", error);
+            alert("회원탈퇴에 실패했습니다. 다시 시도해주세요.")
+        }
+    };
+
 
   const handleClipboard = async() => {
     try {
@@ -76,37 +91,34 @@ export default function MyPage() {
                 </Link>
             </div>
 
-            <div className="pt-7 px-2 flex justify-between " style={{ color: "#333333" }} onClick={openModal}>
+            <div className="pt-7 px-2 flex justify-between " style={{ color: "#333333" }} onClick={() => setIsLogoutModalOpen(true)}>
                 <p> 로그아웃 </p>
                 <span className="text-end">&gt;</span>
             </div>
-            {isModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
-                <div className="bg-white p-6 rounded-lg shadow-lg w-80">
-                    <p className="text-lg font-bold mb-4 text-center">로그아웃 하시겠습니까?</p>
-                    <p className="text-sm text-gray-500 mb-6 text-center">추가 메시지</p>
-                    <div className="flex gap-4 justify-center">
-                    <button
-                        className="px-4 py-2 bg-emerald-300 rounded-lg"
-                        onClick={handleLogout}
-                    >
-                        예
-                    </button>
-                    <button
-                        className="px-4 py-2 bg-gray-300 rounded-lg"
-                        onClick={closeModal}
-                    >
-                        아니오
-                    </button>
-                    </div>
-                </div>
-                </div>
-            )}
+            <Select
+                isOpen={isLogoutModalOpen}
+                title="로그아웃 하시겠습니까?"
+                message=""
+                onConfirm={handleLogout}
+                onClose={()=> setIsLogoutModalOpen(false)}
+                confirmText="예"
+                cancelText="아니오"
+                />
 
-            <div className="pt-7 px-2 flex justify-between " style={{ color: "#333333" }}>
+
+            <div className="pt-7 px-2 flex justify-between " style={{ color: "#333333" }} onClick={()=> setIsDeleteModalOpen(true)}>
                 <p> 회원탈퇴 </p>
                 <span className="text-end">&gt;</span>
             </div>
+            <Select
+                isOpen={isDeleteModalOpen}
+                title="회원탈퇴 하시겠습니까?"
+                message="탈퇴 시 모든 정보가 삭제됩니다."
+                onConfirm={handleDeleteAccount}
+                onClose={()=> setIsDeleteModalOpen(false)}
+                confirmText="탈퇴"
+                cancelText="취소"
+                />
         </div>
     );
 }
