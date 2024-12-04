@@ -13,6 +13,7 @@ export default function Home() {
 
   const [height, setHeight] = useState("0px");
   
+  const {data:user} = useUserInfo();
 
   useEffect(() => {
     const calculateHeight = () => {
@@ -27,8 +28,6 @@ export default function Home() {
       window.removeEventListener("resize", calculateHeight);
     };
   }, []);
-
-  const {data:user} = useUserInfo();
 
   return (
     <div id="main" className="container">
