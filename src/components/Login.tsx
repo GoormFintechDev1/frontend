@@ -6,27 +6,22 @@ import { useState } from 'react';
 import Button from './Button';
 import { useRouter } from 'next/navigation';
 import { LoginType } from '@/interface/login';
-import logo from "../images/logo.png";
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 export default function Login() {
     const router = useRouter();
 
-    const [formData, setFormData] = useState<LoginType>({ loginId: '', password: '' });
+    const { register, handleSubmit} = useForm<LoginType>({ mode: "onChange" });
     const [error, setError] = useState(false);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
-    };
 
     const mutation = useLoginMutation();
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+    const onSubmit: SubmitHandler<LoginType>  = (data) => {
 
-        mutation.mutate(formData, {
+        mutation.mutate(data, {
             onSuccess: async() => {
-                const firstLogin = JSON.parse(localStorage.getItem(`firstLogin:${formData.loginId}`) || "false");
+                const firstLogin = JSON.parse(localStorage.getItem(`firstLogin:${data.loginId}`) || "false");
                 if(firstLogin){
                     router.push('/validate');
                 } else {
@@ -41,32 +36,29 @@ export default function Login() {
 
 
     return (
-        <div className="flex flex-col items-center justify-center h-full p-3">
-            <form onSubmit={handleSubmit} className='w-full flex flex-col space-y-8'>
-                 <div className="flex justify-start mb-4">
-                    <Image src={logo} alt="로고" width={70} height={70} priority/>
-                </div>
+        <div className="flex flex-col justify-center h-full p-3 space-y-4">
+            <div className="flex items-start mb-4">
+                <Image src="/logo.png" alt="로고" width={70} height={70}/>
+            </div>
+            <form onSubmit={handleSubmit(onSubmit)} className='w-full flex flex-col space-y-8'>
                 
                 <div className='label-input-set'>
                     <label className="label-base">아이디</label>
                     <input
                         type="text"
-                        name="loginId"
-                        value={formData.loginId}
-                        onChange={handleChange}
                         placeholder="아이디를 입력하세요."
                         className="input-base"
+                        {...register("loginId")}
                     />
                 </div>
                 <div className='label-input-set '>
                     <label className="label-base">비밀번호</label>
                     <input
                         type="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
                         placeholder="비밀번호를 입력하세요."
                         className="input-base"
+                        {...register("password")}
+
                     />
                 </div>
                 { error && 

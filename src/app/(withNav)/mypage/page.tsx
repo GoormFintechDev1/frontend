@@ -5,15 +5,20 @@ import { useUserInfo } from "@/hooks/useUserQuery";
 import dayjs from "dayjs";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Select from "@/components/Select";
+import Alert from "@/components/Alert";
 dayjs().format();
 
 export default function MyPage() {
   const { data: userInfo } = useUserInfo();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [message, setMessage] = useState("");
+
   const router = useRouter();
 
   const logout = useLogoutMutation();
@@ -26,7 +31,7 @@ export default function MyPage() {
             router.push("/login"); 
         } catch (error) {
             console.error("로그아웃 실패:", error); 
-            alert("로그아웃에 실패했습니다. 다시 시도해주세요."); 
+            setMessage(error as string);
         }
     };
 
@@ -37,29 +42,63 @@ export default function MyPage() {
             router.push("/login");
         } catch (error) {
             console.log("회원탈퇴 실패:", error);
-            alert("회원탈퇴에 실패했습니다. 다시 시도해주세요.")
+            setMessage(error as string);
         }
     };
 
 
-  const handleClipboard = async() => {
+  const handleBrNumClipboard = async() => {
     try {
         await navigator.clipboard.writeText(userInfo?.brNum);
-        //message component 띄우기
+        setMessage("사업자 번호를 복사했어요.")
+        setIsAlertOpen(true);
       } catch (error) {
-        alert(error)
+        setMessage(error as string);
       }
   }
+
+  const handleAddressClipboard = async() => {
+    try {
+        await navigator.clipboard.writeText(userInfo?.address);
+        setMessage("사업장 주소를 복사했어요.")
+        setIsAlertOpen(true);
+      } catch (error) {
+        setIsError(true);
+        setMessage(error as string);
+      }
+  }
+
+  const timerId = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(()=>{
+    if (isAlertOpen){
+       timerId.current = setTimeout(()=>setIsAlertOpen(false), 1000);
+    };
+
+    if(isError){
+        timerId.current = setTimeout(()=>setIsError(false),1000);
+    }
+
+    return ()=> {
+        if (timerId.current !== null) {
+          clearTimeout(timerId.current);
+          timerId.current = null;
+        }
+      };
+  },[isAlertOpen, isError]);
 
     return (
         <div className="container ">
             <div className="flex flex-col space-y-2 pt-2 pb-7">
-                <h1 className="text-xl font-semibold">{userInfo?.companyName}</h1>
-                <div className="flex space-x-2 items-center">
-                    <h1 className="font-medium text-sm">{userInfo?.brNum.slice(0,3)}-{userInfo?.brNum.slice(3,5)}-{userInfo?.brNum.slice(5,)}</h1>
-                    <Image alt="clipboard" src={"/icons/Copy.png"} width={10} height={10} style={{height:"10px"}} onClick={handleClipboard}/>
+                <h1 className="text-xl font-semibold">{userInfo?.companyName || "가게 이름"}</h1>
+                <div className="flex space-x-2 items-center font-medium text-sm">
+                   {userInfo? (<h1>{userInfo?.brNum.slice(0,3)}-{userInfo?.brNum.slice(3,5)}-{userInfo?.brNum.slice(5,)}</h1>) : (<p>000-00-00000</p>)}
+                    <Image alt="clipboard" src={"/icons/Copy.png"} width={10} height={10} style={{height:"10px"}} onClick={handleBrNumClipboard}/>
                 </div>
-                <h1 className="font-medium text-sm">{userInfo?.address}</h1>
+                <div className="flex space-x-2 items-center">
+                    <h1 className="font-medium text-sm">{userInfo?.address || "사업장 주소"}</h1>
+                    <Image alt="clipboard" src={"/icons/Copy.png"} width={10} height={10} style={{height:"10px"}} onClick={handleAddressClipboard}/>
+                </div>
             </div>
 
             <div
@@ -119,6 +158,8 @@ export default function MyPage() {
                 confirmText="탈퇴"
                 cancelText="취소"
                 />
+
+            <Alert isOpen={isAlertOpen} message={message}/>
         </div>
     );
 }

@@ -51,7 +51,7 @@ export default function Register1({ onNext }: Props) {
         clearErrors("loginId");
     
         checkloginIdMutation.mutate(loginId, {
-            onSuccess: (data) => {
+            onSuccess: (data:boolean) => {
                 if (data) setError("loginId", { type: "manual", message: "중복된 아이디입니다." });
                 else {
                     

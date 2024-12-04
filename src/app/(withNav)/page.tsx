@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <div id="main" className="container">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl font-bold">{user?.companyName}</h1>
+        <h1 className="text-xl font-bold">{user?.companyName || "가게 이름"}</h1>
         <Link href={"/setGoals"}>
           <button className="bg-theme w-[70px] h-[40px] text-sm text-white px-1 py-[5px] rounded">
             목표설정

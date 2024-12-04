@@ -89,21 +89,19 @@ const Expenses: React.FC<RevenueProps> = ({height}) => {
         <ResponsiveContainer width={'60%'} height="80%">
           <PieChart>
             <Pie
-              data={chartData}
+              data={chartData.length > 0 ? chartData : [{ name: "No Data", amount: 1 }]}
               dataKey="amount"
               outerRadius={40}
               innerRadius={20}
               startAngle={90}
               endAngle={-270}
             >
-              {
-                chartData?.map((entry, index) => (
+              { chartData.length > 0 ? (
+                chartData?.map((entry, index) => 
                   <Cell key={`cell-${index}`}
                     fill={COLORS[index % COLORS.length]}
-                    // White stroke to separate segments
-                    // strokeWidth={index === 0 ? 0 : 10}
                   />
-                ))
+                )) : (<Cell fill="#FFF4F8" />)
               }
             </Pie>
           </PieChart>

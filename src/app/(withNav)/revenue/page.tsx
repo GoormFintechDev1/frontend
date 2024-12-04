@@ -81,9 +81,9 @@ export default function Revenue() {
       </div>
       <div className='flex flex-row items-center' >
         <div onClick={goToPrevMonth}><Image src={'/icons/smallLeft.png'} alt={'left'} width={18} height={18}></Image></div>
-        <h1 className="text-xl font-semibold px-3">
+        <p className="text-xl font-semibold px-3">
           {month}월 매출
-        </h1>
+        </p>
         <div onClick={goToNextMonth}><Image src={'/icons/smallRight.png'} alt={'right'} width={18} height={18}></Image></div>
       </div>
 
