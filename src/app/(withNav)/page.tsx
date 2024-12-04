@@ -7,12 +7,13 @@ import Goals from "@/components/main/Goals";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useUserInfo } from "@/hooks/useUserQuery";
-import Alarm from "@/components/Alarm";
+// import Alarm from "@/components/Alarm";
 
 export default function Home() {
 
   const [height, setHeight] = useState("0px");
   
+  const {data:user} = useUserInfo();
 
   useEffect(() => {
     const calculateHeight = () => {
@@ -28,12 +29,10 @@ export default function Home() {
     };
   }, []);
 
-  const {data:user} = useUserInfo();
-
   return (
     <div id="main" className="container">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl font-bold">{user?.companyName}</h1>
+        <h1 className="text-xl font-bold">{user?.companyName || "가게 이름"}</h1>
         <Link href={"/setGoals"}>
           <button className="bg-theme w-[70px] h-[40px] text-sm text-white px-1 py-[5px] rounded">
             목표설정

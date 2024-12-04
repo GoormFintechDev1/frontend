@@ -9,7 +9,7 @@ interface Props {
 }
 const list = ["포스 정보를 가져오고 있어요.", "계좌 정보를 가져오고 있어요.",];
 
-export default function Progress({time}:Props) {
+export default function ProgressComponent({time}:Props) {
 
   const [info, setInfo] = useState(list[0]);
   const second = time/2;

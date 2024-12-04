@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/components/Loading";
 import { useRecCard } from "@/hooks/useCardQuery";
 import { paramMonth } from "@/utils/calculateDay";
 import Image from "next/image";
@@ -14,7 +15,7 @@ export default function Card() {
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
     if (!cards || cards.length === 0) {
-        return <p>추천 카드를 불러오는 중입니다...</p>;
+        return <Loading/>;
     }
 
     const currentCard = cards[currentCardIndex];
@@ -38,19 +39,19 @@ export default function Card() {
 
                 <div className="mb-8">
                     <h1 className="font-bold text-xl mb-1"> 카드 추천 </h1>
-                    <p className="text-gray-500">지출 내역을 분석해 적절한 카드를 추천드려요.</p>
+                    <p className="text-gray-500 text-sm">지출 내역을 분석해 적절한 카드를 추천드려요.</p>
                 </div>
 
-                <div className="text-center mb-5">
+                {/* <div className="text-center mb-5">
                     <p className="font-semibold">{currentCard.corporateName}</p>
-                </div>
+                </div> */}
 
                 <div className="flex justify-center items-center mb-6">
                     <button onClick={handlePrev} className="text-gray-500 text-2xl font-bold px-4">
                         &lt;
                     </button>
 
-                    <div className={`w-48 h-72 rounded-lg flex items-center justify-center shadow-lg transition-all duration-500`}>
+                    <div className={`w-48 h-72 rounded-lg flex items-center justify-center shadow-2xl transition-all duration-500`}>
                         <Image
                             src={currentCard.imageURL}
                             alt={currentCard.cardName}
@@ -66,15 +67,15 @@ export default function Card() {
                 </div>
 
                 <div className="text-center mb-5">
-                    <p className="text-gray-600 font-semibold mb-2">{currentCard.cardName}</p>
-                    <p className="text-center font-semibold text-lg text-emerald-600 mt-2">{currentCard.totalSaving}원 절약 가능</p>
+                    <p className="text-center font-bold text-lg text-gray-700 mt-2"><span className="text-emerald-500">{currentCard.totalSaving}</span> 원 절약 가능</p>
+                    <p className="text-gray-600 text-sm mb-2">{currentCard.cardName}</p>
                 </div>
 
                 {/* 키워드 중 하나라도 포함되어 있지 않으면 표시하지 않음 */}
                 <div className="text-center">
-                    <p className="text-lg mb-1 text-gray-700"> 혜택 사항</p>
-                    <form className="bg-gray-50 p-4 rounded-lg shadow-md">
-                        <ul className="text-md text-gray-600 space-y-2">
+                    {/* <p className="text-lg mb-1 text-gray-700"> 혜택 사항</p> */}
+                    <div className="bg-gray-50 p-6 rounded-lg">
+                        <ul className="text-sm text-gray-800 space-y-2 list-disc list-inside">
                         {currentCard.benefits &&
                             Array.isArray(currentCard.benefits) &&
                             currentCard.benefits
@@ -86,12 +87,12 @@ export default function Card() {
                                 return keywords.some((keyword) => benefit.includes(keyword));
                             })
                             .map((benefit: string, index: number) => (
-                                <li key={index}>
+                                <li key={index} className="">
                                 <label>{benefit}</label>
                                 </li>
                             ))}
                         </ul>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

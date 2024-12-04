@@ -86,7 +86,7 @@ export default function Objective() {
             <h1 className="text-xl font-semibold mb-6">목표를 관리해보세요 !</h1>
             <h2 className="text-base font-semibold"> 목표를 달성하고 배지를 모아보세요.</h2>
                 <div className="bg-white rounded-2xl border p-2 mt-3 flex items-center justify-center" style={{height}}>
-                    <div className="grid grid-cols-6 gap-5 justify-items-center content-center w-full">
+                    <div className="grid grid-cols-6 gap-2 justify-items-center content-center w-full">
                         {yearGoal?.map((goal:yearGoal, index:number) => {
                             const revenueGoal = goal.realRevenue !== 0 && goal.realRevenue - goal.revenueGoal >= 0;
                             const expenseGoal = goal.realExpense !== 0 && goal.expenseGoal - goal.realExpense >= 0;
