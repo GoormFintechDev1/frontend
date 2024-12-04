@@ -2,7 +2,7 @@ const enviroment = process.env.NODE_ENV;
 
 let url = "http://localhost:8080/api/posts";
 if (enviroment === "production") {
-  url = "https://domain/api/posts";
+  url = process.env.NEXT_PUBLIC_DOMAIN ? `http://${process.env.NEXT_PUBLIC_DOMAIN}/api/posts` : `http://localhost:8080/api/posts`;
 }
 
 export const getPostList = async () => {

@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 import QueryProvider from "@/Provider/QueryProvider";
-import { AuthProvider } from "@/Provider/AuthProvider";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 // goorm-sans 폰트 설정
 const goormSansBold = localFont({
@@ -25,8 +25,8 @@ const goormSansRegular = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "지팡이",
-  description: "A Helping Hand For Secondhand",
+  title: "더블리",
+  description: "더블리로 자산을 더 불려보세요!",
 };
 
 export default function RootLayout({
@@ -37,6 +37,12 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta name="theme-color" content="#000000" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+      </head>
       <body
         className={`
           ${goormSansBold.variable} 
@@ -46,9 +52,8 @@ export default function RootLayout({
         `}
       >
         <QueryProvider>
-          <AuthProvider>
-            {children}
-          </AuthProvider>
+          {children}
+          <ReactQueryDevtools initialIsOpen={false}/>
         </QueryProvider>
       </body>
     </html>

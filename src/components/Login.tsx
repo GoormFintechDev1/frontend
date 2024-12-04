@@ -6,11 +6,13 @@ import { useState } from 'react';
 import Button from './Button';
 import { useRouter } from 'next/navigation';
 import { LoginType } from '@/interface/login';
+import logo from "../images/logo.png";
 
 export default function Login() {
     const router = useRouter();
 
     const [formData, setFormData] = useState<LoginType>({ loginId: '', password: '' });
+    const [error, setError] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -21,25 +23,28 @@ export default function Login() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // 로그인 로직을 추가하거나, API 호출 등을 여기에 구현
-        mutation.mutate(formData, {
-            onSuccess: () => {
-                const firstLogin = JSON.parse(localStorage.getItem("firstLogin") || "false");
 
+        mutation.mutate(formData, {
+            onSuccess: async() => {
+                const firstLogin = JSON.parse(localStorage.getItem(`firstLogin:${formData.loginId}`) || "false");
                 if(firstLogin){
                     router.push('/validate');
                 } else {
                     router.push('/');
                 }
+            },
+            onError:()=>{
+                setError(true);
             }
         });
     };
+
 
     return (
         <div className="flex flex-col items-center justify-center h-full p-3">
             <form onSubmit={handleSubmit} className='w-full flex flex-col space-y-8'>
                  <div className="flex justify-start mb-4">
-                    <Image src="/logo.png" alt="로고" width={70} height={70} /> {/* 필요에 따라 크기 조정 */}
+                    <Image src={logo} alt="로고" width={70} height={70} priority/>
                 </div>
                 
                 <div className='label-input-set'>
@@ -64,6 +69,9 @@ export default function Login() {
                         className="input-base"
                     />
                 </div>
+                { error && 
+                    <p className='text-xs text-red-500'>아이디 또는 비밀번호가 잘못되었습니다. </p>
+                }
                 
 
                 <Button type="submit">로그인</Button>

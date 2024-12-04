@@ -1,18 +1,39 @@
+import { IndustryReport, MarketReport } from "@/interface/report";
+
 const enviroment = process.env.NODE_ENV;
 
-let url = "http://localhost:8080/api/account";
+let url = "http://localhost:8080/api/report";
 if (enviroment === "production") {
-  url = "https://domain/api/account";
+  url = process.env.NEXT_PUBLIC_DOMAIN ? `http://${process.env.NEXT_PUBLIC_DOMAIN}/api/report` : `http://localhost:8080/api/report`;
 }
 
-console.log(url);
-
-export const getRevenueData = async () => {
-  const data = [
-    { name: "9월", value: 5000, fill: "#E5E7EB" },
-    { name: "10월", value: 20000, fill: "#E5E7EB" },
-    { name: "11월", value: 15000, fill: "#6EE7B7" },
-  ]
-
-  return data;
+interface ReportData {
+  reports: {
+    INDUSTRY_REPORT: IndustryReport,
+    MARKET_REPORT: MarketReport,
+  }
 }
+
+export const getReportData = async (paramMonth: string): Promise<ReportData> => {
+  const response = await fetch(`${url}/all?month=${paramMonth}`, {
+    method: "GET",
+    credentials: "include"
+  });
+
+  if(!response.ok) throw new Error("리포트 데이터 조회 에러");
+
+  return response.json();
+}
+
+//새로운 리포트 생성했는지 체크
+export const getReportCheck = async () => {
+  const response = await fetch(`${url}/previous-month/check`, {
+    method: "GET",
+    credentials: "include"
+  });
+
+  if(!response.ok) throw new Error("리포트 데이터 조회 에러");
+
+  return response.json();
+}
+

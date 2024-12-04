@@ -13,6 +13,7 @@ interface BtnProps {
 const NavbarBtn = (props: BtnProps) => {
   const router = useRouter()
   const pathname = usePathname();
+
   return (
     <button 
       className={`flex flex-col justify-center items-center w-[100px] h-[50px] rounded-lg`}

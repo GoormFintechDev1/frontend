@@ -4,16 +4,23 @@ dayjs().format();
 
 export const paramMonth = dayjs().format('YYYY-MM'); // DB에 전달하는 날짜 형식
 
-export const currentMonth = (month: string) => { // 화면에 표시할 날짜 포맷
+export const paramMonth2 = (year:number, month: number) => { // DB에 전달하는 날짜 형식2
+  const formattedDate = dayjs().set('year', year).set('month', month - 1).format("YYYY-MM");
+  return formattedDate;
+};
+
+
+/* month 를 YYYYMM 형식으로 전달 받으면 number, YYYY-MM 형식으로 전달 받으면 string */
+export const currentMonth = (month: number | string) => { // 화면에 표시할 날짜 포맷
   return dayjs(month).format("MM월");
 };
 
-export const handlePrevMonth = (month: string) => { // 현재 월 기준으로 이전 월 계산
+export const handlePrevMonth = (month: number | string) => { // 현재 월 기준으로 이전 월 계산
   const prevMonth = dayjs(month).subtract(1, 'month').format('YYYY-MM');
   return prevMonth
 }
 
-export const handleNextMonth = (month: string) => { // 현재 월 기준으로 다음 월 계산
+export const handleNextMonth = (month: number | string) => { // 현재 월 기준으로 다음 월 계산
   const nextMonth = dayjs(month).add(1, 'month').format('YYYY-MM');
   return nextMonth
 };
@@ -32,13 +39,12 @@ export const getWeekOfMonth = (date: string) => {
 };
 
 // Extracting and grouping data by week number
-export const groupByWeek = (expenses: ExpenseDetail[]) => {
+export const groupByWeek = (expenses: ExpenseDetail[]): Record<number, ExpenseDetail[]> => {
   const groupedByWeek: Record<number, ExpenseDetail[]> = {};
 
   expenses.forEach((expense) => {
     const date = new Date(expense.transactionDate);
-    const week = getWeekOfMonth(dayjs(date).format("YYYY-MM-DD"));
-
+    const week = Math.ceil(date.getDate() / 7); // 주차 계산 (단순히 날짜 기반으로 계산)
     if (!groupedByWeek[week]) {
       groupedByWeek[week] = [];
     }
@@ -46,4 +52,22 @@ export const groupByWeek = (expenses: ExpenseDetail[]) => {
   });
 
   return groupedByWeek;
+};
+
+//시작 - 끝 구간 값 가져오기
+export const getYearMonths = (start: dayjs.Dayjs, end:dayjs.Dayjs) => {
+  const yearMonths: Record<string, number[]> = {}; // 결과 객체 선언
+  let current = start.startOf("month");
+
+  while (current.isBefore(end) || current.isSame(end, "month")) {
+    const year = current.year();
+    const month = current.month() + 1;
+
+    if (!yearMonths[year]) yearMonths[year] = [];
+
+    yearMonths[year].unshift(month);
+    current = current.add(1, "month");
+  }
+
+  return yearMonths;
 };

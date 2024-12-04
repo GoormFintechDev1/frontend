@@ -1,9 +1,11 @@
 import { convertToKoreanWon } from "@/utils/currency";
 import Link from "next/link";
 import { Bar, BarChart, Cell, LabelList, ResponsiveContainer } from "recharts";
-import {RevenueLoading} from "../Loading";
-import Error from "../Error";
+import {RevenueLoading} from "./Loading";
 import { useRevenueHistory } from "@/hooks/useRevenueQuery";
+import dayjs from "dayjs";
+import { paramMonth2 } from "@/utils/calculateDay";
+dayjs().format();
 
 interface RevenueProps {
   height: string;
@@ -14,8 +16,7 @@ const Revenue: React.FC<RevenueProps> = ({height}) => {
   const year = new Date().getFullYear();
   const month = new Date().getMonth() +1;
 
-  const { data, isLoading, error } = useRevenueHistory(year, month);
-  // console.log(error)
+  const { data, isLoading } = useRevenueHistory(paramMonth2(year, month));
 
   const revenueData = [
     { name: month-2+'월', value: data?.totalIncome2Ago, fill: "#E5E7EB" },
@@ -25,11 +26,7 @@ const Revenue: React.FC<RevenueProps> = ({height}) => {
 
   
   if (isLoading) {
-    return <RevenueLoading />
-  }
-
-  if (error) {
-    return <Error />
+    return <RevenueLoading/>
   }
 
   return (
@@ -74,7 +71,7 @@ const Revenue: React.FC<RevenueProps> = ({height}) => {
           </Bar>
         </BarChart>
       </ResponsiveContainer>
-      <p className="text-center text-theme font-bold">
+      <p className="text-center text-emerald-500 font-bold">
         {revenueData?.map((entry) => (
           entry.name === month+'월' ? convertToKoreanWon(entry.value) : ""
         ))}

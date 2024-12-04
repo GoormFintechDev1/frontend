@@ -7,28 +7,8 @@ const enviroment = process.env.NODE_ENV;
 
 let url = "http://localhost:8080/api/auth";
 if (enviroment === "production") {
-  url = "https://domain/api/auth";
+  url = process.env.NEXT_PUBLIC_DOMAIN ? `http://${process.env.NEXT_PUBLIC_DOMAIN}/api/auth` : `http://localhost:8080/api/auth`;
 }
-
-export const authUser = async () => {
-  try {
-    const response = await fetch(`${url}/check-login`, {
-      method: "GET",
-      credentials: "include",
-    });
-
-    const data = await response.json();
-
-    if (data.message === "Not Authenticated") {
-      return null;
-    }
-
-    return data;
-  } catch (error) {
-    console.error("Authentication Check Failed", error);
-    throw error;
-  }
-};
 
 export const loginUser = async (data:LoginType) => {
   const response = await fetch(`${url}/login`, {
@@ -64,12 +44,13 @@ export const joinUser = async (formData:FormDataType) => {
   return response;
 };
 
-export const logoutUser = async () => {
+export const logoutUser = async (loginId:string) => {
   const response = await fetch(`${url}/logout`, {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',
     },
+    body: JSON.stringify({loginId}),
     credentials: "include",
   })
 
@@ -142,4 +123,19 @@ export const checkEmail = async (email:string) => {
   const data = await response.json();
   return data
 
+}
+
+export const deleteUser = async (loginId:string) => {
+  const response = await fetch(`${url}/inactive`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({loginId}),
+    credentials: "include",
+  })
+
+  if (!response.ok) {
+    console.error("Failed to delete");
+  }
 }

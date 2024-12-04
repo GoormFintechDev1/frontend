@@ -4,13 +4,22 @@ import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-qu
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation';
 
+class CustomError extends Error {
+  status: number;
+
+  constructor(message: string, status: number) {
+    super(message);
+    this.status = status;
+  }
+}
+
 const QueryProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const [queryClient] = useState(() => (
     new QueryClient({
       queryCache: new QueryCache({
-        onError: (error: any) => {
-          if (error.status === 403) {
+        onError: (error: Error) => {
+          if (error instanceof CustomError && error.status === 403) {
             router.push('/login');
           }
         }
@@ -18,7 +27,7 @@ const QueryProvider = ({ children }: { children: React.ReactNode }) => {
       defaultOptions: {
         queries: {
           retry: 1, // API 요청 실패시 재시도 횟수
-        }
+        },
       }
     })
   ))
