@@ -8,7 +8,7 @@ import { useState } from "react";
 
 export default function Card() {
     const { data: cards } = useRecCard(paramMonth);
-    console.log(cards);
+    // console.log(cards);
 
     const router = useRouter();
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -42,7 +42,7 @@ export default function Card() {
                 </div>
 
                 <div className="text-center mb-5">
-                    <p className="font-bold">{currentCard.corporateName}</p>
+                    <p className="font-semibold">{currentCard.corporateName}</p>
                 </div>
 
                 <div className="flex justify-center items-center mb-6">
@@ -66,8 +66,8 @@ export default function Card() {
                 </div>
 
                 <div className="text-center mb-5">
-                    <p className="text-gray-600 font-semibold mb-2 text-lg">{currentCard.cardName}</p>
-                    <p className="text-center font-semibold">{currentCard.benefits[0]}</p>
+                    <p className="text-gray-600 font-semibold mb-2">{currentCard.cardName}</p>
+                    <p className="text-center font-semibold text-lg text-emerald-600 mt-2">{currentCard.totalSaving}원 절약 가능</p>
                 </div>
 
                 {/* 키워드 중 하나라도 포함되어 있지 않으면 표시하지 않음 */}
@@ -93,17 +93,6 @@ export default function Card() {
                         </ul>
                     </form>
                 </div>
-
-
-                <div className="text-center mt-10">
-                    <div className="flex justify-center font-bold"> 
-                    <div className="bg-gray-50 p-4 rounded-lg shadow-md w-2/5 text-center">
-                        <p className="text-lg mb-1 text-gray-700 ">총 절약 금액</p>
-                        <p className="text-lg text-gray-600">{currentCard.totalSaving} 원</p>
-                    </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     );
