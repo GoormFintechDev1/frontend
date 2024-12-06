@@ -45,7 +45,7 @@ const ExpensesWeekData = ({ chartData, month }: WeeklyExpensesProps) => {
                     }
                   }}>
                     <div className="flex items-center">
-                      {/* <span className="w-3 h-3 inline-block mr-2"  style={{ backgroundColor: categoryColor[expense.category] }}></span> */}
+                      <span className="w-3 h-3 inline-block mr-2"  style={{ backgroundColor: categoryColor[expense.category] }}></span>
                       {expense.category}</div>
                     <div>{formatNumberWithComma(expense.amount)} &#62;</div>
                   </Link>

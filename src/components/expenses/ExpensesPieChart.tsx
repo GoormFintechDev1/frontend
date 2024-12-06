@@ -52,7 +52,7 @@ const ExpensesPieChart = (props: chartDataProps) => {
         </ResponsiveContainer>
       </div>
       <div className="text-center">
-        <p className="font-bold text-xl px-5 py-2">총 지출 금액</p>
+        {/* <p className="font-bold text-xl px-5 py-2">총 지출 금액</p> */}
         <p className="font-bold text-xl px-5 py-2">
           {convertToKoreanWon(props.chartData?.totalMonthExpenses)}
         </p>
