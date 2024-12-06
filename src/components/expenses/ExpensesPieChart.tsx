@@ -18,7 +18,7 @@ const ExpensesPieChart = (props: chartDataProps) => {
   ).map(([key, value]) => ({
     category: key,
     amount: value,
-  })).sort((a, b) => b.amount - a.amount);
+  })).sort((a, b)=> b.amount - a.amount) : [];
 
   return (
     <>
