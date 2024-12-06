@@ -2,6 +2,17 @@ export const Loading = () => {
   return <div>로딩 중입니다...</div>;
 };
 
+export const AlarmLoading = () => {
+  return(
+    <div className="flex flex-col justify-between bg-gray-100 py-3 px-2 rounded-2xl shadow animate-pulse h-20">
+      <div className="flex space-x-3 justify-centeritems-center p-3">
+        <div className="bg-gray-300 rounded w-6 h-8"></div>
+        <div className="bg-gray-300 rounded w-full h-8"></div>
+      </div>
+    </div>
+  )
+}
+
 export const RevenueLoading = () => {
   return (
     <div className="flex flex-col justify-between bg-gray-100 py-3 px-2 rounded-2xl shadow animate-pulse">
