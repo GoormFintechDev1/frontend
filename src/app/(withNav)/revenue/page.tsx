@@ -87,7 +87,6 @@ export default function Revenue() {
       return prevMonth; 
     });
   };
-  
   //   setMonth((prevMonth) => {
   //     if (prevMonth === 12) {
   //       setYear((prevYear) => prevYear + 1);

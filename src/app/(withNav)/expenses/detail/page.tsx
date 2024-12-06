@@ -30,9 +30,7 @@ const ExpensesDetailPage = () => {
         : true;
 
       return category && month && week;
-    }).sort((a, b) => b.amount - a.amount) || []
-
-  console.log(filteredData);
+    }) || []
 
   const amountSum = filteredData?.reduce((acc, cur) => acc + cur.amount, 0);
 
