@@ -9,7 +9,7 @@ if (enviroment === "production") {
 
 
 export const validateBR = async(data:BusinessInfo) => {
-    const response = await fetch(`${url}/check`, {
+    const response = await fetch(`${url}/br-connect`, {
       method:"POST",
       headers: {"Content-Type":"application/json"},
       body: JSON.stringify(data),
