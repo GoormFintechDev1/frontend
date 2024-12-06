@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 
 export const useRecCard = (paramMonth: string) => {
     return useQuery({
-      queryKey: ['RecommendCard'],
+      queryKey: ['RecommendCard', paramMonth],
       queryFn: () => RecommendCard(paramMonth),
     })
   }

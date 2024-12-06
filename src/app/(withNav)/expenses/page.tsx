@@ -32,7 +32,7 @@ const ExpensesPage = () => {
 
   const expensesDetailsData = useExpensesStore((state) => state.expensesDetailsData);
 
-  const expensesDetails = expensesDetailsData?.expenseDetails;
+  const expensesDetails = expensesDetailsData?.expenseDetails.sort((a, b) => b.amount - a.amount);
 
   const toggleWeekData = () => {
     setActiveToggle((activeToggle) => !activeToggle);
