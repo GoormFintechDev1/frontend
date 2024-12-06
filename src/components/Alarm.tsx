@@ -33,8 +33,11 @@ export default function Alarm(){
 
 
     return(
-    <div className="box h-10 text-sm items-center justify-center">
-        <p className=""> {info}</p>
+    <div className="box h-20 text-sm items-center justify-center">
+      <div className="flex space-x-3 justify-center items-center">
+        <p className="">💡</p>
+        <p>{info}</p>
+      </div>
     </div>)
 }
 

@@ -7,7 +7,7 @@ import Goals from "@/components/main/Goals";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useUserInfo } from "@/hooks/useUserQuery";
-// import Alarm from "@/components/Alarm";
+import Alarm from "@/components/Alarm";
 
 export default function Home() {
 
@@ -40,22 +40,27 @@ export default function Home() {
         </Link>
         
       </div>
-      {/* <div className="">
-        <Alarm/>
-      </div> */}
 
-      <div className="grid grid-cols-2 gap-4 overflow-y-scroll h-[calc(100vh-160px)]">
-        {/* 이번 달 매출 */}
-        <Revenue height={height}/>
+      <div className="grid grid-rows-[auto,1fr] gap-4 h-[calc(100vh-160px)]">
+        {/* 알림 박스 */}
+        <div className="row-span-1">
+          <Alarm />
+        </div>
 
-        {/* 지난 달 순이익 */}
-        <Profit height={height}/>
+        {/* 메인 콘텐츠 */}
+        <div className="grid grid-cols-2 gap-4 overflow-y-scroll">
+          {/* 이번 달 매출 */}
+          <Revenue height={height} />
 
-        {/* 이번 달 지출 */}
-        <Expenses height={height} />
+          {/* 지난 달 순이익 */}
+          <Profit height={height} />
 
-        {/* 이번 달 목표 */}
-        <Goals height={height} />
+          {/* 이번 달 지출 */}
+          <Expenses height={height} />
+
+          {/* 이번 달 목표 */}
+          <Goals height={height} />
+        </div>
       </div>
     </div>
   );
