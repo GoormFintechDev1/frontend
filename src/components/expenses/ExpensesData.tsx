@@ -17,12 +17,12 @@ const ExpensesData = (props: chartDataProps) => {
     props.chartData.categoryTotalExpenses
   ).map(([key, value]) => ({
     category: key,
-    amount: formatNumberWithComma(value),
-  }));
+    amount: value,
+  })).sort((a,b)=> b.amount - a.amount);
 
   return (
-    <div className="flex items-center gap-8 mb-4">
-      <div className="flex flex-col w-full px-6 pt-2 pb-5 border-b-2 border-[#f5f5f5]">
+    <div className="flex items-center gap-8 my-4">
+      <div className="flex flex-col w-full px-3 pt-2 pb-5 border-b-2 border-[#f5f5f5]">
         <ul className="flex flex-col gap-y-2">
           {totalExpenses.map((data, index) => (
             <li key={index} className="">
@@ -42,7 +42,7 @@ const ExpensesData = (props: chartDataProps) => {
                   {data.category}
                 </div>
                 <div className="flex gap-x-2">
-                  {data.amount}
+                  {formatNumberWithComma(data.amount)}
                   <span>&#62;</span>
                 </div>
               </Link>
