@@ -31,8 +31,8 @@ const ExpensesWeekData = ({ chartData, month }: WeeklyExpensesProps) => {
         const groupedExpenses = Object.values(groupAndSumByCategory(expenses));
 
         return (  
-          <div key={week} className="flex flex-col w-full px-6 pt-2 pb-5 border-b-2 border-[#f5f5f5]">
-            <h3>{dayjs(month).format("YYYY년 MM월")} {week}째주</h3>
+          <div key={week} className="flex flex-col w-full px-3 pt-2 pb-5 border-b-2 border-[#f5f5f5] space-y-2">
+            <h3 className="text-xs text-gray-600">{dayjs(month).format("YYYY년 MM월")} {week}째주</h3>
             <ul className="flex flex-col">
               {groupedExpenses.map((expense, index) => (
                 <li key={index}>
@@ -45,7 +45,7 @@ const ExpensesWeekData = ({ chartData, month }: WeeklyExpensesProps) => {
                     }
                   }}>
                     <div className="flex items-center">
-                      <span className="w-3 h-3 inline-block mr-2"  style={{ backgroundColor: categoryColor[expense.category] }}></span>
+                      {/* <span className="w-3 h-3 inline-block mr-2"  style={{ backgroundColor: categoryColor[expense.category] }}></span> */}
                       {expense.category}</div>
                     <div>{formatNumberWithComma(expense.amount)} &#62;</div>
                   </Link>

@@ -29,6 +29,19 @@ export default function Home() {
     };
   }, []);
 
+  const [isVisible, setIsVisible] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  // 3초 후 자동으로 사라지도록 설정
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(false)
+      setTimeout(() => setIsCollapsed(true), 500);
+    }, 3000);
+    return () => clearTimeout(timer); // 타이머 정리
+  }, []);
+
+
   return (
     <div id="main" className="container">
       <div className="flex justify-between items-center mb-4">
@@ -41,26 +54,26 @@ export default function Home() {
         
       </div>
 
-      <div className="grid grid-rows-[auto,1fr] gap-4 h-[calc(100vh-160px)]">
+      <div className="grid grid-cols-2 gap-4 overflow-y-scroll h-[calc(100vh-160px)]">
         {/* 알림 박스 */}
-        <div className="row-span-1">
+        <div
+        className={`col-span-2 transition-all duration-500 ease-in-out ${
+          isCollapsed ? "hidden" : "h-20"
+        } ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"}`}>
           <Alarm />
         </div>
 
-        {/* 메인 콘텐츠 */}
-        <div className="grid grid-cols-2 gap-4 overflow-y-scroll">
-          {/* 이번 달 매출 */}
-          <Revenue height={height} />
+        {/* 이번 달 매출 */}
+        <Revenue height={height} />
 
-          {/* 지난 달 순이익 */}
-          <Profit height={height} />
+        {/* 지난 달 순이익 */}
+        <Profit height={height} />
 
-          {/* 이번 달 지출 */}
-          <Expenses height={height} />
+        {/* 이번 달 지출 */}
+        <Expenses height={height} />
 
-          {/* 이번 달 목표 */}
-          <Goals height={height} />
-        </div>
+        {/* 이번 달 목표 */}
+        <Goals height={height} />
       </div>
     </div>
   );
