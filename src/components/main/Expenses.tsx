@@ -25,7 +25,7 @@ const Expenses: React.FC<RevenueProps> = ({height}) => {
 
   // chartData를 메모이제이션하여 불필요한 재생성을 방지
   const chartData = useMemo(() => {
-    if (!expensesData) return [{ category: "", amount: 0 }];
+    if (!expensesData) return [];
 
     return Object.entries(expensesData?.categoryExpenses)
       .map(([key, value]) => ({ category: key, amount: value }))
