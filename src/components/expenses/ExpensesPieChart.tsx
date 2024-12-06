@@ -4,14 +4,23 @@ import { convertToKoreanWon } from "@/utils/currency";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 const ExpensesPieChart = (props: chartDataProps) => {
-  const categoryColor = useCategoryColorStore((state) => state.categoryColorMap);
+  const categoryColor = useCategoryColorStore(
+    (state) => state.categoryColorMap
+  );
+
+  const COLORS = ["#A80000", "#FB1111", "#FF7575", "#FFC4C4", "#F8F8F8"];
+
+  if (Object.keys(categoryColor).length === 0) {
+  }
 
   // chartData가 null 또는 undefined인지 확인
   if (!props.chartData || !props.chartData.categoryTotalExpenses) {
     return [];
   }
 
-  const totalExpenses = Object.entries(props.chartData.categoryTotalExpenses).map(([key, value]) => ({
+  const totalExpenses = Object.entries(
+    props.chartData.categoryTotalExpenses
+  ).map(([key, value]) => ({
     category: key,
     amount: value,
   }));
@@ -32,7 +41,11 @@ const ExpensesPieChart = (props: chartDataProps) => {
               {totalExpenses.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
-                  fill={categoryColor[entry.category]}
+                  fill={
+                    Object.keys(categoryColor).length === 0
+                      ? COLORS[index % COLORS.length]
+                      : categoryColor[entry.category]
+                  }
                 />
               ))}
             </Pie>
@@ -41,7 +54,9 @@ const ExpensesPieChart = (props: chartDataProps) => {
       </div>
       <div className="text-center">
         <p className="font-bold text-xl px-5 py-2">총 지출 금액</p>
-        <p className="font-bold text-xl px-5 py-2">{convertToKoreanWon(props.chartData.totalMonthExpenses)}</p>
+        <p className="font-bold text-xl px-5 py-2">
+          {convertToKoreanWon(props.chartData.totalMonthExpenses)}
+        </p>
       </div>
     </>
   );
