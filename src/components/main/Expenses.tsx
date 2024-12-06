@@ -3,7 +3,7 @@
 import { useExpensesData } from '@/hooks/useExpensesQuery';
 import { convertToKoreanWon } from '@/utils/currency';
 import Link from 'next/link';
-import React, { useEffect, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import Error from '../Error';
 import { paramMonth } from '@/utils/calculateDay';
@@ -20,6 +20,8 @@ const Expenses: React.FC<RevenueProps> = ({height}) => {
   const { isLoading, error } = useExpensesData(paramMonth);
   const setCategoryColorMap = useCategoryColorStore((state) => state.setCategoryColorMap);
 
+  setCategoryColorMap(COLORS);
+
   // Access Zustand store states
   const expensesData = useExpensesStore((state) => state.expensesData);
 
@@ -32,24 +34,24 @@ const Expenses: React.FC<RevenueProps> = ({height}) => {
       .sort((a, b) => b.amount - a.amount);
   }, [expensesData]);
 
-  // categoryColorMap을 chartData 기반으로 메모이제이션
-  const categoryColorMap = useMemo(() => {
-    const map: Record<string, string> = {};
-    let colorIndex = 0;
-    chartData.forEach((expense) => {
-      if (!map[expense.category]) {
-        map[expense.category] = COLORS[colorIndex % COLORS.length];
-        colorIndex += 1;
-      }
-    });
-    return map;
-  }, [chartData]);
+  // // categoryColorMap을 chartData 기반으로 메모이제이션
+  // const categoryColorMap = useMemo(() => {
+  //   const map: Record<string, string> = {};
+  //   let colorIndex = 0;
+  //   chartData.forEach((expense) => {
+  //     if (!map[expense.category]) {
+  //       map[expense.category] = COLORS[colorIndex % COLORS.length];
+  //       colorIndex += 1;
+  //     }
+  //   });
+  //   return map;
+  // }, [chartData]);
 
-  useEffect(() => {
-    if (chartData.length > 0) {
-      setCategoryColorMap(categoryColorMap);
-    }
-  }, [categoryColorMap, chartData, setCategoryColorMap]);
+  // useEffect(() => {
+  //   if (chartData.length > 0) {
+  //     setCategoryColorMap(categoryColorMap);
+  //   }
+  // }, [categoryColorMap, chartData, setCategoryColorMap]);
 
   if (isLoading) {
     return <ExpensesLoading />
