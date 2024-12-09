@@ -18,7 +18,7 @@ const ExpensesData = (props: chartDataProps) => {
   ).map(([key, value]) => ({
     category: key,
     amount: value,
-  })).sort((a,b)=> b.amount - a.amount);
+  })).sort((a, b) => b.amount - a.amount);
 
   return (
     <div className="flex items-center gap-8 my-4">
@@ -36,7 +36,7 @@ const ExpensesData = (props: chartDataProps) => {
                   <span
                     className={`inline-block w-3 h-3 mr-2`}
                     style={{
-                      backgroundColor: categoryColor[data.category],
+                      backgroundColor: categoryColor[index % totalExpenses.length],
                     }}
                   ></span>
                   {data.category}

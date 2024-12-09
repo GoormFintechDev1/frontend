@@ -8,7 +8,6 @@ import ExpensesPageLoading from "./loading";
 import {
   paramMonth,
   currentMonth,
-  handleNextMonth,
   handlePrevMonth,
 } from "@/utils/calculateDay";
 import { useState } from "react";
@@ -38,6 +37,23 @@ const ExpensesPage = () => {
     setActiveToggle((activeToggle) => !activeToggle);
   }
 
+  // 현재 달 이후로 넘어가지 않도록 처리하는 함수
+  const handleNextMonth = () => {
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1; // 현재 월 (1부터 시작)
+  
+    // 현재 month를 YYYY-MM으로 분리
+    const [year, nextMonth] = String(month).split("-").map(Number);
+  
+    if (year > currentYear || (year === currentYear && nextMonth >= currentMonth)) {
+      return; // 현재 월 이후로 넘어가지 않음
+    }
+  
+    // 다음 달 계산
+    const nextMonthDate = dayjs(month).add(1, "month").format("YYYY-MM");
+    setMonth(nextMonthDate);
+  };
+
   // 로딩 상태 처리
   if (isExpensesLoading || isCardsLoading) {
     return <ExpensesPageLoading />;
@@ -62,7 +78,7 @@ const ExpensesPage = () => {
           </button>
           {/* 월 표현 방식 - DB는 YYYY-mm 형식의 param을 받음 */}
           <h2 className="text-xl font-semibold">{currentMonth(month)} 지출</h2>
-          <button onClick={() => setMonth(handleNextMonth(month))}>
+          <button onClick={handleNextMonth}>
             <Image src={"/icons/smallRight.png"} alt="Forward" width={18} height={18} />
           </button>
         </div>

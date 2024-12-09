@@ -62,14 +62,39 @@ export default function Revenue() {
   };
   
   const goToNextMonth = () => {
+    const currentMonth = new Date().getMonth() + 1; // 현재 월 (1부터 시작)
+    const currentYear = new Date().getFullYear(); // 현재 연도
+  
     setMonth((prevMonth) => {
-      if (prevMonth === 12) {
-        setYear((prevYear) => prevYear + 1);
-        return 1;
-      }
-      return prevMonth + 1;
+      setYear((prevYear) => {
+        // 현재 연도와 월을 초과하지 않도록 제한
+        if (prevYear === currentYear && prevMonth >= currentMonth) {
+          return prevYear; // 현재 연도와 월 초과 금지
+        }
+  
+        // 다음 달로 이동
+        if (prevMonth === 12) {
+          // 12월인 경우 다음 해로 전환
+          setMonth(1);
+          return prevYear + 1;
+        }
+  
+        // 단순히 다음 달로 이동
+        setMonth(prevMonth + 1);
+        return prevYear;
+      });
+  
+      return prevMonth; 
     });
   };
+  //   setMonth((prevMonth) => {
+  //     if (prevMonth === 12) {
+  //       setYear((prevYear) => prevYear + 1);
+  //       return 1;
+  //     }
+  //     return prevMonth + 1;
+  //   });
+  // };
 
   return (
     <div className='container p-3'>

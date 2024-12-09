@@ -10,8 +10,8 @@ interface ExpensesState {
 }
 
 interface CategoryColorState {
-  categoryColorMap: Record<string, string>
-  setCategoryColorMap: (data: Record<string, string>) => void
+  categoryColorMap: Array<string>
+  setCategoryColorMap: (data: Array<string>) => void
 }
 
 const useExpensesStore = create<ExpensesState>((set) => ({
@@ -27,7 +27,7 @@ const useExpensesStore = create<ExpensesState>((set) => ({
 const useCategoryColorStore = create(
   persist<CategoryColorState>(
     (set) => ({
-      categoryColorMap: {},
+      categoryColorMap: [],
       setCategoryColorMap: (data) => set({ categoryColorMap: data }),
     }),
     {

@@ -8,8 +8,6 @@ const ExpensesPieChart = (props: chartDataProps) => {
     (state) => state.categoryColorMap
   );
 
-  const COLORS = ["#BE185D", "#F472B6", "#F9A8D4", "#FFD2EB", "#F8F8F8"];
-
   // chartData가 null 또는 undefined인지 확인
   // if (!props.chartData || !props.chartData.categoryTotalExpenses) {
   //   return [];
@@ -20,7 +18,7 @@ const ExpensesPieChart = (props: chartDataProps) => {
   ).map(([key, value]) => ({
     category: key,
     amount: value,
-  })).sort((a,b)=> b.amount - a.amount) : [];
+  })).sort((a, b)=> b.amount - a.amount) : [];
 
   return (
     <>
@@ -38,11 +36,7 @@ const ExpensesPieChart = (props: chartDataProps) => {
               {totalExpenses.length > 0 ? (totalExpenses.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
-                  fill={
-                    Object.keys(categoryColor).length === 0
-                      ? COLORS[index % COLORS.length]
-                      : categoryColor[entry.category]
-                  }
+                  fill={categoryColor[index % categoryColor.length]}
                 />
               ))) : (
                 <Cell fill="#FFF4F8"/>
