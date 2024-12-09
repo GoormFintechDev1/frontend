@@ -44,5 +44,5 @@ jobs:
       - name: Trigger Jenkins Job
         run: |
           curl -X POST "http://doubly.co.kr:8100/job/frontend/buildWithParameters" \
-          --user "username:${{ secrets.JENKINS_API_TOKEN }}" \
+          --user "doubly:${{ secrets.JENKINS_API_TOKEN }}" \
           --data-urlencode "IMAGE_TAG=${{ github.sha }}"
