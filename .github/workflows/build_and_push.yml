@@ -1,0 +1,44 @@
+name: PR Build and Push
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      # 1. 체크아웃
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      # 2. Docker 이미지 빌드
+      - name: Build Docker image
+        run: |
+          docker build -t ghcr.io/${{ github.repository }}:${{ github.sha }} .
+      
+      # 3. GitHub Container Registry 로그인
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ ghthub.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      # 4. Docker 이미지 푸시
+      - name: Push Docker image to GitHub Packages
+        run: |
+          docker push ghcr.io/${{ github.repository }}:${{ github.sha }}
+      
+      # 5. Jenkins Job 호출
+      # - name: Trigger Jenkins Job
+      #   run: |
+      #     curl -X POST "http://your-jenkins-url/job/your-job/name/buildWithParameters" \
+      #     --user "username:${{ secrets.JENKINS_API_TOKEN }}" \
+      #     --data-urlencode "IMAGE_TAG=${{ github.sha }}"
