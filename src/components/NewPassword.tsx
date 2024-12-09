@@ -13,7 +13,7 @@ interface Props {
 
 export default function NewPassword({loginId}:Props) {
     const router = useRouter();
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    // const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [confirmPassword, setConfirmPassword] = useState("");
     const [isMatched, setIsMatched] = useState(false);
 
@@ -43,7 +43,7 @@ export default function NewPassword({loginId}:Props) {
                 router.push('/login');
             },
             onError: () => {
-                setErrorMessage("비밀번호 변경 중 오류가 발생했습니다.");
+
             },
         });
     };
@@ -81,7 +81,8 @@ export default function NewPassword({loginId}:Props) {
                         <p className="text-red-500">{errors.confirmPassword?.message}</p>
                     </div>
 
-                    {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+                    {isMatched ? (<p className="text-blue-500">비밀번호가 일치합니다.</p>)  : (<p className="text-red-500">비밀번호가 같지 않습니다.</p>)}
+
                     <Button type="submit" className="mt-10">비밀번호 재설정</Button>
                     </div>
             </form>
