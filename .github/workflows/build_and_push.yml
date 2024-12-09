@@ -21,7 +21,7 @@ jobs:
       # 2. Docker 이미지 빌드
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository }}:${{ github.sha }} .
+          docker build -t ghcr.io/${{ github.repository }}:${{ github.sha }} -f Docker/Dockerfile .
       
       # 3. GitHub Container Registry 로그인
       - name: Login to GitHub Container Registry
