@@ -1,5 +1,5 @@
 import { ExpenseDetail } from "@/interface/expenses";
-import { useCategoryColorStore } from "@/stores/useExpensesStore";
+// import { useCategoryColorStore } from "@/stores/useExpensesStore";
 import { groupByWeek } from "@/utils/calculateDay";
 import { formatNumberWithComma } from "@/utils/currency";
 import dayjs from "dayjs";
@@ -12,7 +12,7 @@ interface WeeklyExpensesProps {
 
 const ExpensesWeekData = ({ chartData, month }: WeeklyExpensesProps) => {
   const weekData = groupByWeek(chartData);
-  const categoryColor = useCategoryColorStore((state) => state.categoryColorMap);
+  // const categoryColor = useCategoryColorStore((state) => state.categoryColorMap);
 
   const groupAndSumByCategory = (expenses: ExpenseDetail[]) => {
     return expenses.reduce((acc, expense) => {
