@@ -27,9 +27,11 @@ export default function MyPage() {
   // 로그아웃
   const handleLogout = async () => {
         try {
-            await logout.mutateAsync(userInfo?.loginId || "");
-            sessionStorage.clear();
-            router.push("/login"); 
+            await logout.mutateAsync(userInfo?.loginId || "", {
+                onSuccess: () => router.push("/login"),
+            });
+            // sessionStorage.clear();
+            // router.push("/login"); 
         } catch (error) {
             setMessage(error as string);
         }

@@ -22,7 +22,7 @@ export default function Login() {
         mutation.mutate(data, {
             onSuccess: async() => {
                 const firstLogin = JSON.parse(localStorage.getItem(`firstLogin:${data.loginId}`) || "false");
-                if(firstLogin){
+                if(!firstLogin){
                     router.push('/validate');
                 } else {
                     router.push('/');
