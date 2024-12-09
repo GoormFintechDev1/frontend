@@ -17,17 +17,45 @@ export default function Income() {
     if(!temp) temp = 12; 
     const [month, setMonth] = useState(temp);
     const [year, setYear] = useState(new Date().getFullYear());
-    const [showFireworks, setShowFireworks] = useState(false);
+    // const [showFireworks, setShowFireworks] = useState(false);
+    const [count, setCount] = useState(0);
+
+    const {data: profit} = useProfitDetail(paramMonth2(year,month));
+    const targetValue = profit?.netProfit
+    const duration = 2000; // 애니메이션 지속 시간 (ms)
+    const increment = Math.ceil(targetValue / (duration / 16));
+
+    // useEffect(() => {
+    //     setShowFireworks(true);
+    //     const timer = setTimeout(() => setShowFireworks(false), 1000); // 1초 후 애니메이션 숨기기
+    //     return () => clearTimeout(timer);
+    // }, []);
+
+    // useEffect(()=>{
+
+    // },[month])
 
     useEffect(() => {
-        setShowFireworks(true);
-        const timer = setTimeout(() => setShowFireworks(false), 1000); // 1초 후 애니메이션 숨기기
-        return () => clearTimeout(timer);
-    }, []);
 
-    useEffect(()=>{
+        if (!targetValue || targetValue <= 0) {
+            setCount(0); 
+            return;
+        }
 
-    },[month])
+        let currentCount = 0;
+    
+        const interval = setInterval(() => {
+          currentCount += increment;
+          if (currentCount >= targetValue) {
+            setCount(targetValue);
+            clearInterval(interval);
+          } else {
+            setCount(currentCount);
+          }
+        }, 16);
+    
+        return () => clearInterval(interval);
+      }, [targetValue, increment]);
 
     const handlePreviousMonth = () => {
         setMonth((prev) => (prev > 1 ? prev - 1 : 12));
@@ -50,13 +78,12 @@ export default function Income() {
         }
       };
 
-    const {data: profit} = useProfitDetail(paramMonth2(year,month));
 
     return (
 
         // 애니메이션
         <div className="container flex flex-col h-full items-center relative overflow-hidden">
-            {showFireworks && (
+            {/* {showFireworks && (
                 <div className="fixed inset-0 z-50 flex justify-center items-center pointer-events-none">
                     <div className="fireworks-container">
                         {[...Array(30)].map((_, i) => {
@@ -78,33 +105,33 @@ export default function Income() {
                         })}
                     </div>
                 </div>
-            )}
+            )} */}
             <div className="mb-3 w-full">
                 <Link href={"/"}>
                     <Image alt="back" src={'/icons/arrow.png'} width={25} height={25}></Image>
                 </Link>
             </div>
-            <div className="flex flex-col w-full h-full max-w-md text-center p-3">
+            <div className="flex flex-col w-full h-[calc(100vh-170px)] max-w-md text-center p-3 justify-between">
                 
                 <div className="flex justify-center items-center ">
                     <Image alt="back" onClick={handlePreviousMonth} src={'/icons/smallLeft.png'} width={18} height={18}></Image>
                     <h1 className="text-xl font-semibold p-3">{month}월 순이익</h1>
                     <Image alt="back" onClick={handleNextMonth} src={'/icons/smallRight.png'} width={18} height={18}></Image>
                 </div>
-                <div className="mt-16">
+                <div className="">
                     <div className="text-lg font-medium mb-4">총 순이익은?</div>
-                    <div className="text-2xl font-bold text-blue-600 mb-6">{profit? profit.netProfit.toLocaleString(): 0}원</div>
+                    <div className="text-2xl font-bold text-blue-600 mb-6">{count.toLocaleString()}원</div>
                 </div>
 
-                <div className="text-left flex-grow text-gray-600 space-y-2 m-auto mt-32">
+                <div className="text-left text-gray-600 space-y-2 mx-auto">
                     <div>➕ 총 매출: {profit?.incomeTotal?.toLocaleString() ?? 0}원</div>
                     <div>➖ 원자재비: {profit?.saleCost?.toLocaleString() ??  0}원</div>
                     <div>➖ 운영비용: {profit?.operatingExpense?.toLocaleString() ?? 0}원</div>
                     <div>➖ 세금: {profit?.taxes.toLocaleString() ?? 0}원 </div>
                 </div>
                 {/* <div className="flex-grow"></div> */}
-                <div className="flex justify-center w-full mb-[100px]">
-    <Button className="button" href={`/report/detail?month=${paramMonth2(year,month)}`}>
+                <div className="flex justify-center w-full">
+                    <Button className="button" href={`/report/detail?month=${paramMonth2(year,month)}`}>
                         월간 리포트 보러 가기
                     </Button>
                 </div>

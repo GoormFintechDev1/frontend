@@ -79,7 +79,7 @@ const ExpensesDetailPage = () => {
           </div>
         </div>
         <div className="flex items-center gap-8 mb-4">
-          <div className="flex flex-col w-full px-6 pt-2 pb-5 border-b-2 border-[#f5f5f5]">
+          <div className="flex flex-col w-full px-6 pt-2 pb-5">
             <ul className="flex flex-col gap-y-2">
               {filteredData.map(
                 (data, index) =>

@@ -9,7 +9,7 @@ if (enviroment === "production") {
 
 
 export const validateBR = async(data:BusinessInfo) => {
-    const response = await fetch(`${url}`, {
+    const response = await fetch(`${url}/br-connect`, {
       method:"POST",
       headers: {"Content-Type":"application/json"},
       body: JSON.stringify(data),
@@ -17,7 +17,7 @@ export const validateBR = async(data:BusinessInfo) => {
     });
    
     if (!response.ok) {
-      throw new Error("사업자 인증 실패...");
+      throw new Error("사업자 인증을 실패했습니다.");
     }
   
     return response;

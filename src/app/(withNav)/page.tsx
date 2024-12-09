@@ -17,7 +17,7 @@ export default function Home() {
 
   useEffect(() => {
     const calculateHeight = () => {
-      const calculatedHeight = Math.max(190, Math.floor((window.innerHeight - 135 - 40 - 20) / 3));
+      const calculatedHeight = Math.max(190, Math.floor((window.innerHeight - 200) / 3));
       setHeight(`${calculatedHeight}px`);
     };
 
@@ -29,18 +29,23 @@ export default function Home() {
     };
   }, []);
 
-  const [isVisible, setIsVisible] = useState(true);
-  const [isCollapsed, setIsCollapsed] = useState(false);
 
-  // 3초 후 자동으로 사라지도록 설정
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(false)
-      setTimeout(() => setIsCollapsed(true), 500);
-    }, 3000);
-    return () => clearTimeout(timer); // 타이머 정리
-  }, []);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isOccupied, setIsOccupied] = useState(false);
 
+  useEffect(()=>{
+    const savedValue = sessionStorage.getItem("alarm");
+
+    setIsVisible(savedValue === "false" ? false : true);
+    setIsOccupied(savedValue === "false" ? false : true);
+  },[])
+
+
+  const handleDelete = () => {
+    setIsVisible(false);
+    sessionStorage.setItem(`alarm`, JSON.parse('false'));
+    setTimeout(()=> setIsOccupied(false), 500);
+  }
 
   return (
     <div id="main" className="container">
@@ -58,9 +63,9 @@ export default function Home() {
         {/* 알림 박스 */}
         <div
         className={`col-span-2 transition-all duration-500 ease-in-out ${
-          isCollapsed ? "hidden" : "h-20"
+          isOccupied ? "h-20" : "hidden"
         } ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"}`}>
-          <Alarm />
+          <Alarm onClick={handleDelete}/>
         </div>
 
         {/* 이번 달 매출 */}
