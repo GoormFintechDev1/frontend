@@ -22,7 +22,7 @@ jobs:
       # 2. Docker 이미지 빌드
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository }}:${{ github.sha }} -f Docker/Dockerfile .
+          docker build -t ghcr.io/${{ github.repository.toLowerCase() }}:${{ github.sha }} -f Docker/Dockerfile .
       
       # 3. GitHub Container Registry 로그인
       - name: Login to GitHub Container Registry
@@ -35,7 +35,7 @@ jobs:
       # 4. Docker 이미지 푸시
       - name: Push Docker image to GitHub Packages
         run: |
-          docker push ghcr.io/${{ github.repository }}:${{ github.sha }}
+          docker push ghcr.io/${{ github.repository.toLowerCase() }}:${{ github.sha }}
       
       # 5. Jenkins Job 호출
       # - name: Trigger Jenkins Job
