@@ -1,6 +1,7 @@
 
 import { LoginType } from "@/interface/login";
 import { FormDataType } from "@/interface/register";
+import { Reset, Validate } from "@/interface/resetPassword";
 
 
 const enviroment = process.env.NODE_ENV;
@@ -139,3 +140,29 @@ export const deleteUser = async (loginId:string) => {
     console.error("Failed to delete");
   }
 }
+
+export const resetPassword = async (resetData: Reset) => {
+  const response = await fetch(`${url}/reset-password`,{
+    method:'POST',
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(resetData),
+  })
+
+  if(!response.ok) throw new Error("비밀번호 변경 실패");
+  const data = await response.json();
+  return data
+
+}
+
+export const checkPassword = async (checkData: Validate) => {
+  const response = await fetch(`${url}/check`,{
+    method:'POST',
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(checkData),
+  })
+
+  if (!response.ok) throw new Error("비밀번호 확인 실패");
+    const data = await response.text(); // 문자열로 처리
+    return data;
+};
+
