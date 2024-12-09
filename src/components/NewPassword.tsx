@@ -5,7 +5,8 @@ import { useResetPassword } from "@/hooks/useAuthQuery";
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Reset } from "@/interface/resetPassword";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Alert from "./Alert";
 
 interface Props {
     loginId: string
@@ -16,6 +17,10 @@ export default function NewPassword({loginId}:Props) {
     // const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [confirmPassword, setConfirmPassword] = useState("");
     const [isMatched, setIsMatched] = useState(false);
+    const [alert, setAlert] = useState("");
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null); // 성공 메시지 상태 관리
+
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm<Reset>({
         mode: "onChange",
@@ -33,20 +38,36 @@ export default function NewPassword({loginId}:Props) {
     const onSubmit: SubmitHandler<Reset> = (data) => {
 
         if(!isMatched) return;
-    
-        // 비밀번호가 일치하는 경우 백엔드로 요청
         console.log(data)
         
         mutation.mutate(data, {
             onSuccess: () => {
-                alert("비밀번호가 성공적으로 변경되었습니다.");
-                router.push('/login');
+                setSuccessMessage("비밀번호가 성공적으로 변경되었습니다.");
+                setTimeout(() => {
+                    router.push('/login');
+                }, 3000);
             },
-            onError: () => {
-
+            onError: (error) => {
+                setAlert(error.message);
+                setIsAlertOpen(true);
             },
         });
     };
+
+    const timerId = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    useEffect(()=>{
+        if (isAlertOpen){
+            timerId.current = setTimeout(()=>setIsAlertOpen(false), 1500);
+        };
+
+        return ()=> {
+            if (timerId.current !== null) {
+                clearTimeout(timerId.current);
+                timerId.current = null;
+            }
+        };
+    },[isAlertOpen]);
 
     return (
         <div className="container flex flex-col justify-center h-full p-3 space-y-4">
@@ -86,6 +107,12 @@ export default function NewPassword({loginId}:Props) {
                     <Button type="submit" className="mt-10">비밀번호 재설정</Button>
                     </div>
             </form>
+            {successMessage && (
+                <div className="mt-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
+                    {successMessage}
+                </div>
+            )}
+            <Alert isOpen={isAlertOpen} message={alert}/>
         </div>
     );
 }
