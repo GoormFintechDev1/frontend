@@ -30,9 +30,7 @@ const ExpensesDetailPage = () => {
         : true;
 
       return category && month && week;
-    }).sort((a, b) => b.amount - a.amount) || []
-
-  console.log(filteredData);
+    }) || []
 
   const amountSum = filteredData?.reduce((acc, cur) => acc + cur.amount, 0);
 
@@ -53,7 +51,7 @@ const ExpensesDetailPage = () => {
           </Link>
         </div>
         <div className="flex items-center gap-x-3">
-          <h2 className="text-sm font-semibold">세부정보</h2>
+          <h2 className="text-xl font-semibold p-2">세부정보</h2>
         </div>
         <div className="flex flex-col mb-4">
           <ResponsiveContainer width="100%" height={200}>
