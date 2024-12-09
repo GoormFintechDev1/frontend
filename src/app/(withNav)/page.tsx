@@ -32,13 +32,12 @@ export default function Home() {
   const [isVisible, setIsVisible] = useState(true);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  // 3초 후 자동으로 사라지도록 설정
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false)
       setTimeout(() => setIsCollapsed(true), 500);
     }, 3000);
-    return () => clearTimeout(timer); // 타이머 정리
+    return () => clearTimeout(timer);
   }, []);
 
 
