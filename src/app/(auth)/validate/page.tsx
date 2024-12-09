@@ -2,16 +2,21 @@
 
 import AddressInput from "@/components/AdderssInput";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BusinessInfo } from "@/interface/business";
 import { useRouter } from "next/navigation";
 import { useValidateBR } from "@/hooks/useBRQuery";
+import Alert from "@/components/Alert";
+// import Alert from "@/components/Alert";
 
 export default function Validate(){
 
     const router  = useRouter();
 
     const [address, setAddress] = useState("");
+    const [alert, setAlert] = useState("");
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
+
     const { register, handleSubmit, setValue, formState: { errors, isValid } } = useForm<BusinessInfo>({mode:'onChange'});
 
     const handleAddressSelect = (selectedAddress: string) => {
@@ -33,11 +38,27 @@ export default function Validate(){
                 router.push('/progress');
                 localStorage.setItem(`firstLogin:${data.brNum}`, "false");
             },
-            onError: () => {
-                alert('사업자등록번호가 유효하지 않습니다.');
+            onError: (error) => {
+                setAlert(error.message);
+                setIsAlertOpen(true);
             }
         });
     };
+
+    const timerId = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    useEffect(()=>{
+        if (isAlertOpen){
+            timerId.current = setTimeout(()=>setIsAlertOpen(false), 1500);
+        };
+
+        return ()=> {
+            if (timerId.current !== null) {
+                clearTimeout(timerId.current);
+                timerId.current = null;
+            }
+        };
+    },[isAlertOpen]);
 
     const isButtonEnabled = isValid && address !== "";
 
@@ -64,6 +85,8 @@ export default function Validate(){
                     <button type="submit" className={`button ${isButtonEnabled ? "" : "!bg-gray-200 !text-gray-700"}`}>인증하기</button>
                 </div>
             </form>
+
+            <Alert isOpen={isAlertOpen} message={alert}/>
         </div>
     )
 }

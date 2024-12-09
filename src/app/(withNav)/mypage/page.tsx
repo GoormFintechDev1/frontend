@@ -31,7 +31,6 @@ export default function MyPage() {
             sessionStorage.clear();
             router.push("/login"); 
         } catch (error) {
-            console.error("로그아웃 실패:", error); 
             setMessage(error as string);
         }
     };

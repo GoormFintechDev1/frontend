@@ -19,7 +19,6 @@ export default function ReportList() {
     // 현재 날짜
     const today = dayjs().subtract(1, "month"); //이번달 기준 지난달까지만 보여야 하니까!
     const yearMonths = useMemo(()=>getYearMonths(start, today),[start,today]);
-    console.log(yearMonths);
     const year = useMemo(()=>Object.keys(yearMonths).sort((a,b)=> Number(b) - Number(a)), [yearMonths]);
 
     return (
