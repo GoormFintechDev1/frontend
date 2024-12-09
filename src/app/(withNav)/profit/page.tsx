@@ -17,7 +17,7 @@ export default function Income() {
     if(!temp) temp = 12; 
     const [month, setMonth] = useState(temp);
     const [year, setYear] = useState(new Date().getFullYear());
-    const [showFireworks, setShowFireworks] = useState(false);
+    // const [showFireworks, setShowFireworks] = useState(false);
     const [count, setCount] = useState(0);
 
     const {data: profit} = useProfitDetail(paramMonth2(year,month));
