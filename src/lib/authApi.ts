@@ -148,7 +148,7 @@ export const resetPassword = async (resetData: Reset) => {
     body: JSON.stringify(resetData),
   })
 
-  if(!response.ok) throw new Error("비밀번호 변경 실패");
+  if(!response.ok) throw new Error("비밀번호 변경 중 오류가 발생했습니다.");
   const data = await response.text();
   return data
 }
