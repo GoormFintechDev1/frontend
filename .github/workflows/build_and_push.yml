@@ -19,10 +19,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
+      - name: Set repository name to lowercase
+        run: ehco "REPO_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+      
       # 2. Docker 이미지 빌드
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository.toLowerCase() }}:${{ github.sha }} -f Docker/Dockerfile .
+          docker build -t ghcr.io/${{ env.REPO_NAME }}:${{ github.sha }} -f Docker/Dockerfile .
       
       # 3. GitHub Container Registry 로그인
       - name: Login to GitHub Container Registry
@@ -35,7 +38,7 @@ jobs:
       # 4. Docker 이미지 푸시
       - name: Push Docker image to GitHub Packages
         run: |
-          docker push ghcr.io/${{ github.repository.toLowerCase() }}:${{ github.sha }}
+          docker push ghcr.io/${{ env.REPO_NAME }}:${{ github.sha }}
       
       # 5. Jenkins Job 호출
       # - name: Trigger Jenkins Job
