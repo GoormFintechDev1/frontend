@@ -149,9 +149,8 @@ export const resetPassword = async (resetData: Reset) => {
   })
 
   if(!response.ok) throw new Error("비밀번호 변경 실패");
-  const data = await response.json();
+  const data = await response.text();
   return data
-
 }
 
 export const checkPassword = async (checkData: Validate) => {
