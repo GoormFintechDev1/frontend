@@ -29,8 +29,6 @@ export default function Home() {
     };
   }, []);
 
-  console.log(height);
-
   const [isVisible, setIsVisible] = useState(false);
   const [isOccupied, setIsOccupied] = useState(false);
 
