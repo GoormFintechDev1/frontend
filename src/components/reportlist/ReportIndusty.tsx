@@ -20,9 +20,10 @@ export default function ReportIndusty({report}:Props) {
     ]
 
   return (
-    <div className="border-b py-3">
+    <div className="py-2">
         <div className="text-xl font-bold pb-3">주변 상권 분석</div>
-        <div className="min-h-7 rounded-xl p-5 my-2 bg-zinc-50" >
+        <div className="bg-zinc-100 rounded-xl p-5">
+        <div className="min-h-7 rounded-xl p-5 my-2 bg-white" >
             <p className="font-bold text-sm pb-3">매출/지출 비교</p>
             <div className="text-xs" style={{ color: "#333333" }}>
             <div className="flex justify-around">
@@ -97,6 +98,7 @@ export default function ReportIndusty({report}:Props) {
                 <p className="font-bold text-base">지출은</p>
                 <div>{report?.expense_description}</div>
             </div>
+        </div>
         </div>
     </div>
 

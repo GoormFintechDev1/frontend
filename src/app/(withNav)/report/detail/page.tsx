@@ -9,6 +9,7 @@ import ReportIndusty from '@/components/reportlist/ReportIndusty';
 import ReportMarket from '@/components/reportlist/ReportMarket';
 import { useEffect, useState } from 'react';
 import ReportLoading from '@/components/ReportLoading';
+import Recommendation from '@/components/Recommendation';
 dayjs().format();
 
 export default function ReportDetail() {
@@ -64,7 +65,9 @@ export default function ReportDetail() {
 
             <div className="pt-4 overflow-scroll flex flex-col space-y-10 " style={{height}}> {/* 높이 변경 필요... */}
                 { reportData && (<><ReportIndusty report={reportData?.reports.INDUSTRY_REPORT}/>
-                <ReportMarket report={reportData?.reports.MARKET_REPORT}/></>)}
+                <ReportMarket report={reportData?.reports.MARKET_REPORT}/>
+                <Recommendation report={reportData?.reports.MARKET_REPORT.recommendations}/>
+                </>)}
             </div>
         </div>
     );
