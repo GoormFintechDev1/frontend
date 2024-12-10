@@ -6,6 +6,7 @@ import { useRegisterMutation } from "@/hooks/useAuthQuery";
 import { FormDataType, InputType, InputType2 } from "@/interface/register";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 
 export default function Register() {
@@ -35,6 +36,7 @@ export default function Register() {
 
     const mutation = useRegisterMutation();
     const router = useRouter();
+    const queryClient = useQueryClient();
 
     const handleSubmit = (data:InputType2) => {
         const cur = {
@@ -50,7 +52,8 @@ export default function Register() {
             setIsReady(false);
             mutation.mutate(formData, {
                 onSuccess: ()=>{
-                    localStorage.setItem(`firstLogin:${formData.loginId}`, "true");
+                    queryClient.invalidateQueries();
+                    localStorage.setItem(`loggedIn:${formData.loginId}`, "true");
                     router.push('/info?first=회원가입 완료!&second=🎉&buttonmessage=로그인&href=/login');
                 }
             });

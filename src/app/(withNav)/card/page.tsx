@@ -67,7 +67,7 @@ export default function Card() {
                 </div>
 
                 <div className="text-center mb-5">
-                    <p className="text-center font-bold text-lg text-gray-700 mt-2"><span className="text-emerald-500">{currentCard.totalSaving}</span> 원 절약 가능</p>
+                    <p className="text-center font-bold text-lg text-gray-700 mt-2"><span className="text-emerald-500">{currentCard.totalSaving.toLocaleString()}</span> 원 절약 가능</p>
                     <p className="text-gray-600 text-sm mb-2">{currentCard.cardName}</p>
                 </div>
 

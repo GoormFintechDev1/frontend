@@ -19,6 +19,7 @@ import ExpensesWeekData from "@/components/expenses/ExpensesWeekData";
 import Image from "next/image";
 import { useRecCard } from "@/hooks/useCardQuery";
 import CardRecommend from "@/components/CardRecommend";
+import { useUserInfo } from "@/hooks/useUserQuery";
 dayjs().format();
 
 const ExpensesPage = () => {
@@ -27,7 +28,6 @@ const ExpensesPage = () => {
 
   const router = useRouter();
   const { isLoading: isExpensesLoading, error: expensesError } = useExpensesDetailData(month); // 지출 데이터
-  const { isLoading: isCardsLoading, error: cardsError, data: cards } = useRecCard(month); // 카드 추천 데이터
 
   const expensesDetailsData = useExpensesStore((state) => state.expensesDetailsData);
 
@@ -55,12 +55,12 @@ const ExpensesPage = () => {
   };
 
   // 로딩 상태 처리
-  if (isExpensesLoading || isCardsLoading) {
+  if (isExpensesLoading) {
     return <ExpensesPageLoading />;
   }
 
   // 에러 처리
-  if (expensesError || cardsError) {
+  if (expensesError) {
     return <Error />;
   }
 
@@ -85,16 +85,8 @@ const ExpensesPage = () => {
         <div className="h-[calc(100vh-173px)] overflow-y-auto">
           <ExpensesPieChart chartData={expensesDetailsData!} />
           <ExpensesData chartData={expensesDetailsData!} month={month} />
-          {/* 카드 추천  */}
-          <div className="mb-5">
-            {cards && (
-              <Link href="/card">
-                <div className="cursor-pointer">
-                  <CardRecommend cards={cards} />
-                </div>
-              </Link>
-            )}
-          </div>
+          <CardRecommend/>
+
           <div className="flex justify-center">
             <button
               onClick={toggleWeekData}
@@ -108,16 +100,6 @@ const ExpensesPage = () => {
               </span>
             </button>
           </div>
-          {/* 카드 추천 
-          <div className="mb-5">
-            {cards && (
-              <Link href="/card">
-                <div className="cursor-pointer">
-                  <CardRecommend cards={cards} />
-                </div>
-              </Link>
-            )}
-          </div> */}
           {activeToggle && (
             <div
               className={`transition-all duration-500 ease-in-out overflow-hidden ${

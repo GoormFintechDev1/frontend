@@ -7,6 +7,7 @@ import { BusinessInfo } from "@/interface/business";
 import { useRouter } from "next/navigation";
 import { useValidateBR } from "@/hooks/useBRQuery";
 import Alert from "@/components/Alert";
+import { useUserInfo } from "@/hooks/useUserQuery";
 // import Alert from "@/components/Alert";
 
 export default function Validate(){
@@ -31,12 +32,13 @@ export default function Validate(){
       };
 
     const validateBRMutation = useValidateBR();
+    const {data:user} = useUserInfo();
 
     const onSubmit: SubmitHandler<BusinessInfo> = (data) => {
         validateBRMutation.mutate(data,{
             onSuccess: () => { 
+                localStorage.setItem(`firstLogin:${user.loginId}`, "true");
                 router.push('/progress');
-                localStorage.setItem(`firstLogin:${data.brNum}`, "false");
             },
             onError: (error) => {
                 setAlert(error.message);

@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
 
-    // const {data:user} = useUserInfo();
-    // const router = useRouter();
+    const {data:user} = useUserInfo();
+    const router = useRouter();
     // if(user) router.push("/");
     
     return (
