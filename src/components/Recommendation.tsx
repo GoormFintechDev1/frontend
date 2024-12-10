@@ -1,6 +1,3 @@
-import { MarketReport } from "@/interface/report"
-import Image from "next/image"
-import { useState } from "react"
 
 interface Props {
     report: string[]
@@ -8,8 +5,6 @@ interface Props {
 
 
 export default function ReportMarket({report}: Props) {
-
-    const [info, setInfo] = useState(false);
 
   return (
     <div className="py-2">
