@@ -41,7 +41,6 @@ jobs:
       - name: Push Docker image to GitHub Packages
         run: |
           docker push ghcr.io/${{ env.REPO_NAME }}:${{ github.sha }}
-          docker push ghcr.io/${{ env.REPO_NAME }}:latest
       
       # 5. Jenkins Job 호출
       - name: Trigger Jenkins Job
