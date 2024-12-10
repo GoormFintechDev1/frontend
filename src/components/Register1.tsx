@@ -1,6 +1,6 @@
 import { useCheckloginId } from "@/hooks/useAuthQuery";
 import { InputType } from "@/interface/register";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 interface Props {
@@ -10,39 +10,24 @@ interface Props {
 export default function Register1({ onNext }: Props) {
     const { register, handleSubmit, watch, setError, clearErrors, formState: { errors } } = useForm<InputType>({ mode: "onChange" });
     const onSubmit: SubmitHandler<InputType> = (data) => onNext(data);
-    const password = watch("password");
+    const password = watch("password","");
     const loginId = watch("loginId");
+    
+    const isLengthValid = password.length >= 8;
+    const hasLetter = /[A-Za-z]/.test(password);
+    const hasNumber = /\d/.test(password);
 
     const [confirmPassword, setConfirmPassword] = useState("");
     const [isMatch, setIsMatch] = useState(false);
-    const [isLengthValid, setIsLengthValid] = useState(false);
-    const [hasLetter, setHasLetter] = useState(false);
-    const [hasNumber, setHasNumber] = useState(false);
     const [isloginIdAvailable, setIsloginIdAvailable] = useState("");
     const [isloginIdChecked, setIsloginIdChecked] = useState(false);
 
     const checkloginIdMutation = useCheckloginId();
 
-    // 패스워드 유효성 검사
-    useEffect(() => {
-        if (password) {
-            setIsLengthValid(password.length >= 8);
-            setHasLetter(/[A-Za-z]/.test(password));
-            setHasNumber(/\d/.test(password));
-        }
-    }, [password]);
-
     // 비밀번호 일치 여부 확인
     useEffect(() => {
         setIsMatch(password === confirmPassword);
     }, [password, confirmPassword]);
-
-    // 아이디 변경 시 중복 확인 상태 초기화
-    useEffect(() => {
-        setIsloginIdChecked(false);
-        setIsloginIdAvailable("");
-        clearErrors("loginId");
-    }, [clearErrors, loginId]);
 
     // 중복 확인 버튼 클릭 핸들러
     const handleCheckloginId = () => {
@@ -51,10 +36,9 @@ export default function Register1({ onNext }: Props) {
         clearErrors("loginId");
     
         checkloginIdMutation.mutate(loginId, {
-            onSuccess: (data) => {
+            onSuccess: (data:boolean) => {
                 if (data) setError("loginId", { type: "manual", message: "중복된 아이디입니다." });
                 else {
-                    
                     setIsloginIdAvailable("사용 가능한 아이디입니다.");
                     setIsloginIdChecked(true);
                 }
@@ -65,7 +49,8 @@ export default function Register1({ onNext }: Props) {
         });
     };
 
-    const isButtonEnabled = isloginIdChecked && !errors.loginId && isMatch && isLengthValid && hasLetter && hasNumber;
+    const isButtonEnabled = useMemo(() => {return isloginIdChecked && !errors.loginId && isMatch && isLengthValid && hasLetter && hasNumber}
+    ,[isloginIdChecked, errors.loginId, isMatch, isLengthValid, hasLetter, hasNumber]);
 
     return (
         <div className="h-full p-3">
@@ -90,6 +75,11 @@ export default function Register1({ onNext }: Props) {
                                 pattern: {
                                     value: /^(?=.*[A-Za-z])(?=.*\d)(?!.*[ㄱ-ㅎㅏ-ㅣ가-힣]).+$/,
                                     message: "아이디는 영문과 숫자를 포함해야합니다.",
+                                },
+                                onChange: () => {
+                                    setIsloginIdChecked(false); // 중복 확인 상태 초기화
+                                    setIsloginIdAvailable(""); // 메시지 초기화
+                                    clearErrors("loginId"); // 에러 초기화
                                 },
                             })}
                         />

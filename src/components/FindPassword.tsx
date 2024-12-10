@@ -1,43 +1,79 @@
 'use client';
 
+import Button from "./Button";
+import { useCheckPassword, } from "@/hooks/useAuthQuery";
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Validate } from "@/interface/resetPassword";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+
 
 export default function FindPassword() {
-    const [userId, setUserId] = useState("");
-    const [password, setPassword] = useState("");
+    const router = useRouter();
+    const [error, setError] = useState<string | null>(null); 
+    
+    const { register, handleSubmit, formState: { errors } } = useForm<Validate>({ mode: "onChange" });
+    const mutation = useCheckPassword();
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log("Find Password Data:", { userId, password });
-        // 비밀번호 찾기 로직 추가
+    const onSubmit: SubmitHandler<Validate> = (data) => {
+        console.log("Find Password Data:", data);
+
+        mutation.mutate(data, {
+            onSuccess: async (response) => {
+                // API 응답이 "true" 또는 "false" 문자열로 반환되는 경우 처리
+                if (response === "true") {
+                    router.push(`/newpassword?loginId=${data.loginId}`);
+                } else {
+                    setError("아이디 또는 이메일이 잘못되었습니다.");
+                }
+            },
+            onError: (error) => {
+                setError(error.message || "서버 에러가 발생했습니다.");
+            },
+        });
     };
 
     return (
-        <div className="flex items-center justify-center h-full">
-            <form onSubmit={handleSubmit}>
-                <p className="text-xl font-bold mb-10">비밀번호 찾기</p>
-                
-                <div>
-                    <label className="label-base">아이디</label>
-                    <input
-                        type="text"
-                        value={userId}
-                        onChange={(e) => setUserId(e.target.value)}
-                        placeholder="아이디를 입력하세요."
-                        className="w-full mb-10 p-2 border rounded mt-3"
-                    />
-                
-                    <label className="label-base">비밀번호</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="비밀번호를 입력하세요."
-                        className="w-full mb-7 p-2 border rounded mt-3"
-                    />
-                </div>
-                
-                <button type="submit" className="button mt-3">비밀번호 찾기</button>
+        <div className="container flex flex-col justify-center h-full p-3 space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col space-y-8">
+            <p className="text-2xl font-bold flex items-start ">비밀번호 재설정</p>
+                <div className="p-3 ">
+                    <div className="label-input-set">
+                        <label className="label-base">아이디</label>
+                        <input
+                            type="text"
+                            placeholder="아이디를 입력하세요."
+                            className="input-base"
+                            {...register('loginId',
+                                { required: "아이디를 입력하세요."}
+                            )}
+                        />
+                        <p>{errors.loginId?.message}</p>
+                    </div>
+
+                    <div className="label-input-set mt-5">
+                        <label className="label-base">이메일</label>
+                        <input
+                            type="email"
+                            placeholder="이메일을 입력하세요."
+                            className="input-base"
+                            {...register('email',
+                                { required: "이메일을 입력하세요.",
+                                    pattern: {
+                                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                        message: "유효한 이메일을 입력해주세요."
+                                    },
+                                }
+                            )}
+                        />
+                        <p className="text-red-500 helper-text">{errors.email?.message}</p>
+                    </div>
+                    { error && 
+                    <p className='text-xs text-red-500'>아이디 또는 이메일이 잘못되었습니다. </p>
+                }
+                    <Button type="submit" className="mt-10">비밀번호 재설정</Button>
+                    </div>
             </form>
         </div>
     );

@@ -14,9 +14,10 @@ export default function ReportList() {
     const {data:user} = useUserInfo();
     const {data:check} = useReportCheck();
 
+    // 계정 생성일
     const start = dayjs(user?.createAt);
+    // 현재 날짜
     const today = dayjs().subtract(1, "month"); //이번달 기준 지난달까지만 보여야 하니까!
-
     const yearMonths = useMemo(()=>getYearMonths(start, today),[start,today]);
     const year = useMemo(()=>Object.keys(yearMonths).sort((a,b)=> Number(b) - Number(a)), [yearMonths]);
 

@@ -10,18 +10,21 @@ const goormSansBold = localFont({
   src: "./fonts/goorm-sans-bold.woff",
   variable: "--font-goorm-sans-bold",
   weight: "700",
+  display: "swap",
 });
 
 const goormSansMedium = localFont({
   src: "./fonts/goorm-sans-medium.woff",
   variable: "--font-goorm-sans-medium",
   weight: "500",
+  display: "swap",
 });
 
 const goormSansRegular = localFont({
   src: "./fonts/goorm-sans-regular.woff",
   variable: "--font-goorm-sans-regular",
   weight: "400",
+  display: "swap",
 });
 
 export const metadata: Metadata = {

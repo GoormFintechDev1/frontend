@@ -51,7 +51,7 @@ const ExpensesDetailPage = () => {
           </Link>
         </div>
         <div className="flex items-center gap-x-3">
-          <h2 className="text-sm font-semibold">세부정보</h2>
+          <h2 className="text-xl font-semibold p-2">세부정보</h2>
         </div>
         <div className="flex flex-col mb-4">
           <ResponsiveContainer width="100%" height={200}>
@@ -79,7 +79,7 @@ const ExpensesDetailPage = () => {
           </div>
         </div>
         <div className="flex items-center gap-8 mb-4">
-          <div className="flex flex-col w-full px-6 pt-2 pb-5 border-b-2 border-[#f5f5f5]">
+          <div className="flex flex-col w-full px-6 pt-2 pb-5">
             <ul className="flex flex-col gap-y-2">
               {filteredData.map(
                 (data, index) =>

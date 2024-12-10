@@ -57,7 +57,7 @@ const Revenue: React.FC<RevenueProps> = ({height}) => {
           {/* <XAxis dataKey="name" /> */}
           {/* <YAxis /> */}
           {/* <Bar dataKey="value" fill="#8884d8" /> */}
-          <Bar dataKey="value" radius={7}>
+          <Bar dataKey="value" radius={7} minPointSize={25}>
             {revenueData?.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={entry.fill} />
             ))}

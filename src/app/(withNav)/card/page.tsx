@@ -9,7 +9,7 @@ import { useState } from "react";
 
 export default function Card() {
     const { data: cards } = useRecCard(paramMonth);
-    console.log(cards);
+    // console.log(cards);
 
     const router = useRouter();
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -43,7 +43,7 @@ export default function Card() {
                 </div>
 
                 {/* <div className="text-center mb-5">
-                    <p className="font-bold">{currentCard.corporateName}</p>
+                    <p className="font-semibold">{currentCard.corporateName}</p>
                 </div> */}
 
                 <div className="flex justify-center items-center mb-6">
@@ -51,7 +51,7 @@ export default function Card() {
                         &lt;
                     </button>
 
-                    <div className={`w-48 h-72 rounded-lg flex items-center justify-center shadow-lg transition-all duration-500`}>
+                    <div className={`w-48 h-72 rounded-lg flex items-center justify-center shadow-2xl transition-all duration-500`}>
                         <Image
                             src={currentCard.imageURL}
                             alt={currentCard.cardName}
@@ -67,15 +67,15 @@ export default function Card() {
                 </div>
 
                 <div className="text-center mb-5">
-                    <p className="text-gray-600 font-semibold mb-2 text-lg">{currentCard.cardName}</p>
-                    <p className="text-center font-semibold">{currentCard.benefits[0]}</p>
+                    <p className="text-center font-bold text-lg text-gray-700 mt-2"><span className="text-emerald-500">{currentCard.totalSaving}</span> 원 절약 가능</p>
+                    <p className="text-gray-600 text-sm mb-2">{currentCard.cardName}</p>
                 </div>
 
                 {/* 키워드 중 하나라도 포함되어 있지 않으면 표시하지 않음 */}
                 <div className="text-center">
-                    <p className="text-lg mb-1 text-gray-700"> 혜택 사항</p>
-                    <form className="bg-gray-50 p-4 rounded-lg shadow-md">
-                        <ul className="text-md text-gray-600 space-y-2">
+                    {/* <p className="text-lg mb-1 text-gray-700"> 혜택 사항</p> */}
+                    <div className="bg-gray-50 p-6 rounded-lg">
+                        <ul className="text-sm text-gray-800 space-y-2 list-disc list-inside">
                         {currentCard.benefits &&
                             Array.isArray(currentCard.benefits) &&
                             currentCard.benefits
@@ -87,24 +87,13 @@ export default function Card() {
                                 return keywords.some((keyword) => benefit.includes(keyword));
                             })
                             .map((benefit: string, index: number) => (
-                                <li key={index}>
+                                <li key={index} className="">
                                 <label>{benefit}</label>
                                 </li>
                             ))}
                         </ul>
-                    </form>
-                </div>
-
-
-                <div className="text-center mt-10">
-                    <div className="flex justify-center font-bold"> 
-                    <div className="bg-gray-50 p-4 rounded-lg shadow-md w-2/5 text-center">
-                        <p className="text-lg mb-1 text-gray-700 ">총 절약 금액</p>
-                        <p className="text-lg text-gray-600">{currentCard.totalSaving} 원</p>
-                    </div>
                     </div>
                 </div>
-
             </div>
         </div>
     );

@@ -2,8 +2,14 @@
 
 import { useWeather } from "@/hooks/useWeatherQuery";
 import { useEffect, useMemo, useState } from "react"
+import { AlarmLoading } from "./main/Loading";
+import Image from "next/image";
 
-export default function Alarm(){
+interface Props {
+  onClick: () => void
+}
+
+export default function Alarm({onClick}:Props){
 
     const [geolocation, setGeoLocation] = useState({
         long:0,
@@ -12,29 +18,36 @@ export default function Alarm(){
 
     const [info, setInfo] = useState("");
 
-
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition((position) => {
-          setGeoLocation({
-            long: position.coords.longitude,
-            lat: position.coords.latitude,
-          });
+      navigator.geolocation.getCurrentPosition((position) => {
+        setGeoLocation({
+          long: position.coords.longitude,
+          lat: position.coords.latitude,
         });
-      }, []);
+      });
+    }, []);
 
+    const {data:weather, isLoading} = useWeather(geolocation);
 
-    const {data:weather} = useWeather(geolocation);
-
-    const C = useMemo(()=>Math.round((weather?.main?.temp-32)%1.8), [weather]);
+    const C = useMemo(()=>Math.round((weather?.main?.temp-273.15)), [weather]);
 
     useEffect(()=>{
-        if(C <= 10 ) setInfo("오늘 날씨는 영상 10도 이하이니 따뜻한 음료가 잘 팔릴 거예요.")
-    }, [C])
+        if(C <= 10 ) setInfo('따뜻한 음료가 잘 팔릴 것 같아요.');
+        else if(C <= 20) setInfo('시원한 음료가 잘 팔릴 것 같아요.')
+    }, [C]);
 
+    if( isLoading || info == ""){
+      return (<AlarmLoading/>)
+    }
 
     return(
-    <div className="box h-10 text-sm items-center justify-center">
-        <p className=""> {info}</p>
+    <div className="box h-20 text-sm items-center justify-center">
+      <div className="flex space-x-3 justify-center items-center text-gray-800">
+        <p>현재 <span className="font-bold">{C}°C</span>로 {info}</p>
+        <div className="" onClick={onClick}>
+          <Image src={"/icons/Cancel.png"} alt="cancle" width={25} height={25}></Image>
+        </div>
+      </div>
     </div>)
 }
 

@@ -7,7 +7,7 @@ import Goals from "@/components/main/Goals";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useUserInfo } from "@/hooks/useUserQuery";
-// import Alarm from "@/components/Alarm";
+import Alarm from "@/components/Alarm";
 
 export default function Home() {
 
@@ -17,7 +17,7 @@ export default function Home() {
 
   useEffect(() => {
     const calculateHeight = () => {
-      const calculatedHeight = Math.max(190, Math.floor((window.innerHeight - 135 - 40 - 20) / 3));
+      const calculatedHeight = Math.max(190, Math.floor((window.innerHeight - 200) / 3));
       setHeight(`${calculatedHeight}px`);
     };
 
@@ -29,10 +29,28 @@ export default function Home() {
     };
   }, []);
 
+
+  const [isVisible, setIsVisible] = useState(false);
+  const [isOccupied, setIsOccupied] = useState(false);
+
+  useEffect(()=>{
+    const savedValue = sessionStorage.getItem("alarm");
+
+    setIsVisible(savedValue === "false" ? false : true);
+    setIsOccupied(savedValue === "false" ? false : true);
+  },[])
+
+
+  const handleDelete = () => {
+    setIsVisible(false);
+    sessionStorage.setItem(`alarm`, JSON.parse('false'));
+    setTimeout(()=> setIsOccupied(false), 500);
+  }
+
   return (
     <div id="main" className="container">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl font-bold">{user?.companyName}</h1>
+        <h1 className="text-xl font-bold">{user?.companyName || "가게 이름"}</h1>
         <Link href={"/setGoals"}>
           <button className="bg-theme w-[70px] h-[40px] text-sm text-white px-1 py-[5px] rounded">
             목표설정
@@ -40,16 +58,21 @@ export default function Home() {
         </Link>
         
       </div>
-      {/* <div className="">
-        <Alarm/>
-      </div> */}
 
       <div className="grid grid-cols-2 gap-4 overflow-y-scroll h-[calc(100vh-160px)]">
+        {/* 알림 박스 */}
+        <div
+        className={`col-span-2 transition-all duration-500 ease-in-out ${
+          isOccupied ? "h-20" : "hidden"
+        } ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"}`}>
+          <Alarm onClick={handleDelete}/>
+        </div>
+
         {/* 이번 달 매출 */}
-        <Revenue height={height}/>
+        <Revenue height={height} />
 
         {/* 지난 달 순이익 */}
-        <Profit height={height}/>
+        <Profit height={height} />
 
         {/* 이번 달 지출 */}
         <Expenses height={height} />

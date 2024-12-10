@@ -1,8 +1,7 @@
 'use client'
 
 import { SubmitHandler, useForm } from "react-hook-form";
-// import Button from "./Button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useCheckEmail, useCheckPhoneNumber } from "@/hooks/useAuthQuery";
 import { InputType2 } from "@/interface/register";
 
@@ -27,26 +26,7 @@ export default function Register2({ onReadySubmit }: Props) {
   const email = watch("email");
 
   const checkPhoneNumberMutation = useCheckPhoneNumber();
-
-  useEffect(() => {
-    // 전화번호나 이메일이 변경될 때 중복 확인 상태 초기화
-    if (phoneNumber !== "") {
-      setIsPhoneNumberChecked(false);
-      setIsPhoneNumberAvailable("");
-      clearErrors("phoneNumber");
-    }
-
-  }, [phoneNumber, clearErrors]);
-
-  useEffect(()=>{
-    if (email !== "") {
-      setIsEmailChecked(false);
-      setIsEmailAvailable("");
-      clearErrors("email");
-    }
-  },[email, clearErrors])
   
-  // 전화번호 중복 확인
   const handleCheckPhoneNumber = () => {
     if (phoneNumber === "" || errors.phoneNumber) return;
 
@@ -101,7 +81,8 @@ export default function Register2({ onReadySubmit }: Props) {
         
         <div className="label-input-set">
           <label className="label-base">이름</label>
-          <input className="input-base flex-grow" placeholder="이름을 입력하세요." {...register("name", { required: "이름을 입력하세요." })}/>
+          <input className="input-base flex-grow" placeholder="이름을 입력하세요." {...register("name", { required: "이름을 입력하세요." 
+          })}/>
           {errors.name && (<p className="helper-text text-red-500">{errors.name.message}</p> )}
         </div>
 
@@ -157,10 +138,14 @@ export default function Register2({ onReadySubmit }: Props) {
                   pattern: {
                       value: /^[0-9]{11}$/,
                       message: "유효한 전화번호를 입력해주세요."
-                  }
+                  },
+                  onChange: ()=>{      
+                    setIsPhoneNumberChecked(false);
+                    setIsPhoneNumberAvailable("");
+                    clearErrors("phoneNumber");}
               })}
             />
-            <button type="button"  className={`p-3 rounded-xl text-xs ${isEmailChecked ? 'bg-gray-200 text-gray-700' : 'bg-emerald-400 text-white font-bold'}`}
+            <button type="button"  className={`p-3 rounded-xl text-xs ${isPhoneNumberChecked ? 'bg-gray-200 text-gray-700' : 'bg-emerald-400 text-white font-bold'}`}
                 disabled={isEmailChecked} onClick={handleCheckPhoneNumber}>중복 확인</button>
           </div>
           {errors.phoneNumber && ( <p className="helper-text text-red-500">{errors.phoneNumber.message}</p>)}
@@ -175,6 +160,11 @@ export default function Register2({ onReadySubmit }: Props) {
                   pattern: {
                       value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                       message: "유효한 이메일을 입력해주세요."
+                  },
+                  onChange: () => {
+                    setIsEmailChecked(false);
+                    setIsEmailAvailable("");
+                    clearErrors("email");
                   }
               })}
             />

@@ -62,14 +62,39 @@ export default function Revenue() {
   };
   
   const goToNextMonth = () => {
+    const currentMonth = new Date().getMonth() + 1; // 현재 월 (1부터 시작)
+    const currentYear = new Date().getFullYear(); // 현재 연도
+  
     setMonth((prevMonth) => {
-      if (prevMonth === 12) {
-        setYear((prevYear) => prevYear + 1);
-        return 1;
-      }
-      return prevMonth + 1;
+      setYear((prevYear) => {
+        // 현재 연도와 월을 초과하지 않도록 제한
+        if (prevYear === currentYear && prevMonth >= currentMonth) {
+          return prevYear; // 현재 연도와 월 초과 금지
+        }
+  
+        // 다음 달로 이동
+        if (prevMonth === 12) {
+          // 12월인 경우 다음 해로 전환
+          setMonth(1);
+          return prevYear + 1;
+        }
+  
+        // 단순히 다음 달로 이동
+        setMonth(prevMonth + 1);
+        return prevYear;
+      });
+  
+      return prevMonth; 
     });
   };
+  //   setMonth((prevMonth) => {
+  //     if (prevMonth === 12) {
+  //       setYear((prevYear) => prevYear + 1);
+  //       return 1;
+  //     }
+  //     return prevMonth + 1;
+  //   });
+  // };
 
   return (
     <div className='container p-3'>
@@ -81,9 +106,9 @@ export default function Revenue() {
       </div>
       <div className='flex flex-row items-center' >
         <div onClick={goToPrevMonth}><Image src={'/icons/smallLeft.png'} alt={'left'} width={18} height={18}></Image></div>
-        <h1 className="text-xl font-semibold px-3">
+        <p className="text-xl font-semibold px-3">
           {month}월 매출
-        </h1>
+        </p>
         <div onClick={goToNextMonth}><Image src={'/icons/smallRight.png'} alt={'right'} width={18} height={18}></Image></div>
       </div>
 
