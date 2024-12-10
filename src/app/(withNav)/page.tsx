@@ -29,7 +29,6 @@ export default function Home() {
     };
   }, []);
 
-
   const [isVisible, setIsVisible] = useState(false);
   const [isOccupied, setIsOccupied] = useState(false);
 
@@ -59,7 +58,7 @@ export default function Home() {
         
       </div>
 
-      <div className="grid grid-cols-2 gap-4 overflow-y-scroll h-[calc(100vh-160px)]">
+      <div className="grid grid-cols-2 gap-4 overflow-y-scroll h-[calc(100vh-168px)]">
         {/* 알림 박스 */}
         <div
         className={`col-span-2 transition-all duration-500 ease-in-out ${
