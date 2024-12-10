@@ -11,7 +11,7 @@ RUN npm ci
 
 # 1. Build stage (Next.js standalone 모드로 빌드)
 FROM base AS builder
-ENV NEXT_PUBLIC_DOMAIN=43.203.217.67
+ENV NEXT_PUBLIC_DOMAIN=doubly.co.kr
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 
