@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useValidateBR } from "@/hooks/useBRQuery";
 import Alert from "@/components/Alert";
 import { useUserInfo } from "@/hooks/useUserQuery";
+import { useQueryClient } from "@tanstack/react-query";
 // import Alert from "@/components/Alert";
 
 export default function Validate(){
@@ -32,12 +33,14 @@ export default function Validate(){
       };
 
     const validateBRMutation = useValidateBR();
+    const queryClient = useQueryClient();
     const {data:user} = useUserInfo();
 
     const onSubmit: SubmitHandler<BusinessInfo> = (data) => {
         validateBRMutation.mutate(data,{
             onSuccess: () => { 
-                localStorage.setItem(`firstLogin:${user.loginId}`, "true");
+                localStorage.setItem(`loggedIn:${user.loginId}`, "true");
+                queryClient.invalidateQueries();
                 router.push('/progress');
             },
             onError: (error) => {
