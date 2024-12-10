@@ -1,14 +1,10 @@
 "use client";
 
-import { useRecCard } from "@/hooks/useCardQuery";
 import { useUserInfo } from "@/hooks/useUserQuery";
-import { paramMonth } from "@/utils/calculateDay";
-import { convertToKoreanWon } from "@/utils/currency";
 import Link from "next/link";
 
 const CardRecommend = () => {
-  const {data:user} = useUserInfo();
-  const {data:card, isLoading} = useRecCard(paramMonth);
+  const {data:user, isLoading} = useUserInfo();
 
   if(isLoading){
     return(

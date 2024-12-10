@@ -17,9 +17,7 @@ import ExpensesData from "@/components/expenses/ExpensesData";
 import dayjs from "dayjs";
 import ExpensesWeekData from "@/components/expenses/ExpensesWeekData";
 import Image from "next/image";
-import { useRecCard } from "@/hooks/useCardQuery";
 import CardRecommend from "@/components/CardRecommend";
-import { useUserInfo } from "@/hooks/useUserQuery";
 dayjs().format();
 
 const ExpensesPage = () => {
