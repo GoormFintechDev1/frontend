@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Select from "@/components/Select";
 import Alert from "@/components/Alert";
+import { useQueryClient } from "@tanstack/react-query";
 dayjs().format();
 
 export default function MyPage() {
@@ -24,14 +25,20 @@ export default function MyPage() {
   const logout = useLogoutMutation();
   const deleteAccount = useDeleteMutation();
 
+ const queryClient = useQueryClient();
+
   // 로그아웃
   const handleLogout = async () => {
         try {
             await logout.mutateAsync(userInfo?.loginId || "", {
-                onSuccess: () => router.push("/login"),
+                onSuccess: () => {
+                    queryClient.setQueryData(["user"], null);
+                    // queryClient.invalidateQueries();
+                    sessionStorage.clear();
+                    router.push("/login"); 
+                },
             });
-            // sessionStorage.clear();
-            // router.push("/login"); 
+            
         } catch (error) {
             setMessage(error as string);
         }
