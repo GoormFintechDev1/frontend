@@ -27,7 +27,7 @@ jobs:
       # 2. Docker 이미지 빌드
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ env.REPO_NAME }}:${{ github.sha }} -f Docker/Dockerfile .
+          docker build -t ghcr.io/${{ env.REPO_NAME }}:latest -f Docker/Dockerfile .
       
       # 3. GitHub Container Registry 로그인
       - name: Login to GitHub Container Registry
@@ -40,11 +40,10 @@ jobs:
       # 4. Docker 이미지 푸시
       - name: Push Docker image to GitHub Packages
         run: |
-          docker push ghcr.io/${{ env.REPO_NAME }}:${{ github.sha }}
+          docker push ghcr.io/${{ env.REPO_NAME }}:latest
       
       # 5. Jenkins Job 호출
       - name: Trigger Jenkins Job
         run: |
           curl -X POST "http://doubly.co.kr:8100/job/frontend/buildWithParameters" \
-          --user "doubly:${{ secrets.JENKINS_API_TOKEN }}" \
-          --data-urlencode "F_IMAGE_TAG=${{ github.sha }}"
+          --user "doubly:${{ secrets.JENKINS_API_TOKEN }}"
