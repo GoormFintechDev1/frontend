@@ -21,8 +21,9 @@ export default function Login() {
 
         mutation.mutate(data, {
             onSuccess: async() => {
-                const firstLogin = JSON.parse(localStorage.getItem(`firstLogin:${data.loginId}`) || "false");
-                if(!firstLogin){
+                const loggedIn = JSON.parse(localStorage.getItem(`loggedIn:${data.loginId}`) || "false");
+                // console.log(loggedIn);
+                if(!loggedIn){
                     router.push('/validate');
                 } else {
                     router.push('/');

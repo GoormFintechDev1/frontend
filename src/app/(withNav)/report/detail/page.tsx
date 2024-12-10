@@ -2,7 +2,7 @@
 
 import { useReportQuery2 } from '@/hooks/useReportQuery';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import dayjs from "dayjs";
 import { useUserInfo } from '@/hooks/useUserQuery';
 import ReportIndusty from '@/components/reportlist/ReportIndusty';
@@ -15,11 +15,11 @@ export default function ReportDetail() {
     const searchParams = useSearchParams();
     const initialMonth = searchParams.get('month') || '2024-11'; // 기본값을 11월로 설정
     const month = initialMonth;
+    const router = useRouter();
 
     
     const {data: useInfo} = useUserInfo();
     const {data: reportData, isLoading} = useReportQuery2(month);
-    console.log(reportData);
 
     const [height, setHeight] = useState("500px");
 
@@ -40,6 +40,12 @@ export default function ReportDetail() {
     
     if(isLoading){
         return <ReportLoading/>
+    }
+
+    if(reportData?.reports.INDUSTRY_REPORT.error){
+        // alert("에러가 발생했습니다.");
+        router.push("/report");
+        return
     }
 
     return (

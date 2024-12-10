@@ -12,6 +12,7 @@ export interface MarketReport {
   price_index: string,
   food_trend: string,
   recommendations: string[],
+  error?:string,
 }
 
 export interface IndustryReport {
@@ -21,6 +22,7 @@ export interface IndustryReport {
   my_income: string,
   expense_description: string,
   sale_description: string,
+  error?: string,
 }
 
 export interface ReportItemProps {
