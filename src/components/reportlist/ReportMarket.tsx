@@ -74,7 +74,7 @@ export default function ReportMarket({report}: Props) {
                                 <li className="px-2">CPI가 하락하면 상품 및 서비스 비용이 감소했음을 나타냅니다.</li>
                             </ul>
                         </div>
-                        <p className="text-gray-700 text-right" style={{fontSize:'10px'}}>출처 </p>
+                        <p className="text-gray-700 text-right" style={{fontSize:'10px'}}>출처 통계청</p>
                     </>)}
                     
                 </div>
