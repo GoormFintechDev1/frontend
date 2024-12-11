@@ -53,7 +53,6 @@ export default function Register() {
             mutation.mutate(formData, {
                 onSuccess: ()=>{
                     queryClient.invalidateQueries();
-                    localStorage.setItem(`loggedIn:${formData.loginId}`, "true");
                     router.push('/info?first=회원가입 완료!&second=🎉&buttonmessage=로그인&href=/login');
                 }
             });

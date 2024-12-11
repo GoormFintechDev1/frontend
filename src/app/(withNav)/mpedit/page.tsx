@@ -72,12 +72,12 @@ export default function Mpedit() {
                 </Link>
             </div>
 
-            <div className="p-4">
+            <div className="pb-5">
                 <h1 className="text-xl font-bold">내 정보 수정</h1>
             </div>
 
-            <div className="mb-4 p-3">
-                <label className="block text-lg font-bold mb-2 ml-1">전화번호</label>
+            <div className="mb-4">
+                <label className="block text-lg font-bold mb-2">전화번호</label>
                 <div className="flex items-center gap-3">
                 <input
                     type="text"
@@ -93,10 +93,10 @@ export default function Mpedit() {
                 />
                 <button
                     type="button"
-                    className={`p-4 rounded-lg text-md  ${
+                    className={`p-4 rounded-xl text-md  ${
                     isPhoneNumberChecked
                         ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                        : "bg-emerald-500 text-white"
+                        : "bg-emerald-400 text-white"
                     }`}
                     disabled={isPhoneNumberChecked}
                     onClick={handleCheckPhoneNumber}

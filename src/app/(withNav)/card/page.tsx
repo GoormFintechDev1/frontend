@@ -5,28 +5,44 @@ import { paramMonth } from "@/utils/calculateDay";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Card() {
     const { data: cards } = useRecCard(paramMonth);
-    // console.log(cards);
 
     const router = useRouter();
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
+    const [isVertical, setIsVertical] = useState<boolean>(true);
 
-    if (!cards || cards.length === 0) {
-        return <Loading/>;
-    }
+    const currentCard = cards ? cards[currentCardIndex] : null;
 
-    const currentCard = cards[currentCardIndex];
+    // 카드 비율 판별
+    useEffect(() => {
+        if (!currentCard || !currentCard.imageURL) { 
+            return;
+        }
 
+        if (typeof window !== "undefined") {
+            const img = new window.Image();
+            img.src = currentCard.imageURL;
+
+            img.onload = () => {
+                setIsVertical(img.naturalWidth <= img.naturalHeight); 
+            };
+        }
+    }, [currentCard]);
+    
     const handlePrev = () => {
         setCurrentCardIndex((prevIndex) => (prevIndex === 0 ? cards.length - 1 : prevIndex - 1));
     };
-
+    
     const handleNext = () => {
         setCurrentCardIndex((prevIndex) => (prevIndex === cards.length - 1 ? 0 : prevIndex + 1));
     };
+    
+    if (!cards || cards.length === 0) {
+        return <Loading/>;
+    }
 
     return (
         <div className="container">
@@ -51,15 +67,19 @@ export default function Card() {
                         &lt;
                     </button>
 
-                    <div className={`w-48 h-72 rounded-lg flex items-center justify-center shadow-2xl transition-all duration-500`}>
-                        <Image
-                            src={currentCard.imageURL}
-                            alt={currentCard.cardName}
-                            width={192}
-                            height={288}
-                            className="rounded-lg"
-                        />
-                        </div>
+                    <div className="w-48 h-72 relative rounded-lg overflow-hidden ">
+                        {currentCard && (
+                            <Image
+                                src={currentCard.imageURL}
+                                alt={currentCard.cardName}
+                                layout="fill"
+                                objectFit="contain"
+                                className={isVertical ? "" : "rotate-90 "}
+                                
+                            />
+                        )}
+                        
+                    </div>
 
                     <button onClick={handleNext} className="text-gray-500 text-2xl font-bold px-4">
                         &gt;
@@ -67,7 +87,7 @@ export default function Card() {
                 </div>
 
                 <div className="text-center mb-5">
-                    <p className="text-center font-bold text-lg text-gray-700 mt-2"><span className="text-emerald-500">{currentCard.totalSaving.toLocaleString()}</span> 원 절약 가능</p>
+                    <p className="text-center font-bold text-lg text-gray-700 mt-2"><span className="text-emerald-500">{currentCard.totalSaving}</span> 원 절약 가능</p>
                     <p className="text-gray-600 text-sm mb-2">{currentCard.cardName}</p>
                 </div>
 

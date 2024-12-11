@@ -66,18 +66,18 @@ export default function ReportIndusty({report}:Props) {
                     <YAxis hide />
                     {/* <Tooltip formatter={(value: number) => `${value}만원`} /> */}
                     <Bar
-                    dataKey="나"
+                    dataKey="평균"
                     fill="#d3d3d3"
                     barSize={45}
                     radius={[10, 10, 10, 10]}
-                    label={{ position: "insideTop", fill: "#666", fontSize: 12 ,}}
+                    label={{ position: "insideTop", fill: "#666", fontSize: 12 }}
                     />
                     <Bar
-                    dataKey="평균"
+                    dataKey="나"
                     fill="#f76c6c"
                     barSize={45}
                     radius={[10, 10, 10, 10]}
-                    label={{ position: "insideTop", fill: "#fff", fontSize: 12 }}
+                    label={{ position: "insideTop", fill: "#fff", fontSize: 12 ,}}
                     />
                 </BarChart>
                 </ResponsiveContainer>

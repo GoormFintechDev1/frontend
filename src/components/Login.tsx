@@ -2,32 +2,48 @@
 
 import { useLoginMutation } from '@/hooks/useAuthQuery';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from './Button';
 import { useRouter } from 'next/navigation';
 import { LoginType } from '@/interface/login';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useQueryClient } from '@tanstack/react-query';
+import { useUserInfo } from '@/hooks/useUserQuery';
+import { log } from 'console';
 
 export default function Login() {
     const router = useRouter();
 
-    const { register, handleSubmit} = useForm<LoginType>({ mode: "onChange" });
-    const [error, setError] = useState(false);
 
+    const {data:user} = useUserInfo();
+
+    useEffect(()=>{
+        if(user && user.brNum) router.push("/");   
+    },[user])
+
+    const { register, handleSubmit, watch} = useForm<LoginType>({ mode: "onChange" });
+    const [error, setError] = useState(false);
+    const [redirect, setRedirect] = useState("");
+    
+    const loginId = watch("loginId");
 
     const mutation = useLoginMutation();
+    const queryClient = useQueryClient();
+
+    useEffect(() => {
+        if (redirect) {
+            router.push(redirect);
+        }
+    }, [redirect, router, loginId]);
 
     const onSubmit: SubmitHandler<LoginType>  = (data) => {
 
         mutation.mutate(data, {
             onSuccess: async() => {
                 const loggedIn = JSON.parse(localStorage.getItem(`loggedIn:${data.loginId}`) || "false");
+                setRedirect(loggedIn ? "/" : "/validate");
+                queryClient.invalidateQueries();
 
-                if(!loggedIn){
-                    router.push('/validate');
-                } else {
-                    router.push('/');
-                }
             },
             onError:()=>{
                 setError(true);

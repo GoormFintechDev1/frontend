@@ -101,7 +101,7 @@ export default function MyPage() {
             <div className="flex flex-col space-y-2 pt-2 pb-7">
                 <h1 className="text-xl font-semibold">{userInfo?.companyName || "가게 이름"}</h1>
                 <div className="flex space-x-2 items-center font-medium text-sm">
-                   {userInfo? (<h1>{userInfo?.brNum.slice(0,3)}-{userInfo?.brNum.slice(3,5)}-{userInfo?.brNum.slice(5,)}</h1>) : (<p>000-00-00000</p>)}
+                   {userInfo && userInfo.brNum? (<h1>{userInfo?.brNum.slice(0,3)}-{userInfo?.brNum.slice(3,5)}-{userInfo?.brNum.slice(5,)}</h1>) : (<p>000-00-00000</p>)}
                     <Image alt="clipboard" src={"/icons/Copy.png"} width={10} height={10} style={{height:"10px"}} onClick={handleBrNumClipboard}/>
                 </div>
                 <div className="flex space-x-2 items-center">
