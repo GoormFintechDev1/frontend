@@ -36,9 +36,9 @@ export default function FindPassword() {
 
     return (
         <div className="container flex flex-col justify-center h-full p-3 space-y-4">
-            <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col space-y-8">
-            <p className="text-2xl font-bold flex items-start ">비밀번호 재설정</p>
-                <div className="p-3 ">
+            <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col space-y-8 p-3">
+            <p className="text-xl font-bold flex items-start ">비밀번호 재설정</p>
+                <div className=" ">
                     <div className="label-input-set">
                         <label className="label-base">아이디</label>
                         <input
@@ -49,7 +49,7 @@ export default function FindPassword() {
                                 { required: "아이디를 입력하세요."}
                             )}
                         />
-                        <p>{errors.loginId?.message}</p>
+                        <p className="helper-text text-red-500">{errors.loginId?.message}</p>
                     </div>
 
                     <div className="label-input-set mt-5">
@@ -70,7 +70,7 @@ export default function FindPassword() {
                         <p className="text-red-500 helper-text">{errors.email?.message}</p>
                     </div>
                     { error && 
-                    <p className='text-xs text-red-500'>아이디 또는 이메일이 잘못되었습니다. </p>
+                    <p className=' text-red-500 helper-text'>아이디 또는 이메일이 잘못되었습니다. </p>
                 }
                     <Button type="submit" className="mt-10">비밀번호 재설정</Button>
                     </div>

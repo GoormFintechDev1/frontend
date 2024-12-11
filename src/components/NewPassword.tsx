@@ -38,7 +38,6 @@ export default function NewPassword({loginId}:Props) {
     const onSubmit: SubmitHandler<Reset> = (data) => {
 
         if(!isMatched) return;
-        console.log(data)
         
         mutation.mutate(data, {
             onSuccess: () => {
@@ -71,13 +70,13 @@ export default function NewPassword({loginId}:Props) {
 
     return (
         <div className="container flex flex-col justify-center h-full p-3 space-y-4">
-            <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col space-y-8">
-            <p className="text-2xl font-bold flex items-start ">새로운 비밀번호 설정</p>
-                <div className="p-3 ">
+            <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col space-y-8 p-3">
+            <p className="text-xl font-bold flex items-start ">새로운 비밀번호 설정</p>
+                <div className="">
                     <div className="label-input-set">
                         <label className="label-base">비밀번호</label>
                         <input
-                            type="text"
+                            type="password"
                             placeholder="비밀번호를 입력하세요."
                             className="input-base"
                             {...register('newPassword', {
@@ -88,7 +87,7 @@ export default function NewPassword({loginId}:Props) {
                                 }
                             })}
                         />
-                         <p className="text-red-500">{errors.newPassword?.message}</p>
+                         <p className="text-red-500 helper-text">{errors.newPassword?.message}</p>
                     </div>
 
                     <div className="label-input-set mt-5">
@@ -99,10 +98,10 @@ export default function NewPassword({loginId}:Props) {
                             className="input-base"
                             onChange={(e)=>setConfirmPassword(e.target.value)}
                         />
-                        <p className="text-red-500">{errors.confirmPassword?.message}</p>
+                        <p className="text-red-500 helper-text">{errors.confirmPassword?.message}</p>
                     </div>
 
-                    {isMatched ? (<p className="text-blue-500">비밀번호가 일치합니다.</p>)  : (<p className="text-red-500">비밀번호가 같지 않습니다.</p>)}
+                    {isMatched ? (<p className="text-blue-500 helper-text">비밀번호가 일치합니다.</p>)  : (<p className="text-red-500 helper-text">비밀번호가 같지 않습니다.</p>)}
 
                     <Button type="submit" className="mt-10">비밀번호 재설정</Button>
                     </div>
