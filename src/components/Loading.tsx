@@ -4,6 +4,6 @@
 
     return (
     <div className="flex container justify-center items-center">
-        <Image alt="loader" src={"/Loading.gif"} width={80} height={80} unoptimized></Image>
+        <Image alt="loader" src={"/Loading.gif"} width={80} height={80} unoptimized priority></Image>
     </div>)
  }
