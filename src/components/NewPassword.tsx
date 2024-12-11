@@ -21,7 +21,6 @@ export default function NewPassword({loginId}:Props) {
     const [isAlertOpen, setIsAlertOpen] = useState(false);
     const [successMessage, setSuccessMessage] = useState<string | null>(null); // 성공 메시지 상태 관리
 
-
     const { register, handleSubmit, watch, formState: { errors } } = useForm<Reset>({
         mode: "onChange",
         defaultValues:{loginId:loginId}
@@ -69,8 +68,8 @@ export default function NewPassword({loginId}:Props) {
     },[isAlertOpen]);
 
     return (
-        <div className="container flex flex-col justify-center h-full p-3 space-y-4">
-            <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col space-y-8 p-3">
+        <div className="container2 flex flex-col justify-center">
+            <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col space-y-8 px-3">
             <p className="text-xl font-bold flex items-start ">새로운 비밀번호 설정</p>
                 <div className="">
                     <div className="label-input-set">
@@ -101,15 +100,17 @@ export default function NewPassword({loginId}:Props) {
                         <p className="text-red-500 helper-text">{errors.confirmPassword?.message}</p>
                     </div>
 
-                    {isMatched ? (<p className="text-blue-500 helper-text">비밀번호가 일치합니다.</p>)  : (<p className="text-red-500 helper-text">비밀번호가 같지 않습니다.</p>)}
+                    { confirmPassword?.length > 0 && isMatched ? (<p className="text-blue-500 helper-text">비밀번호가 일치합니다.</p>)  : confirmPassword?.length > 0 && (<p className="text-red-500 helper-text">비밀번호가 같지 않습니다.</p>)}
 
                     <Button type="submit" className="mt-10">비밀번호 재설정</Button>
                     </div>
             </form>
             {successMessage && (
-                <div className="mt-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
-                    {successMessage}
-                </div>
+                 <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
+                 <div className="bg-white p-6 rounded-lg w-80 h-14 flex items-center justify-center">
+                     <p className="text-center font-bold text-sm">{successMessage}</p>
+                 </div>
+             </div>
             )}
             <Alert isOpen={isAlertOpen} message={alert}/>
         </div>
