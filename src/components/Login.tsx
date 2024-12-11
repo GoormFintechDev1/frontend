@@ -9,7 +9,6 @@ import { LoginType } from '@/interface/login';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
 import { useUserInfo } from '@/hooks/useUserQuery';
-import { log } from 'console';
 
 export default function Login() {
     const router = useRouter();
@@ -19,7 +18,7 @@ export default function Login() {
 
     useEffect(()=>{
         if(user && user.brNum) router.push("/");   
-    },[user])
+    },[user, router])
 
     const { register, handleSubmit, watch} = useForm<LoginType>({ mode: "onChange" });
     const [error, setError] = useState(false);

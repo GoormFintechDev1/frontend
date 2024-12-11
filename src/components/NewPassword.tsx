@@ -108,7 +108,7 @@ export default function NewPassword({loginId}:Props) {
             {successMessage && (
                  <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
                  <div className="bg-white p-6 rounded-lg w-80 h-14 flex items-center justify-center">
-                     <p className="text-center font-bold text-sm">{successMessage}</p>
+                     <p className="text-center font-bold text-sm">💡 {successMessage}</p>
                  </div>
              </div>
             )}
