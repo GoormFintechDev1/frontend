@@ -50,7 +50,7 @@ export default function ReportDetail() {
     }
 
     const recommendation = reportData?.reports.INDUSTRY_REPORT.recommendation as string + " " + reportData?.reports.MARKET_REPORT.recommendation as string;
-    console.log(recommendation)
+    
     return (
         <div className="container h-full">
             <div className="flex items-center mb-4">
