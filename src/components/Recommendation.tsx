@@ -1,6 +1,6 @@
 
 interface Props {
-    report: string[]
+    report: string
 }
 
 
@@ -12,7 +12,7 @@ export default function ReportMarket({report}: Props) {
         <div className="bg-zinc-100 p-5 rounded-xl">
         <div className="flex w-full space-x-5">
             <div className="py-3">
-                <ul className="ml-5 list-outside list-disc space-y-4 text-sm text-gray-700" style={{color:"#333333", lineHeight:"24px"}}>{report?.map((r, i)=>(
+                <ul className="ml-5 list-outside list-disc space-y-4 text-sm text-gray-700" style={{color:"#333333", lineHeight:"24px"}}>{report?.split(". ").map((r, i)=>(
                     <li key={i}>{r}</li>
                 ))}</ul>
             </div>
