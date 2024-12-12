@@ -2,7 +2,7 @@ const enviroment = process.env.NODE_ENV;
 
 let url = "http://localhost:8080/api/card";
 if (enviroment === "production") {
-  url = process.env.NEXT_PUBLIC_DOMAIN ? `http://${process.env.NEXT_PUBLIC_DOMAIN}/api/card` : `http://localhost:8080/api/card`;
+  url = process.env.NEXT_PUBLIC_DOMAIN ? `${process.env.NEXT_PUBLIC_DOMAIN}/api/card` : `http://localhost:8080/api/card`;
 }
 
 

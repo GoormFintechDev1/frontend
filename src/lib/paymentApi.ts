@@ -5,7 +5,7 @@ const enviroment = process.env.NODE_ENV;
 
 let url = "http://localhost:8083/api/payments";
 if (enviroment === "production") {
-  url = process.env.NEXT_PUBLIC_DOMAIN ? `http://${process.env.NEXT_PUBLIC_DOMAIN}/api` : `http://localhost:8083/api/payment`;
+  url = process.env.NEXT_PUBLIC_DOMAIN ? `${process.env.NEXT_PUBLIC_DOMAIN}/api` : `http://localhost:8083/api/payment`;
 }
 
 
