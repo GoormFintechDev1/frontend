@@ -4,7 +4,7 @@ const enviroment = process.env.NODE_ENV;
 
 let url = "http://localhost:8080/api/member";
 if (enviroment === "production") {
-  url = process.env.NEXT_PUBLIC_DOMAIN ? `https://${process.env.NEXT_PUBLIC_DOMAIN}/api/member` : `http://localhost:8080/api/member`;
+  url = process.env.NEXT_PUBLIC_DOMAIN ? `http://${process.env.NEXT_PUBLIC_DOMAIN}/api/member` : `http://localhost:8080/api/member`;
 }
 
 export const getUserInfo = async() => {
