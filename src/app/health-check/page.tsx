@@ -10,9 +10,9 @@ const HealthCheck = () => {
   useEffect(() => {
     const enviroment = process.env.NODE_ENV;
 
-    let url = "http://localhost:8080/api/auth";
+    let url = "http://localhost:8080";
     if (enviroment === "production") {
-      url = process.env.NEXT_PUBLIC_DOMAIN ? `http://${process.env.NEXT_PUBLIC_DOMAIN}/api/auth` : `http://localhost:8080/api/auth`;
+      url = process.env.NEXT_PUBLIC_DOMAIN ? `http://${process.env.NEXT_PUBLIC_DOMAIN}/api/auth` : `http://localhost:8080`;
     }
 
     const fetchData = async () => {
