@@ -4,7 +4,7 @@ const enviroment = process.env.NODE_ENV;
 
 let url = "http://localhost:8080/api/report";
 if (enviroment === "production") {
-  url = process.env.NEXT_PUBLIC_DOMAIN ? `http://${process.env.NEXT_PUBLIC_DOMAIN}/api/report` : `http://localhost:8080/api/report`;
+  url = process.env.NEXT_PUBLIC_DOMAIN ? `${process.env.NEXT_PUBLIC_DOMAIN}/api/report` : `http://localhost:8080/api/report`;
 }
 
 interface ReportData {
