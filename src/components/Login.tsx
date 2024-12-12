@@ -18,7 +18,7 @@ export default function Login() {
 
     useEffect(()=>{
         if(user && user.brNum) router.push("/");   
-    },[user, router])
+    },[user,router])
 
     const { register, handleSubmit, watch} = useForm<LoginType>({ mode: "onChange" });
     const [error, setError] = useState(false);

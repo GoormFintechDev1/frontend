@@ -111,7 +111,7 @@ export default function Income() {
                     <Image alt="back" src={'/icons/arrow.png'} width={25} height={25}></Image>
                 </Link>
             </div>
-            <div className="flex flex-col w-full h-[calc(100vh-170px)] max-w-md text-center p-3 justify-between">
+            <div className="flex flex-col w-full h-[calc(var(--dynamic-vh)-170px)] max-w-md text-center p-3 justify-between">
                 
                 <div className="flex justify-center items-center ">
                     <Image alt="back" onClick={handlePreviousMonth} src={'/icons/smallLeft.png'} width={18} height={18}></Image>
