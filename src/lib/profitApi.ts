@@ -2,7 +2,7 @@ const enviroment = process.env.NODE_ENV;
 
 let url = "http://localhost:8080/api/account";
 if (enviroment === "production") {
-  url = process.env.NEXT_PUBLIC_DOMAIN ? `${process.env.NEXT_PUBLIC_DOMAIN}/api/account` : `http://localhost:8080/api/account`;
+  url = process.env.NEXT_PUBLIC_DOMAIN ? `/api/account` : `http://localhost:8080/api/account`;
 }
 
 export const getLastProfit = async(year:number , month:number) => {
