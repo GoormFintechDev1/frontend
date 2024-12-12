@@ -51,8 +51,9 @@ const ExpensesDetailPage = () => {
           </Link>
         </div>
         <div className="flex items-center gap-x-3">
-          <h2 className="text-xl font-semibold p-2">세부정보</h2>
+          <h2 className="text-xl font-semibold px-2">세부정보</h2>
         </div>
+        <div className="overflow-y-scroll h-[calc(var(--dynamic-vh)-173px)]">
         <div className="flex flex-col mb-4">
           <ResponsiveContainer width="100%" height={200}>
             <PieChart>
@@ -116,6 +117,7 @@ const ExpensesDetailPage = () => {
               )}
             </ul>
           </div>
+        </div>
         </div>
       </div>
     </div>

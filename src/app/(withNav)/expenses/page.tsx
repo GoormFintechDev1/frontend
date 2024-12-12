@@ -80,7 +80,7 @@ const ExpensesPage = () => {
             <Image src={"/icons/smallRight.png"} alt="Forward" width={18} height={18} />
           </button>
         </div>
-        <div className="h-[calc(100vh-173px)] overflow-y-auto">
+        <div className="h-[calc(var(--dynamic-vh)-173px)] overflow-y-auto">
           <ExpensesPieChart chartData={expensesDetailsData!} />
           <ExpensesData chartData={expensesDetailsData!} month={month} />
           <CardRecommend/>

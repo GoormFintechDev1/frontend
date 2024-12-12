@@ -21,7 +21,7 @@ export default function Select({
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-80 h-1/5 flex flex-col justify-around">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-80 flex flex-col justify-around">
             <p className="text-base font-bold mb-4 text-center">{title}</p>
             {message && <p className="text-sm text-gray-600 mb-6 text-center">{message}</p>}
             <div className="flex gap-4 justify-center">

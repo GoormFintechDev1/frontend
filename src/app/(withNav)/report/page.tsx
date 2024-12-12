@@ -27,7 +27,7 @@ export default function ReportList() {
                 <h1 className="text-xl font-bold">월간 리포트</h1>
             </div>
 
-            <div className="overflow-y-scroll h-[calc(100vh-160px)] flex flex-col justify-center">
+            <div className="overflow-y-scroll h-[calc(var(--dynamic-vh)-160px)] flex flex-col justify-center">
                 {
                     year.length > 0 ? year.map((y,i)=> (
                         <div key={i} className='h-full'>

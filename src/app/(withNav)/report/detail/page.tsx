@@ -65,7 +65,7 @@ export default function ReportDetail() {
                 </div>
             </div>
 
-            <div className="pt-4 overflow-scroll flex flex-col space-y-10 " style={{height}}> {/* 높이 변경 필요... */}
+            <div className="pt-4 overflow-y-scroll flex flex-col space-y-10 " style={{height}}> {/* 높이 변경 필요... */}
                 { reportData && (<><ReportIndusty report={reportData?.reports.INDUSTRY_REPORT}/>
                 <ReportMarket report={reportData?.reports.MARKET_REPORT}/>
                 <Recommendation report={recommendation}/>

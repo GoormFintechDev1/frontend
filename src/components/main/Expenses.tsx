@@ -5,7 +5,6 @@ import { convertToKoreanWon } from '@/utils/currency';
 import Link from 'next/link';
 import React, { useMemo } from 'react'
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
-import Error from '../Error';
 import { paramMonth } from '@/utils/calculateDay';
 import { useExpensesStore, useCategoryColorStore } from '@/stores/useExpensesStore';
 import { ExpensesLoading } from './Loading';
@@ -17,7 +16,7 @@ interface RevenueProps {
 const COLORS = ["#BE185D", "#F472B6", "#F9A8D4", "#FFD2EB", "#F8F8F8"];
 
 const Expenses: React.FC<RevenueProps> = ({height}) => {
-  const { isLoading, error } = useExpensesData(paramMonth);
+  const { isLoading } = useExpensesData(paramMonth);
   const setCategoryColorMap = useCategoryColorStore((state) => state.setCategoryColorMap);
 
   setCategoryColorMap(COLORS);
@@ -57,9 +56,9 @@ const Expenses: React.FC<RevenueProps> = ({height}) => {
     return <ExpensesLoading />
   }
 
-  if (error) {
-    return <Error />
-  }
+  // if (error) {
+  //   return <Error />
+  // }
 
   const maxValue = Math.max(...chartData.map((entry) => entry.amount));
   const maxCategory = chartData.find((e)=> e.amount === maxValue)?.category;

@@ -84,7 +84,7 @@ export default function Objective() {
 
             <div className="mb-6">
             <h1 className="text-xl font-semibold mb-6">목표를 관리해보세요 !</h1>
-            <div className="h-[calc(100vh-210px)] overflow-y-scroll">
+            <div className="h-[calc(var(--dynamic-vh)-210px)] overflow-y-scroll">
             <h2 className="text-base font-semibold"> 목표를 달성하고 배지를 모아보세요.</h2>
                 <div className="bg-white rounded-2xl border p-2 mt-3 flex items-center justify-center" style={{height}}>
                     <div className="grid grid-cols-6 gap-2 justify-items-center content-center w-full">
