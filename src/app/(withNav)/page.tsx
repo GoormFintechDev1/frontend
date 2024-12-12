@@ -15,17 +15,12 @@ import Error from "@/components/Error";
 export default function Home() {
 
   const [height, setHeight] = useState("0px");
+  const [isVisible, setIsVisible] = useState(false);
+  const [isOccupied, setIsOccupied] = useState(false);
   const router = useRouter();
   
   const {data:user, error} = useUserInfo();
 
-  if((error as CustomError)?.status === 403){
-    router.push("/login")
-  }
-
-  if((error as CustomError)?.status === 500){
-    return <Error/>
-  }
 
   useEffect(() => {
     const metaTag = document.querySelector('meta[name="theme-color"]');
@@ -55,15 +50,21 @@ export default function Home() {
     };
   }, []);
 
-  const [isVisible, setIsVisible] = useState(false);
-  const [isOccupied, setIsOccupied] = useState(false);
-
   useEffect(()=>{
     const savedValue = sessionStorage.getItem("alarm");
 
     setIsVisible(savedValue === "false" ? false : true);
     setIsOccupied(savedValue === "false" ? false : true);
   },[])
+
+
+  if((error as CustomError)?.status === 403){
+    router.push("/login")
+  }
+
+  if((error as CustomError)?.status === 500){
+    return <Error/>
+  }
 
 
   const handleDelete = () => {
