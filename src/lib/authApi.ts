@@ -8,7 +8,7 @@ const enviroment = process.env.NODE_ENV;
 
 let url = "http://localhost:8080/api/auth";
 if (enviroment === "production") {
-  url = process.env.NEXT_PUBLIC_DOMAIN ? `http://${process.env.NEXT_PUBLIC_DOMAIN}/api/auth` : `http://localhost:8080/api/auth`;
+  url = process.env.NEXT_PUBLIC_DOMAIN ? `${process.env.NEXT_PUBLIC_DOMAIN}/api/auth` : `http://localhost:8080/api/auth`;
 }
 
 export const loginUser = async (data:LoginType) => {
