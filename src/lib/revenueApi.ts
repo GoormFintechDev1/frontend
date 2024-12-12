@@ -2,7 +2,7 @@ const enviroment = process.env.NODE_ENV;
 
 let url = "http://localhost:8080/api/pos";
 if (enviroment === "production") {
-  url = process.env.NEXT_PUBLIC_DOMAIN ? `https://${process.env.NEXT_PUBLIC_DOMAIN}/api/pos` : `http://localhost:8080/api/pos`;
+  url = process.env.NEXT_PUBLIC_DOMAIN ? `http://${process.env.NEXT_PUBLIC_DOMAIN}/api/pos` : `http://localhost:8080/api/pos`;
 }
 
 interface CustomError extends Error {

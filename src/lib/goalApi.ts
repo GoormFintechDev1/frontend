@@ -4,7 +4,7 @@ const enviroment = process.env.NODE_ENV;
 
 let url = "http://localhost:8080/api/goal";
 if (enviroment === "production") {
-  url = process.env.NEXT_PUBLIC_DOMAIN ? `https://${process.env.NEXT_PUBLIC_DOMAIN}/api` : `http://localhost:8080/api/goal`;
+  url = process.env.NEXT_PUBLIC_DOMAIN ? `http://${process.env.NEXT_PUBLIC_DOMAIN}/api` : `http://localhost:8080/api/goal`;
 }
 
 export const getRevenueGoal = async(date: string) => {
