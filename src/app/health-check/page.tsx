@@ -12,7 +12,7 @@ const HealthCheck = () => {
 
     let url = "http://localhost:8080";
     if (enviroment === "production") {
-      url = process.env.NEXT_PUBLIC_DOMAIN ? `http://${process.env.NEXT_PUBLIC_DOMAIN}` : `http://localhost:8080`;
+      url = process.env.NEXT_PUBLIC_DOMAIN ? `https://${process.env.NEXT_PUBLIC_DOMAIN}` : `http://localhost:8080`;
     }
 
     const fetchData = async () => {
