@@ -48,9 +48,11 @@ export default function MyPage() {
     const handleDeleteAccount = async () => {
         try {
             await deleteAccount.mutateAsync(userInfo?.loginId || "");
+            localStorage.removeItem(`loggedIn:${userInfo?.loginId}`);
+            queryClient.setQueryData(["user"], null);
             router.push("/login");
         } catch (error) {
-            console.log("회원탈퇴 실패:", error);
+            // console.log("회원탈퇴 실패:", error);
             setMessage(error as string);
         }
     };

@@ -17,13 +17,25 @@ export default function Alarm({onClick}:Props){
     });
 
     const [info, setInfo] = useState("");
+    const [error, setError] = useState(false);
 
     useEffect(() => {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setGeoLocation({
-          long: position.coords.longitude,
-          lat: position.coords.latitude,
-        });
+      navigator.permissions.query({ name: "geolocation" }).then((result) => {
+        if (result.state === "granted") {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              setGeoLocation({
+                long: position.coords.longitude,
+                lat: position.coords.latitude,
+              });
+            },
+            () => {
+              setError(true);
+            }
+          );
+        } else if (result.state === "denied") {
+          setError(true);
+        }
       });
     }, []);
 
@@ -36,14 +48,15 @@ export default function Alarm({onClick}:Props){
         else if(C <= 20) setInfo('시원한 음료가 잘 팔릴 것 같아요.')
     }, [C]);
 
-    if( isLoading || info == ""){
-      return (<AlarmLoading/>)
+    if (!error && (isLoading || info === "")) {
+      return (<AlarmLoading />);
     }
 
     return(
     <div className="box h-20 text-sm items-center justify-center">
       <div className="flex space-x-3 justify-center items-center text-gray-800">
-        <p>현재 <span className="font-bold">{C}°C</span>로 {info}</p>
+        {info && <p>현재 <span className="font-bold">{C}°C</span>로 {info}</p>}
+        {error && <p>위치 접근이 거부되었습니다.</p>}
         <div className="" onClick={onClick}>
           <Image src={"/icons/Cancel.png"} alt="cancle" width={25} height={25}></Image>
         </div>
