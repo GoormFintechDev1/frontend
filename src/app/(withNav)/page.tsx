@@ -10,6 +10,7 @@ import { useUserInfo } from "@/hooks/useUserQuery";
 import Alarm from "@/components/Alarm";
 import { CustomError } from "@/interface/error";
 import { useRouter } from "next/navigation";
+import Error from "@/components/Error";
 
 export default function Home() {
 
@@ -20,6 +21,10 @@ export default function Home() {
 
   if((error as CustomError)?.status === 403){
     router.push("/login")
+  }
+
+  if((error as CustomError)?.status === 500){
+    return <Error/>
   }
 
   useEffect(() => {
