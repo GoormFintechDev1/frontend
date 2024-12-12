@@ -6,4 +6,5 @@ export interface UserInfo {
     address: string;
     businessStartDate: string;
     companyName: string;
+    createAt: string;
   };
