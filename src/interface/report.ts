@@ -8,10 +8,11 @@ export interface MarketReport {
   month: number,
   BSI_index: number,
   BSI_description: string,
-  exchange_rate: string,
-  price_index: string,
-  food_trend: string,
-  recommendations: string[],
+  CPI_index: number,
+  CPI_description: string,
+  market_issue: string,
+  trend: string,
+  recommendation: string,
   error?:string,
 }
 
@@ -22,6 +23,7 @@ export interface IndustryReport {
   my_income: string,
   expense_description: string,
   sale_description: string,
+  recommendation: string,
   error?: string,
 }
 

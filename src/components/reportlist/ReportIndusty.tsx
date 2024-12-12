@@ -1,5 +1,5 @@
 import { IndustryReport } from "@/interface/report";
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, XAxis, YAxis } from "recharts";
 
 export interface Props {
     report: IndustryReport;
@@ -30,11 +30,9 @@ export default function ReportIndusty({report}:Props) {
             {/* 매출 차트 */}
             <div className="flex flex-col items-center space-y-2">
                 <p className="text-sm font-medium">매출</p>
-                <ResponsiveContainer width={120} height={120}>
-                <BarChart data={revenueChart} margin={{ top: 0, bottom: 5 }}>
+                <BarChart width={120} height={120} data={revenueChart} margin={{ top: 0, bottom: 5 }}>
                     <XAxis dataKey="name" hide />
                     <YAxis hide />
-                    {/* <Tooltip formatter={(value: number) => `${value}만원`} /> */}
                     <Bar
                     dataKey="평균"
                     fill="#CECECE"
@@ -50,7 +48,6 @@ export default function ReportIndusty({report}:Props) {
                     label={{ position: "insideTop", fill: "#fff", fontSize: 12 }}
                     />
                 </BarChart>
-                </ResponsiveContainer>
                 <div className="flex justify-between w-full text-xs">
                 <div className="text-center w-1/2 text-gray-500">평균</div>
                 <div className="text-center w-1/2 text-blue-500">나</div>
@@ -60,11 +57,9 @@ export default function ReportIndusty({report}:Props) {
             {/* 지출 차트 */}
             <div className="flex flex-col items-center space-y-2">
                 <p className="text-sm font-medium">지출</p>
-                <ResponsiveContainer width={120} height={120}>
-                <BarChart data={expenseChart} margin={{ top: 0, bottom: 5 }}>
+                <BarChart width={120} height={120} data={expenseChart} margin={{ top: 0, bottom: 5 }}>
                     <XAxis dataKey="name" hide />
                     <YAxis hide />
-                    {/* <Tooltip formatter={(value: number) => `${value}만원`} /> */}
                     <Bar
                     dataKey="평균"
                     fill="#d3d3d3"
@@ -80,7 +75,6 @@ export default function ReportIndusty({report}:Props) {
                     label={{ position: "insideTop", fill: "#fff", fontSize: 12 ,}}
                     />
                 </BarChart>
-                </ResponsiveContainer>
                 <div className="flex justify-between w-full text-xs">
                 <div className="text-center w-1/2 text-gray-500">평균</div>
                 <div className="text-center w-1/2 text-red-500">나</div>

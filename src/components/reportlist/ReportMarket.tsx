@@ -12,6 +12,8 @@ export default function ReportMarket({report}: Props) {
     const [info, setInfo] = useState(false);
     const [content, setContent] = useState("");
 
+    const description = report.BSI_description + " " + report.CPI_description; 
+
   return (
     <div className="py-3">
         <div className="text-xl font-bold pb-3">시장 동향</div>
@@ -24,28 +26,28 @@ export default function ReportMarket({report}: Props) {
                 </div>
                 <div className="text-base h-10 justify-self-center" style={{color:"#333333"}}><p className="font-extrabold text-blue-600">{report?.BSI_index}</p></div>
             </div>
-            <div className="min-h-7 w-1/2 rounded-xl p-5 my-2 bg-zinc-50">
+            <div className="min-h-7 w-1/2 rounded-xl p-5 my-2 bg-white">
                 <div className="flex justify-between">
                     <p className="font-bold text-sm pb-3 ">CPI 지수</p>
                     <Image alt="information" src={"/icons/Info.png"} width={20} height={20} style={{height:'20px'}} onClick={()=>{setInfo(true); setContent("CPI")}}></Image>
                 </div>
-                <div className="text-base h-10 justify-self-center items-center" style={{color:"#333333"}}><p className="font-extrabold text-blue-600">{report?.BSI_index} 원</p></div>
+                <div className="text-base h-10 justify-self-center items-center" style={{color:"#333333"}}><p className="font-extrabold text-blue-600">{report?.CPI_index}</p></div>
             </div>
         </div>
         <div className="text-sm" style={{color:"#333333", lineHeight:"24px"}}>
             <div className="py-3">
                 <p className="font-bold text-base">BSI & CPI</p>
-                <ul className="list-disc pl-3 space-y-3">{report?.BSI_description.split('. ').map((w, i) => {
+                <ul className="list-disc pl-3 space-y-3">{description.split('. ').map((w, i) => {
                     return(<li key={i}>{w}</li>)
                 })}</ul>
             </div>
             <div className="py-3">
                 <p className="font-bold text-base">주요 이슈</p>
-                <div>{report?.price_index}</div>
+                <div>{report?.market_issue}</div>
             </div>
             <div className="py-3">
                 <p className="font-bold text-base">주요 트렌드</p>
-                <div>{report?.food_trend}</div>
+                <div>{report?.trend}</div>
             </div>
         </div>
 

@@ -57,7 +57,7 @@ export default function SetGoals(){
       <div className="flex flex-row items-center mb-6">
         <p className="text-xl font-semibold">목표 설정하기</p>
       </div>
-      <form className="flex flex-col space-y-10 flex-grow" onSubmit={handleSubmit(onSubmit)}>
+      <form className="flex flex-col space-y-10 h-[calc(var(--dynamic-vh)-180px)]" onSubmit={handleSubmit(onSubmit)}>
         <div className="label-input-set">
           <label className="label-base">매출 목표</label>
           <div className="input-base flex flex-row items-center justify-between space-x-3 focus-within:border-emerald-400">

@@ -115,22 +115,22 @@ export default function MyPage() {
                 style={{ borderColor: "#F5F5F5" }}>
             </div>
 
-            <div className="pt-7 px-2 flex justify-between ">
+            {/* <div className="pt-7 px-2 flex justify-between ">
                 <Link href="/mpedit" className="flex justify-between w-full " style={{ color: "#333333" }}>
                 <p>내 정보 수정</p>
                 <span className="ml-auto">&gt;</span>
                 </Link>
-            </div>
+            </div> */}
 
              {/* <div className="p-5 border-b flex justify-between items-center">
                 <p className="text-lg ">사업자 인증 </p>
                 <span className="ml-auto">&gt;</span>
             </div> */}
 
-            <div className="pt-7 px-2 flex justify-between " style={{ color: "#333333" }}>
+            {/* <div className="pt-7 px-2 flex justify-between " style={{ color: "#333333" }}>
                 <p>알림</p>
                 <span className="text-end">&gt;</span>
-            </div>
+            </div> */}
 
             <div className="pt-7 px-2 flex justify-between ">
                 <Link href="/card" className="flex justify-between w-full " style={{ color: "#333333" }}>

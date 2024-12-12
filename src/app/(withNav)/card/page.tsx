@@ -61,6 +61,7 @@ export default function Card() {
                 {/* <div className="text-center mb-5">
                     <p className="font-semibold">{currentCard.corporateName}</p>
                 </div> */}
+                <div className="overflow-y-scroll h-[calc(var(--dynamic-vh)-220px)]">
 
                 <div className="flex justify-center items-center mb-6">
                     <button onClick={handlePrev} className="text-gray-500 text-2xl font-bold px-4">
@@ -113,6 +114,7 @@ export default function Card() {
                             ))}
                         </ul>
                     </div>
+                </div>
                 </div>
             </div>
         </div>

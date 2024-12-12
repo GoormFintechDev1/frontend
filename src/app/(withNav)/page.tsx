@@ -8,16 +8,24 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useUserInfo } from "@/hooks/useUserQuery";
 import Alarm from "@/components/Alarm";
+import { CustomError } from "@/interface/error";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
 
   const [height, setHeight] = useState("0px");
+  const router = useRouter();
   
-  const {data:user} = useUserInfo();
+  const {data:user, error} = useUserInfo();
+
+  if((error as CustomError)?.status === 403){
+    router.push("/login")
+  }
 
   useEffect(() => {
     const calculateHeight = () => {
       const calculatedHeight = Math.max(190, Math.floor((window.innerHeight - 200) / 3));
+      // const calculatedHeight = Math.max(190, Math.floor((document.documentElement.client - 200) / 3));
       setHeight(`${calculatedHeight}px`);
     };
 
@@ -58,7 +66,7 @@ export default function Home() {
         
       </div>
 
-      <div className="grid grid-cols-2 gap-4 overflow-y-scroll h-[calc(100vh-168px)]">
+      <div id="main-content" className="grid grid-cols-2 gap-4 overflow-y-scroll h-[calc(var(--dynamic-vh)-168px)]">
         {/* 알림 박스 */}
         <div
         className={`col-span-2 transition-all duration-500 ease-in-out ${

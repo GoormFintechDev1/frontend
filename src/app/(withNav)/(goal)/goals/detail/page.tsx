@@ -118,6 +118,8 @@ export default function ObjDetail() {
                 <Image alt="back" onClick={goToNextMonth} src={'/icons/smallRight.png'} width={18} height={18}></Image>
             </div>
 
+            
+            <div className="overflow-y-scroll h-[calc(var(--dynamic-vh)-250px)]">
             {/*자세한 목표 설정*/}
             <div className="text-center my-16 text-xl">
                 {pageType === "revenue" ? (
@@ -175,6 +177,7 @@ export default function ObjDetail() {
                         <p>{nextAchievement}%</p>
                     </div>
                 </div>
+            </div>
             </div>
             </div>
 

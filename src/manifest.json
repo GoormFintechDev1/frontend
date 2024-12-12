@@ -2,9 +2,9 @@
     "name": "더블리",
     "short_name": "더블리",
     "start_url": "/splash",
-    "display": "standalone",
+    "display": "fullscreen",
     "background_color": "#ffffff",
-    "theme_color": "#000000",
+    "theme_color": "#ffffff",
     "icons": [
       {
         "src": "/logo.png",
