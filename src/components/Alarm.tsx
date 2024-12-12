@@ -48,8 +48,8 @@ export default function Alarm({onClick}:Props){
         else if(C <= 20) setInfo('시원한 음료가 잘 팔릴 것 같아요.')
     }, [C]);
 
-    if( isLoading || (info == "" && !error)){
-      return (<AlarmLoading/>)
+    if (!error && (isLoading || info === "")) {
+      return (<AlarmLoading />);
     }
 
     return(

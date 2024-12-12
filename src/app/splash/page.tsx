@@ -20,7 +20,6 @@ export default function Splash() {
 
         const timer = setTimeout(() => {
             if (data) {
-              console.log(data)
                 router.push("/");
             } else if (error) {
                 const status = (error as CustomError)?.status || null;
@@ -30,8 +29,10 @@ export default function Splash() {
                 } else {
                     router.push("/login");
                 }
+
             }
-        }, 2000);
+          }, 2000);
+        
 
         return () => clearTimeout(timer); 
     }, [data, error, isLoading, router]);

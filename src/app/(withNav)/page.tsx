@@ -28,6 +28,19 @@ export default function Home() {
   }
 
   useEffect(() => {
+    const metaTag = document.querySelector('meta[name="theme-color"]');
+    if (metaTag) {
+      metaTag.setAttribute('content', '#f9f9f9');
+    }
+
+    return () => {
+      if (metaTag) {
+        metaTag.setAttribute('content', '#ffffff');
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     const calculateHeight = () => {
       const calculatedHeight = Math.max(190, Math.floor((window.innerHeight - 200) / 3));
       // const calculatedHeight = Math.max(190, Math.floor((document.documentElement.client - 200) / 3));
