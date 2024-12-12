@@ -83,7 +83,7 @@ const ExpensesPage = () => {
         <div className="h-[calc(var(--dynamic-vh)-173px)] overflow-y-auto">
           <ExpensesPieChart chartData={expensesDetailsData!} />
           <ExpensesData chartData={expensesDetailsData!} month={month} />
-          <CardRecommend/>
+          <CardRecommend color="#f3f4f6"/>
 
           <div className="flex justify-center">
             <button
