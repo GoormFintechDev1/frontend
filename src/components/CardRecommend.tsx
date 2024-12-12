@@ -3,7 +3,11 @@
 import { useUserInfo } from "@/hooks/useUserQuery";
 import Link from "next/link";
 
-const CardRecommend = () => {
+interface Props {
+  color:string
+}
+
+const CardRecommend = ({color}:Props) => {
   const {data:user, isLoading} = useUserInfo();
 
   if(isLoading){
@@ -15,8 +19,8 @@ const CardRecommend = () => {
   }
   
   return (
-    <Link href={"/card"}>
-      <div className="bg-gray-100 p-5 rounded-lg text-sm m-5">
+    <Link href={"/card"} className="animate-pulse">
+      <div className=" p-5 rounded-lg text-sm m-5" style={{backgroundColor:color}}>
         <div className="flex flex-col text-center">
           <div className=""><span className="font-bold">{user?.companyName}</span>에 맞는 카드 추천 보러가기</div>
           {/* <div className="font-bold text-center">{convertToKoreanWon(card[0].totalSaving)} 할인 받기!</div>

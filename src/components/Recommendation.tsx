@@ -1,3 +1,4 @@
+import CardRecommend from "./CardRecommend"
 
 interface Props {
     report: string
@@ -16,6 +17,9 @@ export default function ReportMarket({report}: Props) {
                     <li key={i}>{r}</li>
                 ))}</ul>
             </div>
+        </div>
+        <div>
+            <CardRecommend color="#ffffff"/>
         </div>
         </div>
     </div>

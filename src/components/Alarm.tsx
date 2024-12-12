@@ -33,11 +33,12 @@ export default function Alarm({onClick}:Props){
               setError(true);
             }
           );
-        } else if (result.state === "denied") {
+        } else {
           setError(true);
         }
       });
     }, []);
+
 
     const {data:weather, isLoading} = useWeather(geolocation);
 
