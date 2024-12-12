@@ -16,6 +16,7 @@ export const useUserStore = create<UserStore>((set) => ({
     address:  "",
     businessStartDate:  "",
     companyName:  "",
+    createAt: "",
   },
   setUser: (user) => set({ user }), // 상태 업데이트 함수
 }));
