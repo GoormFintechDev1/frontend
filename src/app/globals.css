@@ -8,14 +8,14 @@
   --font-goorm-sans-regular: 'goorm-sans-regular', sans-serif;
   --background: #ffffff;
   --foreground: #171717;
-  --dynamic-vh: 100vh;
+  --dynamic-vh: 100svh;
 }
 
-@supports (-webkit-touch-callout: none) {
+/* @supports (-webkit-touch-callout: none) {
   :root {
     --dynamic-vh: calc(100vh - 80px); 
   }
-}
+} */
 
 @media (prefers-color-scheme: white) {
   :root {
@@ -26,7 +26,7 @@
 
 body {
   /* max-width: 800px; */
-  min-height: 100dvh;
+  min-height: 100svh;
   /* padding: 2rem;  */
   color: var(--foreground); /* 텍스트 색상 */
   background: var(--background); /* 배경 색상 */
@@ -39,7 +39,7 @@ body {
   margin-right: auto; 
   max-width: 800px;
   /* height: calc(100dvh);  */
-  height: 100vh;
+  height: 100svh;
   padding: 25px; 
   padding-bottom: 83px; /* navbar 만큼 padding-bottom 값 추가 */
 }
@@ -51,7 +51,6 @@ body {
   max-width: 800px;
   height: 100vh;
   padding: 25px; 
-  padding-bottom: 83px; /* navbar 만큼 padding-bottom 값 추가 */
 }
 
 .navbar{

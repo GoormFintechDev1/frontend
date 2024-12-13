@@ -56,11 +56,12 @@ export default function Register1({ onNext }: Props) {
         <div className="h-full p-3">
             <form className="flex flex-col space-y-6 h-full" onSubmit={handleSubmit(onSubmit)}>
                 <p className="text-xl font-bold">회원가입</p>
+                <div className="h-[calc(var(--dynamic-vh)-173px)] space-y-6 overflow-y-scroll">
                 <div className="label-input-set">
                     <label className="label-base">아이디</label>
-                    <div className="flex gap-3">
+                    <div className="flex gap-4 items-center">
                         <input
-                            className="input-base flex-grow"
+                            className="input-base w-9/12 appearance-none"
                             placeholder="아이디를 입력하세요."
                             {...register("loginId", {
                                 required: "아이디를 입력하세요.",
@@ -84,7 +85,7 @@ export default function Register1({ onNext }: Props) {
                             })}
                         />
                         <button
-                            className={`p-3 rounded-xl text-xs ${isloginIdChecked ?  "bg-gray-200 text-gray-700": "bg-emerald-400 text-white font-bold"}`}
+                            className={`h-14 p-3 w-20 rounded-xl text-xs ${isloginIdChecked ?  "bg-gray-200 text-gray-700": "bg-emerald-400 text-white font-bold"}`}
                             onClick={handleCheckloginId}
                             type="button"
                         > 중복 확인</button>
@@ -125,7 +126,8 @@ export default function Register1({ onNext }: Props) {
                     )}
                 </div>
                 <div className="flex-grow"></div>
-                <div className="py-8">
+                </div>
+                <div className="py-14">
                     <button
                         className={`button ${isButtonEnabled ? "" : "!bg-gray-200 !text-gray-700"}`}
                         type="submit"
