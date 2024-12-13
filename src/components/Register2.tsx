@@ -78,6 +78,7 @@ export default function Register2({ onReadySubmit }: Props) {
     <div className="h-full p-3">
       <form className="flex flex-col space-y-8 h-full" onSubmit={handleSubmit(onSubmit)}>
         <p className="text-xl font-bold">회원가입</p>
+        <div className="h-[calc(var(--dynamic-vh)-173px)] space-y-6 overflow-y-scroll">
         
         <div className="label-input-set">
           <label className="label-base">이름</label>
@@ -176,8 +177,9 @@ export default function Register2({ onReadySubmit }: Props) {
         </div>
 
         <div className="flex-grow"></div> 
+        </div>
         
-        <div className="py-8">
+        <div className="py-14">
           <button type="submit" disabled={!isButtonEnabled} className={`button ${isButtonEnabled ? "" : "!bg-gray-200 !text-gray-700"}`}>
             회원가입
           </button>

@@ -56,6 +56,7 @@ export default function Register1({ onNext }: Props) {
         <div className="h-full p-3">
             <form className="flex flex-col space-y-6 h-full" onSubmit={handleSubmit(onSubmit)}>
                 <p className="text-xl font-bold">회원가입</p>
+                <div className="h-[calc(var(--dynamic-vh)-173px)] space-y-6 overflow-y-scroll">
                 <div className="label-input-set">
                     <label className="label-base">아이디</label>
                     <div className="flex gap-4 items-center">
@@ -125,7 +126,8 @@ export default function Register1({ onNext }: Props) {
                     )}
                 </div>
                 <div className="flex-grow"></div>
-                <div className="py-8">
+                </div>
+                <div className="py-14">
                     <button
                         className={`button ${isButtonEnabled ? "" : "!bg-gray-200 !text-gray-700"}`}
                         type="submit"

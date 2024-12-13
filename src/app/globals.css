@@ -31,7 +31,7 @@ body {
   color: var(--foreground); /* 텍스트 색상 */
   background: var(--background); /* 배경 색상 */
   font-family: var(--font-goorm-sans-regular); /* 로컬 폰트를 기본 폰트로 적용 */
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 .container {
@@ -51,7 +51,6 @@ body {
   max-width: 800px;
   height: 100vh;
   padding: 25px; 
-  padding-bottom: 83px; /* navbar 만큼 padding-bottom 값 추가 */
 }
 
 .navbar{
