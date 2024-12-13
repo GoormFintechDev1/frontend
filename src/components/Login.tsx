@@ -54,7 +54,7 @@ export default function Login() {
     return (
         <div className="flex flex-col justify-center h-full p-3 space-y-4">
             <div className="flex items-start mb-4">
-                <Image src="/logo.png" alt="로고" width={70} height={70}/>
+                <Image src={"/logo.png"} alt="로고" width={70} height={70}/>
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className='w-full flex flex-col space-y-8'>
                 
