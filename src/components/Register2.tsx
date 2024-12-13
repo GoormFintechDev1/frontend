@@ -78,6 +78,7 @@ export default function Register2({ onReadySubmit }: Props) {
     <div className="h-full p-3">
       <form className="flex flex-col space-y-8 h-full" onSubmit={handleSubmit(onSubmit)}>
         <p className="text-xl font-bold">회원가입</p>
+        <div className="h-[calc(var(--dynamic-vh)-173px)] space-y-6 overflow-y-scroll">
         
         <div className="label-input-set">
           <label className="label-base">이름</label>
@@ -132,8 +133,8 @@ export default function Register2({ onReadySubmit }: Props) {
 
         <div className="label-input-set">
           <label className="label-base">전화번호</label>
-          <div className="flex gap-3">
-            <input className="input-base flex-grow" placeholder="전화번호를 입력하세요."
+          <div className="flex gap-4">
+            <input className="input-base flex-grow w-9/12 appearance-none" placeholder="전화번호를 입력하세요."
               {...register("phoneNumber", { required: "전화번호를 입력하세요.",
                   pattern: {
                       value: /^[0-9]{11}$/,
@@ -145,7 +146,7 @@ export default function Register2({ onReadySubmit }: Props) {
                     clearErrors("phoneNumber");}
               })}
             />
-            <button type="button"  className={`p-3 rounded-xl text-xs ${isPhoneNumberChecked ? 'bg-gray-200 text-gray-700' : 'bg-emerald-400 text-white font-bold'}`}
+            <button type="button"  className={`p-3 rounded-xl w-20 h-14 text-xs ${isPhoneNumberChecked ? 'bg-gray-200 text-gray-700' : 'bg-emerald-400 text-white font-bold'}`}
                 disabled={isEmailChecked} onClick={handleCheckPhoneNumber}>중복 확인</button>
           </div>
           {errors.phoneNumber && ( <p className="helper-text text-red-500">{errors.phoneNumber.message}</p>)}
@@ -154,8 +155,8 @@ export default function Register2({ onReadySubmit }: Props) {
 
         <div className="label-input-set">
           <label className="label-base">이메일</label>
-          <div className="flex gap-3">
-            <input className="input-base flex-grow" placeholder="이메일을 입력하세요."
+          <div className="flex gap-4">
+            <input className="input-base flex-grow w-9/12 appearance-none" placeholder="이메일을 입력하세요."
               {...register("email", { required: "이메일을 입력하세요.",
                   pattern: {
                       value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
@@ -168,7 +169,7 @@ export default function Register2({ onReadySubmit }: Props) {
                   }
               })}
             />
-            <button type="button" className={`p-3 rounded-xl text-xs ${isEmailChecked ? 'bg-gray-200 text-gray-700' : 'bg-emerald-400 text-white font-bold'}`}
+            <button type="button" className={`p-3 w-20 h-14 rounded-xl text-xs ${isEmailChecked ? 'bg-gray-200 text-gray-700' : 'bg-emerald-400 text-white font-bold'}`}
                     disabled={isEmailChecked} onClick={handleCheckEmail}>중복 확인</button>
           </div>
           {errors.email && ( <p className="helper-text text-red-500">{errors.email.message}</p>)}
@@ -176,8 +177,9 @@ export default function Register2({ onReadySubmit }: Props) {
         </div>
 
         <div className="flex-grow"></div> 
+        </div>
         
-        <div className="py-8">
+        <div className="py-14">
           <button type="submit" disabled={!isButtonEnabled} className={`button ${isButtonEnabled ? "" : "!bg-gray-200 !text-gray-700"}`}>
             회원가입
           </button>

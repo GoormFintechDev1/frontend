@@ -12,9 +12,9 @@ function AddressInput({ onAddressSelect, value }: Props) {
   };
 
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-4">
       <input
-        className="input-base flex-grow"
+        className="input-base flex-grow w-9/12"
         placeholder="주소를 입력하세요."
         value={value}
         readOnly

@@ -71,6 +71,8 @@ export default function Validate(){
         <div className="container2" onKeyDown={handleKeyDown}>
         <form className="flex flex-col space-y-8 h-full p-3" onSubmit={handleSubmit(onSubmit)}>
                 <p className="text-xl font-bold">사업자 인증</p>
+                <div className="h-[calc(var(--dynamic-vh)-173px)] space-y-6 overflow-y-scroll">
+
                 <div className="label-input-set">
                     <label className="label-base">사업자등록번호</label>
                     <input className="input-base" placeholder="사업자등록번호를 입력하세요."
@@ -86,7 +88,8 @@ export default function Validate(){
                     {errors.address && ( <p className="text-xs font-light text-red-500">{errors.address.message}</p>)}
                 </div>
                 <div className="flex-grow"></div>
-                <div className="py-8">
+                </div>
+                <div className="py-14">
                     <button type="submit" className={`button ${isButtonEnabled ? "" : "!bg-gray-200 !text-gray-700"}`}>인증하기</button>
                 </div>
             </form>
