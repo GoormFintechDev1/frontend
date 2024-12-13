@@ -11,8 +11,12 @@ RUN npm ci
 
 # 1. Build stage (Next.js standalone 모드로 빌드)
 FROM base AS builder
-ENV NEXT_PUBLIC_DOMAIN=doubly.co.kr
 WORKDIR /app
+
+ARG NEXT_PUBLIC_WEATHER_APP
+ENV NEXT_PUBLIC_WEATHER_APP=${NEXT_PUBLIC_WEATHER_APP}
+ENV NEXT_PUBLIC_DOMAIN=doubly.co.kr
+
 COPY --from=deps /app/node_modules ./node_modules
 
 # 앱 소스 복사

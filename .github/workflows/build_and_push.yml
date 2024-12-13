@@ -32,7 +32,9 @@ jobs:
       # 2. Docker 이미지 빌드
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ env.REPO_NAME }}:latest -f Docker/Dockerfile .
+          docker build \
+          --build-arg NEXT_PUBLIC_WEATHER_KEY=${{ secrets.WEATHER_KEY }} \
+           -t ghcr.io/${{ env.REPO_NAME }}:latest -f Docker/Dockerfile .
       
       # 3. GitHub Container Registry 로그인
       - name: Login to GitHub Container Registry
