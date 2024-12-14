@@ -26,7 +26,7 @@ import Image from "next/image";
             {gif && <Image src={gif} width={150} height={140} unoptimized alt="gif"></Image>}
           </div>
       
-          <Button className="mb-8" href={`${href}`}>
+          <Button className="mb-12" href={`${href}`}>
             {buttonmessage}
           </Button>
         </div>

@@ -167,7 +167,7 @@ export default function ObjDetail() {
             {/* 지지난 달 정보 */}
             <div className="text-base font-sans mb-2">
                 <p className="mb-2">
-                    {prepreviousData}월 <span className=""> - 총 {nextTotal?.toLocaleString() || "0"}원 </span>
+                    {prepreviousData}월 <span className=""> - {nextTotal?.toLocaleString() || "0"}원 </span>
                 </p>
                 <div className="relative w-full h-7 bg-gray-200 rounded-md overflow-hidden mb-8">
                     <div

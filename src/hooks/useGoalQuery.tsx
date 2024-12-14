@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 export const useRevenueGoal = (date: string) => {
     return useQuery({
-      queryKey: ['revenueGoal'],
+      queryKey: ['revenueGoal', date],
       queryFn: () => getRevenueGoal(date),
       // staleTime: 1000*60,
     })
@@ -13,7 +13,7 @@ export const useRevenueGoal = (date: string) => {
 
 export const useExpenseGoal = (date: string) => {
     return useQuery({
-      queryKey: ['expenseGoal'],
+      queryKey: ['expenseGoal', date],
       queryFn: () => getExpenseGoal(date),
       // staleTime:1000*60,
     })
