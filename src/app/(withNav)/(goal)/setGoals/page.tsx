@@ -22,8 +22,8 @@ export default function SetGoals(){
   const [revenueGoal, setRevenueGoal] = useState(0);
   const [expenseGoal, setExpenseGoal] = useState(0);
 
-  const setMutation = useSetGoal();
-  const updateMutation = useUpdateGoal();
+  const setMutation = useSetGoal(paramMonth);
+  const updateMutation = useUpdateGoal(paramMonth);
 
   const onSubmit = (data: SetGoalInput) => {
     const newData = { ...data, goalMonth: paramMonth };
@@ -64,6 +64,7 @@ export default function SetGoals(){
             <input
               className="text-emerald-500 placeholder:text-xs w-full placeholder:text-gray-600 focus:outline-none"
               placeholder="매출 목표를 설정해보세요."
+              type="number"
               {...register("revenueGoal", { valueAsNumber: true })}
             />
             <p>원</p>
@@ -75,6 +76,7 @@ export default function SetGoals(){
             <input
               className="text-red-500 placeholder:text-xs w-full placeholder:text-gray-600 focus:outline-none"
               placeholder="지출 예산을 설정해보세요."
+              type="number"
               {...register("expenseGoal", { valueAsNumber: true })}
             />
             <p>원</p>
