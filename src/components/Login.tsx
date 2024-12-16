@@ -31,7 +31,7 @@ export default function Login() {
 
     useEffect(() => {
         if (redirect) {
-            router.push(redirect);
+            // router.push(redirect);
         }
     }, [redirect, router, loginId]);
 

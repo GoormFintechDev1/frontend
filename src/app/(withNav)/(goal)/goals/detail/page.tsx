@@ -96,6 +96,7 @@ export default function ObjDetail() {
     let nextTotal = pageType === "revenue" ? revenue?.monthlyRevenue2Ago : expense?.monthlyExpense2Ago;
     if (nextTotal === null) nextTotal = 0;
 
+
     return (
         <div className="container mx-auto p-4 h-full">
             <div className="back">
