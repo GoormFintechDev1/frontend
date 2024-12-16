@@ -6,7 +6,8 @@ export const useRevenueGoal = (date: string) => {
     return useQuery({
       queryKey: ['revenueGoal', date],
       queryFn: () => getRevenueGoal(date),
-      staleTime: 1000*60,
+      staleTime: 1000*60*60,
+      gcTime:1000*60*60,
     })
   }
 
@@ -15,7 +16,8 @@ export const useExpenseGoal = (date: string) => {
     return useQuery({
       queryKey: ['expenseGoal', date],
       queryFn: () => getExpenseGoal(date),
-      staleTime:1000*60,
+      staleTime:1000*60*60,
+      gcTime:1000*60*60,
     })
   }
 
